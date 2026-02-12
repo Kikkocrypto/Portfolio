@@ -1,0 +1,43 @@
+# Configurazione base portfolio backend
+
+spring:
+  application:
+    name: portfolio-backend
+
+  # DataSource: SQLite. URL da variabile DB_URL o default (relativo alla working dir, es. Backend).
+  datasource:
+    url: ${DB_URL:jdbc:sqlite:../Database/portfolio.db}
+    driver-class-name: org.sqlite.JDBC
+
+  # JPA/Hibernate: ddl-auto crea/aggiorna le tabelle dalle entity (es. password_reset_tokens).
+  # update = crea tabelle mancanti e nuove colonne, non elimina dati (ok per dev/small prod).
+  # In produzione con migrazioni (Flyway/Liquibase) usa: validate o none.
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  # Profilo dev disattivato. Per attivarlo: mvn spring-boot:run -Dspring-boot.run.profiles=dev
+  # profiles:
+  #   active: dev
+
+# ---------------------------------------------------------------------------
+# Data retention (cancellazione automatica dati vecchi)
+# ---------------------------------------------------------------------------
+app:
+  data-retention:
+    retention-days: 90
+    cron: "0 0 2 * * ?"
+    batch-size: 500
+
+  # ---------------------------------------------------------------------------
+  # Password Reset (reset password via email)
+  # ---------------------------------------------------------------------------
+  password-reset:
+    # Durata validità token di reset in minuti (default: 60 = 1 ora)
+    token-expiration-minutes: 60
+    # Cron per pulizia token scaduti (ogni giorno alle 3:00 AM)
+    cleanup-cron: "0 0 3 * * ?"
+    # URL frontend per costruire link di reset (es. https://tuodomain.com)
+    frontend-url: ${FRONTEND_URL:http://localhost:3000}
+    # Abilita invio email (false = solo log, true = invia email via SMTP)
+    email-enabled: ${PASSWORD_RESET_EMAIL_ENABLED:true}

@@ -1,0 +1,43 @@
+# Database (non versionare i file .db)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+Database/*.db
+Database/*.db-journal
+Database/*.db-shm
+Database/*.db-wal
+
+# Backend (Java/Maven)
+Backend/target/
+Backend/.mvn/wrapper/maven-wrapper.jar
+Backend/*.log
+Backend/.flattened-pom.xml
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.cursor/
+*.swp
+*.swo
+*~
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (se aggiungi frontend in futuro)
+node_modules/
+dist/
+build/
+.next/
+out/
+to-do.md
+Documentazione/
