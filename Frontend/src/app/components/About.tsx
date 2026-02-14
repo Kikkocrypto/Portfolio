@@ -229,7 +229,7 @@ export function About() {
                             <button
                               type="button"
                               onClick={() => setOpenTimelineIndex((i) => (i === index ? null : index))}
-                              className={`w-5 h-5 rounded-full relative z-10 shrink-0 mt-0.5 timeline-dot timeline-dot-hint animate-scale-in transition-transform duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer ${item.year === '2023' ? 'bg-[#2C2416] focus-visible:ring-[#2C2416]/50 timeline-dot-milestone' : item.year === '2025' ? 'timeline-dot-romania focus-visible:ring-[#CE1126]/50 timeline-dot-erasmus' : 'bg-[#D4A574] focus-visible:ring-[#D4A574]/50'}`}
+                              className={`w-5 h-5 rounded-full relative z-10 shrink-0 mt-0.5 timeline-dot timeline-dot-hint animate-scale-in transition-transform duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer ${item.year === '2023' ? 'bg-[#E6B800] focus-visible:ring-[#E6B800]/50 timeline-dot-milestone' : item.year === '2025' ? 'timeline-dot-romania focus-visible:ring-[#CE1126]/50 timeline-dot-erasmus' : 'bg-[#D4A574] focus-visible:ring-[#D4A574]/50'}`}
                               style={{ animationDuration: `${DURATION.fast}ms`, animationFillMode: 'both' }}
                               aria-expanded={openTimelineIndex === index}
                               aria-label={openTimelineIndex === index ? 'Chiudi dettaglio' : `Dettaglio ${item.year}${item.year === '2023' ? ' — Partenza seria nell\'informatica' : item.year === '2025' ? ' — Erasmus, esperienza che mi ha cambiato la vita' : ''}`}
@@ -280,7 +280,7 @@ export function About() {
                               <button
                                 type="button"
                                 onClick={() => setOpenTimelineIndex((i) => (i === index ? null : index))}
-                                className={`w-5 h-5 rounded-full relative z-10 timeline-dot timeline-dot-hint animate-scale-in transition-transform duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer ${item.year === '2023' ? 'bg-[#2C2416] focus-visible:ring-[#2C2416]/50 timeline-dot-milestone' : item.year === '2025' ? 'timeline-dot-romania focus-visible:ring-[#CE1126]/50 timeline-dot-erasmus' : 'bg-[#D4A574] focus-visible:ring-[#D4A574]/50'}`}
+                                className={`w-5 h-5 rounded-full relative z-10 timeline-dot timeline-dot-hint animate-scale-in transition-transform duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer ${item.year === '2023' ? 'bg-[#E6B800] focus-visible:ring-[#E6B800]/50 timeline-dot-milestone' : item.year === '2025' ? 'timeline-dot-romania focus-visible:ring-[#CE1126]/50 timeline-dot-erasmus' : 'bg-[#D4A574] focus-visible:ring-[#D4A574]/50'}`}
                                 style={{ animationDuration: `${DURATION.fast}ms`, animationFillMode: 'both' }}
                                 aria-expanded={isOpen}
                                 aria-label={isOpen ? 'Chiudi dettaglio' : `Dettaglio ${item.year}${item.year === '2023' ? ' — Partenza seria nell\'informatica' : item.year === '2025' ? ' — Erasmus, esperienza che mi ha cambiato la vita' : ''}`}

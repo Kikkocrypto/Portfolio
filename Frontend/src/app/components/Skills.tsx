@@ -1,6 +1,12 @@
-import { Code, Database, Layers, Sparkles } from 'lucide-react';
+import { Code, Database, Layers } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
+import dockerIcon from '@/assets/icons8-docker.svg';
+
+/** Icona Docker da assets (balena con container, nero) */
+function DockerIcon({ className }: { className?: string }) {
+  return <img src={dockerIcon} alt="" className={className} aria-hidden />;
+}
 
 export function Skills() {
   const skillCategories = [
@@ -40,7 +46,7 @@ export function Skills() {
     },
     {
       title: 'Strumenti e DevOps',
-      icon: Sparkles,
+      icon: DockerIcon,
       skills: [
         'Git & GitHub',
         'Docker',
@@ -84,7 +90,7 @@ export function Skills() {
                   <div className="group bg-white border border-[#D4A574]/10 p-8 md:p-10 hover:border-[#D4A574]/30 hover:shadow-sm transition-all duration-500 hover-lift">
                     <div className="flex items-center gap-4 mb-8">
                       <div className="w-11 h-11 border border-[#8B9DAF]/20 flex items-center justify-center group-hover:border-[#8B9DAF]/40 transition-colors duration-500">
-                        <Icon className="w-5 h-5 text-[#6B5D4F] group-hover:scale-110 transition-transform duration-500" />
+                        <Icon className={`w-5 h-5 group-hover:scale-110 transition-transform duration-500 ${category.title === 'Strumenti e DevOps' ? 'text-[#2C2416]' : 'text-[#6B5D4F]'}`} />
                       </div>
                       <h3 className="text-2xl font-light text-[#2C2416] tracking-wide">
                         {category.title}

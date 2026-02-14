@@ -5,25 +5,28 @@ import { ScrollReveal } from '../../components/motion';
 import { useScrollProgress } from '../../utils/motion';
 import { DURATION } from '../../constants/motion';
 
+const projectImage = new URL('../../assets/Screenshot 2026-02-14 172842.png', import.meta.url).href;
+
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollProgress = useScrollProgress(sectionRef);
 
   const featuredProject = {
-    title: 'Piattaforma E-Commerce',
-    subtitle: 'Esperienza di acquisto digitale completa',
-    description: 'Una soluzione e-commerce full-stack costruita da zero. Partendo da ricerche utente nel quartiere della moda a Milano, ho progettato un sistema che unisce presentazione elegante dei prodotti e checkout fluido. La dashboard admin si ispira ai sistemi minimalisti che ho osservato nelle boutique di Tokyo.',
-    challenge: 'Creare una piattaforma che sembri personale e curata, non corporate. La sfida è costruire fiducia attraverso il design mantenendo la solidità tecnica necessaria per transazioni sicure.',
+    title: 'Piattaforma di gestione pazienti',
+    subtitle: 'Applicazione web full-stack per la gestione dei pazienti, dottori e delle visite mediche.',
+    description: 'Applicazione sviluppata come oggetto della tesi di laurea, per la gestione di una clinica privata, con una interfaccia utente moderna, intuitiva, responsive e una gestione efficiente dei pazienti, dottori e delle visite.',
+    challenge: 'La sfida è stata quella di creare un\'applicazione che sia sia facile da usare per pazienti e dottori non tecnici, il tutto, in pochi giorni senza compromettere la qualità. A causa delle tempistiche, non ho potuto integrare un sistema di sicurezza basato su token JWT e gestione dei ruoli, ma un sistema di autenticazione basato su header.',
     approach: [
-      'Interviste utente in tre città per capire i comportamenti d\'acquisto',
-      'Prototipazione iterativa con dati reali di artigiani locali',
-      'Ottimizzazione delle performance per clienti internazionali con connessioni diverse'
+      'Interfaccia utente moderna e intuitiva',
+      'Gestione efficiente dei pazienti e delle visite',
+      'Sistema di autenticazione basato su header',
+      'Sistema semplice di gestione dei ruoli e delle autorizzazioni',
     ],
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'Redis'],
-    image: 'https://images.unsplash.com/photo-1554306274-f23873d9a26c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNoJTIwcHJvamVjdCUyMGNvZGluZyUyMHNjcmVlbnxlbnwxfHx8fDE3NzAyMjQ5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    github: 'https://github.com',
-    demo: 'https://example.com',
-    year: '2024'
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'pgAdmin', 'Spring Boot', 'Java', 'Docker', 'RESTful API', 'Deployment'],
+    image: projectImage,
+    github: 'https://github.com/your-username/your-project-name',
+    demo: 'https://dottori-dolori.xyz/',
+    year: '2026 - tesi'
   };
 
   const additionalWork = {
@@ -95,17 +98,18 @@ export function Projects() {
                 <div className="lg:col-span-9 space-y-12">
                   {/* Main Image - No card, just image with subtle border */}
                   <div 
-                    className="group relative overflow-hidden border border-[#D4A574]/10 hover:border-[#D4A574]/20 transition-colors duration-500"
+                    className="relative overflow-hidden border border-[#D4A574]/10 hover:border-[#D4A574]/20 transition-colors duration-500"
                     style={{
                       transform: `translateY(${scrollProgress * -20}px)`,
-                      transition: 'transform 0.1s ease-out'
+                      transition: 'transform 0.1s ease-out',
+                      boxShadow: '0 4px 20px rgba(212, 165, 116, 0.12)'
                     }}
                   >
                     <div className="overflow-hidden">
                       <ImageWithFallback
                         src={featuredProject.image}
                         alt={featuredProject.title}
-                        className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full aspect-[16/10] object-cover object-center"
                       />
                     </div>
                   </div>
@@ -174,7 +178,7 @@ export function Projects() {
                     >
                       <ExternalLink className="w-5 h-5" />
                       <span className="text-sm tracking-wide link-underline">
-                        Visit site
+                        Vai al sito
                       </span>
                     </a>
                   </div>

@@ -88,9 +88,12 @@ export function Footer() {
           </div>
 
           {/* Bottom */}
-          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center">
+          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center space-y-2">
             <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
               © {new Date().getFullYear()} Damiano Francesco. Realizzato con cura.
+            </p>
+            <p className="text-xs text-[#FAF9F6]/30 tracking-wide">
+              <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/22801/docker" className="hover:text-[#FAF9F6]/50 transition-colors">Docker</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" className="hover:text-[#FAF9F6]/50 transition-colors">Icons8</a>
             </p>
           </div>
         </div>
