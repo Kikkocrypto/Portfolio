@@ -55,7 +55,7 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       } ${
         isTop 
@@ -68,7 +68,7 @@ export function Header() {
           {/* Logo */}
           <button
             onClick={() => handleNavClick('#')}
-            className={`font-light text-xl tracking-wider transition-colors ${
+            className={`font-light text-xl tracking-wider transition-all duration-300 ${
               isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
             } hover:text-[#6B5D4F]`}
           >
@@ -81,12 +81,12 @@ export function Header() {
               <button
                 key={idx}
                 onClick={() => handleNavClick(item.href)}
-                className={`text-sm tracking-wider transition-colors relative group ${
+                className={`text-sm tracking-wider transition-all duration-300 relative group ${
                   isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
                 } hover:text-[#6B5D4F]`}
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4A574] group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4A574] group-hover:w-full transition-all duration-300 ease-out"></span>
               </button>
             ))}
           </nav>
@@ -94,7 +94,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors ${
+            className={`md:hidden p-2 transition-all duration-300 ${
               isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
             } hover:text-[#6B5D4F]`}
             aria-label="Apri/chiudi menu"
@@ -106,7 +106,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       <div 
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
+        className={`md:hidden transition-all duration-300 ease-out overflow-hidden ${
           isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
@@ -115,7 +115,7 @@ export function Header() {
             <button
               key={idx}
               onClick={() => handleNavClick(item.href)}
-              className="block w-full text-left px-6 py-4 text-[#2C2416] hover:text-[#6B5D4F] hover:bg-white/50 transition-colors tracking-wider text-sm border-b border-[#D4A574]/5 last:border-b-0"
+              className="block w-full text-left px-6 py-4 text-[#2C2416] hover:text-[#6B5D4F] hover:bg-white/50 transition-all duration-300 tracking-wider text-sm border-b border-[#D4A574]/5 last:border-b-0"
             >
               {item.label}
             </button>

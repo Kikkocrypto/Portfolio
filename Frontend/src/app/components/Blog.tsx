@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Calendar, ArrowRight } from 'lucide-react';
+import { ScrollReveal } from '../../components/motion';
+import { STAGGER } from '../../constants/motion';
 
 interface Post {
   id: number;
@@ -216,68 +218,73 @@ Non il più veloce. Solo il più riflessivo. E col tempo sarà abbastanza veloce
       <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="mb-24 max-w-3xl">
-            <div className="inline-block h-px w-20 bg-[#D4A574] mb-8"></div>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2C2416] mb-8 leading-[1.1]">
-              Riflessioni
-            </h2>
-            <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-              Cosa ho imparato tra codice e viaggi, caffè e momenti di quiete
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="mb-24 max-w-3xl">
+              <div className="inline-block h-px w-20 bg-[#D4A574] mb-8"></div>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2C2416] mb-8 leading-[1.1]">
+                Riflessioni
+              </h2>
+              <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
+                Cosa ho imparato tra codice e viaggi, caffè e momenti di quiete
+              </p>
+            </div>
+          </ScrollReveal>
 
           {/* Posts - Text-focused editorial layout */}
           <div className="space-y-1">
             {posts.map((post, index) => (
-              <article
-                key={post.id}
-                onClick={() => handlePostClick(post)}
-                className="group cursor-pointer py-12 border-t border-[#D4A574]/10 hover:border-[#D4A574]/30 transition-all duration-500"
-              >
-                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                  {/* Date column */}
-                  <div className="lg:col-span-3">
-                    <div className="flex items-center gap-3 text-sm text-[#6B5D4F]/60 tracking-wide mb-3 lg:mb-0">
-                      <span>{post.date}</span>
-                      <span className="hidden lg:inline">•</span>
-                      <span>{post.readTime}</span>
+              <ScrollReveal key={post.id} delay={index * STAGGER.comfortable}>
+                <article
+                  onClick={() => handlePostClick(post)}
+                  className="group cursor-pointer py-12 border-t border-[#D4A574]/10 hover:border-[#D4A574]/30 transition-all duration-500"
+                >
+                  <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    {/* Date column */}
+                    <div className="lg:col-span-3">
+                      <div className="flex items-center gap-3 text-sm text-[#6B5D4F]/60 tracking-wide mb-3 lg:mb-0">
+                        <span>{post.date}</span>
+                        <span className="hidden lg:inline">•</span>
+                        <span>{post.readTime}</span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Content column */}
-                  <div className="lg:col-span-9 space-y-4">
-                    <h3 className="text-3xl md:text-4xl font-light text-[#2C2416] leading-tight group-hover:text-[#6B5D4F] transition-colors duration-500">
-                      {post.title}
-                    </h3>
-                    <p className="text-lg md:text-xl text-[#6B5D4F]/70 leading-relaxed font-light">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center gap-3 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <span className="text-sm text-[#2C2416] tracking-wide border-b border-[#D4A574]/30">
-                        Leggi riflessione
-                      </span>
-                      <ArrowRight className="w-4 h-4 text-[#2C2416] group-hover:translate-x-1 transition-transform" />
-                    </div>
-                    {/* Location tag */}
-                    <div className="pt-2">
-                      <span className="text-xs text-[#6B5D4F]/50 italic tracking-wide">
-                        {post.location}
-                      </span>
+                    {/* Content column */}
+                    <div className="lg:col-span-9 space-y-4">
+                      <h3 className="text-3xl md:text-4xl font-light text-[#2C2416] leading-tight group-hover:text-[#6B5D4F] group-hover:font-normal transition-all duration-500">
+                        {post.title}
+                      </h3>
+                      <p className="text-lg md:text-xl text-[#6B5D4F]/70 leading-relaxed font-light group-hover:text-[#6B5D4F]/80 transition-colors duration-500">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center gap-3 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span className="text-sm text-[#2C2416] tracking-wide link-underline">
+                          Leggi riflessione
+                        </span>
+                        <ArrowRight className="w-4 h-4 text-[#2C2416] group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
+                      {/* Location tag */}
+                      <div className="pt-2">
+                        <span className="text-xs text-[#6B5D4F]/50 italic tracking-wide">
+                          {post.location}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
 
           {/* Footer note */}
-          <div className="mt-24 pt-12 border-t border-[#D4A574]/10 max-w-3xl">
-            <p className="text-lg text-[#6B5D4F]/60 italic leading-relaxed">
-              Queste riflessioni sono il risultato di un percorso di crescita, durato molti anni, di sviluppo personale e professionale. 
-              Non sono tutorial o guide, solo pensieri su ciò che ho imparato lungo la strada e che sto imparando ogni giorno.
-              Sono qui per ispirare e crescere insieme a voi.
-            </p>
-          </div>
+          <ScrollReveal delay={400}>
+            <div className="mt-24 pt-12 border-t border-[#D4A574]/10 max-w-3xl">
+              <p className="text-lg text-[#6B5D4F]/60 italic leading-relaxed">
+                Queste riflessioni sono il risultato di un percorso di crescita, durato molti anni, di sviluppo personale e professionale. 
+                Non sono tutorial o guide, solo pensieri su ciò che ho imparato lungo la strada e che sto imparando ogni giorno.
+                Sono qui per ispirare e crescere insieme a voi.
+              </p>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
