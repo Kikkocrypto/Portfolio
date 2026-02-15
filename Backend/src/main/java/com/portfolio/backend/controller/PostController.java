@@ -10,6 +10,7 @@ import com.portfolio.backend.entity.PostTranslation;
 import com.portfolio.backend.service.PostService;
 import com.portfolio.backend.util.ApiErrorUtil;
 import com.portfolio.backend.util.SlugUtil;
+import com.portfolio.backend.util.XssSanitizer;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -88,8 +89,8 @@ public class PostController {
                 t.setPost(saved);
                 t.setLocale(tr.getLocale());
                 t.setSlug(trSlug);
-                t.setTitle(tr.getTitle());
-                t.setContent(tr.getContent());
+                t.setTitle(XssSanitizer.stripHtml(tr.getTitle()));
+                t.setContent(XssSanitizer.stripHtml(tr.getContent()));
                 postService.saveTranslation(t);
             }
         }
@@ -128,8 +129,8 @@ public class PostController {
                 String tSlug = resolveTranslationSlug(tr.getSlug(), tr.getTitle());
                 if (tSlug.isBlank()) tSlug = tr.getLocale();
                 t.setSlug(ensureTranslationSlugUnique(tSlug, tr.getLocale()));
-                t.setTitle(tr.getTitle());
-                t.setContent(tr.getContent());
+                t.setTitle(XssSanitizer.stripHtml(tr.getTitle()));
+                t.setContent(XssSanitizer.stripHtml(tr.getContent()));
                 toUpdate.getTranslations().add(t);
             }
         }
@@ -201,8 +202,8 @@ public class PostController {
         if (trSlug.isBlank()) trSlug = locale;
         trSlug = ensureTranslationSlugUnique(trSlug, locale, translationId);
         t.setSlug(trSlug);
-        t.setTitle(request.getTitle());
-        t.setContent(request.getContent());
+        t.setTitle(XssSanitizer.stripHtml(request.getTitle()));
+        t.setContent(XssSanitizer.stripHtml(request.getContent()));
         postService.saveTranslation(t);
         return ResponseEntity.ok(t);
     }
