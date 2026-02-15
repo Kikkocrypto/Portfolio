@@ -101,11 +101,11 @@ public class GlobalExceptionHandler {
 
     /**
      * Fallback per altre eccezioni non gestite: 500 con messaggio generico.
-     * Logga messaggio e stack trace completo per facilitare il debug.
+     * Logga solo tipo e messaggio (no stack trace) per evitare information disclosure nei log.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {
-        log.error("Errore 500 - eccezione non gestita: {} - {}", ex.getClass().getSimpleName(), ex.getMessage(), ex);
+        log.error("Errore 500 - eccezione non gestita: {} - {}", ex.getClass().getSimpleName(), ex.getMessage());
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Si è verificato un errore interno. Riprova più tardi.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);

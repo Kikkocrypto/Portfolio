@@ -121,14 +121,10 @@ public class PasswordResetService {
                          user.getUsername(), tokenExpirationMinutes);
             } catch (MessagingException e) {
                 log.error("Errore invio email reset password per utente: {}", user.getUsername(), e);
-                // Fallback a log (in dev può essere utile)
-                log.warn("Email fallita, token (dev only): {}", tokenValue);
             }
         } else {
-            // SVILUPPO: Log del token (NON in produzione con email abilitate!)
             log.info("Password reset token generato per utente: {} (scade tra {} minuti)", 
                      user.getUsername(), tokenExpirationMinutes);
-            log.debug("Reset token (dev only): {}", tokenValue);
         }
         
         return true;
