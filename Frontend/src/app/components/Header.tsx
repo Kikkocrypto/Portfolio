@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Menu, X } from 'lucide-react';
 
 export function Header() {
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isTop, setIsTop] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Chi sono', href: '#about' },
-    { label: 'Competenze', href: '#skills' },
-    { label: 'Progetti', href: '#projects' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'Contatti', href: '#contact' }
+    { labelKey: 'header.nav.about', href: '#about' },
+    { labelKey: 'header.nav.skills', href: '#skills' },
+    { labelKey: 'header.nav.projects', href: '#projects' },
+    { labelKey: 'header.nav.blog', href: '#blog' },
+    { labelKey: 'header.nav.contact', href: '#contact' }
   ];
 
   useEffect(() => {
@@ -75,21 +77,48 @@ export function Header() {
             DF
           </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item, idx) => (
+          {/* Desktop Navigation + Language switcher */}
+          <div className="hidden md:flex items-center gap-8">
+            <nav className="flex items-center gap-8">
+              {navItems.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`text-sm tracking-wider transition-all duration-300 relative group ${
+                    isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
+                  } hover:text-[#6B5D4F]`}
+                >
+                  {t(item.labelKey)}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4A574] group-hover:w-full transition-all duration-300 ease-out"></span>
+                </button>
+              ))}
+            </nav>
+            <div className="flex items-center gap-1 border-l border-[#D4A574]/20 pl-6">
               <button
-                key={idx}
-                onClick={() => handleNavClick(item.href)}
-                className={`text-sm tracking-wider transition-all duration-300 relative group ${
-                  isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
-                } hover:text-[#6B5D4F]`}
+                onClick={() => i18n.changeLanguage('it')}
+                className={`px-2 py-1 text-sm tracking-wider transition-colors ${i18n.language === 'it' ? 'text-[#2C2416] font-medium' : 'text-[#6B5D4F]/70 hover:text-[#6B5D4F]'}`}
+                aria-label="Italiano"
               >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-[#D4A574] group-hover:w-full transition-all duration-300 ease-out"></span>
+                IT
               </button>
-            ))}
-          </nav>
+              <span className="text-[#6B5D4F]/40">|</span>
+              <button
+                onClick={() => i18n.changeLanguage('en')}
+                className={`px-2 py-1 text-sm tracking-wider transition-colors ${i18n.language === 'en' ? 'text-[#2C2416] font-medium' : 'text-[#6B5D4F]/70 hover:text-[#6B5D4F]'}`}
+                aria-label="English"
+              >
+                EN
+              </button>
+              <span className="text-[#6B5D4F]/40">|</span>
+              <button
+                onClick={() => i18n.changeLanguage('es')}
+                className={`px-2 py-1 text-sm tracking-wider transition-colors ${i18n.language === 'es' ? 'text-[#2C2416] font-medium' : 'text-[#6B5D4F]/70 hover:text-[#6B5D4F]'}`}
+                aria-label="Español"
+              >
+                ES
+              </button>
+            </div>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -97,7 +126,7 @@ export function Header() {
             className={`md:hidden p-2 transition-all duration-300 ${
               isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
             } hover:text-[#6B5D4F]`}
-            aria-label="Apri/chiudi menu"
+            aria-label={t('header.menuAria')}
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -117,9 +146,30 @@ export function Header() {
               onClick={() => handleNavClick(item.href)}
               className="block w-full text-left px-6 py-4 text-[#2C2416] hover:text-[#6B5D4F] hover:bg-white/50 transition-all duration-300 tracking-wider text-sm border-b border-[#D4A574]/5 last:border-b-0"
             >
-              {item.label}
+              {t(item.labelKey)}
             </button>
           ))}
+          <div className="flex items-center gap-4 px-6 py-4 border-t border-[#D4A574]/10">
+            <span className="text-xs text-[#6B5D4F]/60 tracking-wider uppercase">Idioma</span>
+            <button
+              onClick={() => { i18n.changeLanguage('it'); setIsMobileMenuOpen(false); }}
+              className={`px-3 py-1.5 text-sm ${i18n.language === 'it' ? 'text-[#2C2416] font-medium bg-white/50' : 'text-[#6B5D4F]'}`}
+            >
+              IT
+            </button>
+            <button
+              onClick={() => { i18n.changeLanguage('en'); setIsMobileMenuOpen(false); }}
+              className={`px-3 py-1.5 text-sm ${i18n.language === 'en' ? 'text-[#2C2416] font-medium bg-white/50' : 'text-[#6B5D4F]'}`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => { i18n.changeLanguage('es'); setIsMobileMenuOpen(false); }}
+              className={`px-3 py-1.5 text-sm ${i18n.language === 'es' ? 'text-[#2C2416] font-medium bg-white/50' : 'text-[#6B5D4F]'}`}
+            >
+              ES
+            </button>
+          </div>
         </nav>
       </div>
     </header>

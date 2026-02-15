@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="bg-[#2C2416] text-[#FAF9F6]/60 py-16 border-t border-[#FAF9F6]/5 relative">
       {/* Texture */}
@@ -16,39 +18,39 @@ export function Footer() {
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             {/* Brand */}
             <div>
-              <h3 className="text-[#FAF9F6] font-light text-2xl mb-4 tracking-wide">Damiano Francesco</h3>
+              <h3 className="text-[#FAF9F6] font-light text-2xl mb-4 tracking-wide">{t('footer.brand')}</h3>
               <p className="text-[#FAF9F6]/50 leading-relaxed">
-                Sviluppatore full-stack: esperienze digitali curate, ispirate da viaggi e prospettive globali.
+                {t('footer.tagline')}
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-[#FAF9F6] font-normal mb-6 tracking-wide">Naviga</h4>
+              <h4 className="text-[#FAF9F6] font-normal mb-6 tracking-wide">{t('footer.navigate')}</h4>
               <ul className="space-y-3">
                 <li>
                   <a href="#about" className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors tracking-wide">
-                    Chi sono
+                    {t('footer.navAbout')}
                   </a>
                 </li>
                 <li>
                   <a href="#skills" className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors tracking-wide">
-                    Competenze
+                    {t('footer.navSkills')}
                   </a>
                 </li>
                 <li>
                   <a href="#projects" className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors tracking-wide">
-                    Progetti
+                    {t('footer.navProjects')}
                   </a>
                 </li>
                 <li>
                   <a href="#blog" className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors tracking-wide">
-                    Blog
+                    {t('footer.navBlog')}
                   </a>
                 </li>
                 <li>
                   <a href="#contact" className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors tracking-wide">
-                    Contatti
+                    {t('footer.navContact')}
                   </a>
                 </li>
               </ul>
@@ -56,7 +58,7 @@ export function Footer() {
 
             {/* Social */}
             <div>
-              <h4 className="text-[#FAF9F6] font-normal mb-6 tracking-wide">Connect</h4>
+              <h4 className="text-[#FAF9F6] font-normal mb-6 tracking-wide">{t('footer.connect')}</h4>
               <div className="flex gap-3">
                 <a 
                   href="https://github.com" 
@@ -90,10 +92,7 @@ export function Footer() {
           {/* Bottom */}
           <div className="pt-8 border-t border-[#FAF9F6]/5 text-center space-y-2">
             <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
-              © {new Date().getFullYear()} Damiano Francesco. Realizzato con cura.
-            </p>
-            <p className="text-xs text-[#FAF9F6]/30 tracking-wide">
-              <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/22801/docker" className="hover:text-[#FAF9F6]/50 transition-colors">Docker</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" className="hover:text-[#FAF9F6]/50 transition-colors">Icons8</a>
+              {t('footer.copyright', { year: new Date().getFullYear() })}
             </p>
           </div>
         </div>

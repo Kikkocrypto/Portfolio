@@ -1,60 +1,14 @@
-import { Code, Database, Layers } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Code, Container, Database, Layers } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
-import dockerIcon from '@/assets/icons8-docker.svg';
 
-/** Icona Docker da assets (balena con container, nero) */
-function DockerIcon({ className }: { className?: string }) {
-  return <img src={dockerIcon} alt="" className={className} aria-hidden />;
-}
+const categoryIcons = [Code, Layers, Database, Container];
 
 export function Skills() {
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      icon: Code,
-      skills: [
-        'React',
-        'TypeScript',
-        'HTML/CSS',
-        'JavaScript',
-        'Responsive Design'
-      ]
-    },
-    {
-      title: 'Backend',
-      icon: Layers,
-      skills: [
-        'Spring Boot',
-        'RESTful APIs',
-        'Authenticazione',
-        'Sicurezza',
-        'API Design',
-        'Database Design',
-        'SQL'
-      ]
-    },
-    {
-      title: 'Database',
-      icon: Database,
-      skills: [
-        'PostgreSQL',
-        'MySQL',
-        'SQLite',
-        'pgAdmin'
-      ]
-    },
-    {
-      title: 'Strumenti e DevOps',
-      icon: DockerIcon,
-      skills: [
-        'Git & GitHub',
-        'Docker',
-        'CI/CD',
-        'Vite'
-      ]
-    }
-  ];
+  const { t } = useTranslation();
+  const categoriesData = t('skills.categories', { returnObjects: true }) as { title: string; skills: string[] }[];
+  const skillCategories = categoriesData.map((cat, i) => ({ ...cat, icon: categoryIcons[i] }));
 
   return (
     <section id="skills" className="py-24 md:py-32 bg-[#FAF9F6] relative">
@@ -73,10 +27,10 @@ export function Skills() {
             <div className="mb-20 max-w-3xl">
               <div className="inline-block h-px w-16 bg-[#8B9DAF] mb-6"></div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#2C2416] mb-6 leading-tight">
-                Competenze tecniche
+                {t('skills.title')}
               </h2>
               <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-                Un set di strumenti per soluzioni complete
+                {t('skills.subtitle')}
               </p>
             </div>
           </ScrollReveal>
@@ -90,7 +44,7 @@ export function Skills() {
                   <div className="group bg-white border border-[#D4A574]/10 p-8 md:p-10 hover:border-[#D4A574]/30 hover:shadow-sm transition-all duration-500 hover-lift">
                     <div className="flex items-center gap-4 mb-8">
                       <div className="w-11 h-11 border border-[#8B9DAF]/20 flex items-center justify-center group-hover:border-[#8B9DAF]/40 transition-colors duration-500">
-                        <Icon className={`w-5 h-5 group-hover:scale-110 transition-transform duration-500 ${category.title === 'Strumenti e DevOps' ? 'text-[#2C2416]' : 'text-[#6B5D4F]'}`} />
+                        <Icon className="w-5 h-5 text-[#6B5D4F] group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <h3 className="text-2xl font-light text-[#2C2416] tracking-wide">
                         {category.title}

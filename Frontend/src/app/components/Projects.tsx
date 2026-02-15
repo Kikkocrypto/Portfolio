@@ -1,3 +1,33 @@
+/**
+ * PROGETTI – Linee guida per aggiungere progetti
+ * -----------------------------------------------
+ *
+ * 1) PROGETTO IN EVIDENZA (uno solo, in alto)
+ *    Modifica l’oggetto `featuredProject` sotto:
+ *    - title: nome del progetto
+ *    - subtitle: riga sotto il titolo (es. "Applicazione web full-stack per...")
+ *    - description: paragrafo principale
+ *    - challenge: testo della sezione "Sfida"
+ *    - approach: array di stringhe (punti elenco "Approccio")
+ *    - technologies: array di stringhe (tag tecnologie)
+ *    - image: URL o import dell’immagine (es. new URL('../../assets/tua-foto.png', import.meta.url).href)
+ *    - github: link al repo
+ *    - demo: link al sito/demo
+ *    - year: anno o label (es. "2026 - tesi")
+ *
+ * 2) ALTRI PROGETTI (lista sotto)
+ *    Aggiungi un nuovo oggetto nell’array `additionalProjects` con:
+ *    - title: nome
+ *    - description: breve descrizione
+ *    - tags: array di stringhe (tecnologie)
+ *    - github: link (usa "#" se non hai repo)
+ *    - demo: link (usa "#" se non hai demo)
+ *
+ * Per un nuovo progetto in evidenza al posto di quello attuale, sostituisci tutto
+ * l’oggetto `featuredProject` e aggiorna l’import dell’immagine in cima al file.
+ */
+
+import { useTranslation, Trans } from 'react-i18next';
 import { ExternalLink, Github, ArrowUpRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useRef } from 'react';
@@ -8,34 +38,23 @@ import { DURATION } from '../../constants/motion';
 const projectImage = new URL('../../assets/Screenshot 2026-02-14 172842.png', import.meta.url).href;
 
 export function Projects() {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const scrollProgress = useScrollProgress(sectionRef);
 
+  const featuredData = t('projects.featured', { returnObjects: true }) as { title: string; subtitle: string; description: string; challenge: string; approach: string[]; technologies: string[]; year: string };
   const featuredProject = {
-    title: 'Piattaforma di gestione pazienti',
-    subtitle: 'Applicazione web full-stack per la gestione dei pazienti, dottori e delle visite mediche.',
-    description: 'Applicazione sviluppata come oggetto della tesi di laurea, per la gestione di una clinica privata, con una interfaccia utente moderna, intuitiva, responsive e una gestione efficiente dei pazienti, dottori e delle visite.',
-    challenge: 'La sfida è stata quella di creare un\'applicazione che sia sia facile da usare per pazienti e dottori non tecnici, il tutto, in pochi giorni senza compromettere la qualità. A causa delle tempistiche, non ho potuto integrare un sistema di sicurezza basato su token JWT e gestione dei ruoli, ma un sistema di autenticazione basato su header.',
-    approach: [
-      'Interfaccia utente moderna e intuitiva',
-      'Gestione efficiente dei pazienti e delle visite',
-      'Sistema di autenticazione basato su header',
-      'Sistema semplice di gestione dei ruoli e delle autorizzazioni',
-    ],
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'pgAdmin', 'Spring Boot', 'Java', 'Docker', 'RESTful API', 'Deployment'],
+    ...featuredData,
     image: projectImage,
     github: 'https://github.com/your-username/your-project-name',
     demo: 'https://dottori-dolori.xyz/',
-    year: '2026 - tesi'
   };
 
-  const additionalWork = {
-    title: 'Task Manager',
-    description: 'Real-time collaboration tool inspired by the fluid communication styles I noticed in remote teams across Europe.',
-    tags: ['Next.js', 'TypeScript', 'MongoDB'],
-    github: 'https://github.com',
-    demo: 'https://example.com'
-  };
+  const additionalData = t('projects.additional', { returnObjects: true }) as { title: string; description: string; tags: string[] }[];
+  const additionalProjects = additionalData.map((p, i) => ({
+    ...p,
+    github: i === 0 ? 'https://github.com/Kikkocrypto/Wellbook-APP' : 'https://github.com/Kikkocrypto/CRUD_application_PCLP2pj',
+  }));
 
   return (
     <section 
@@ -68,10 +87,10 @@ export function Projects() {
             <div className="mb-24 md:mb-32 max-w-3xl">
               <div className="inline-block h-px w-20 bg-[#D4A574] mb-8"></div>
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2C2416] mb-8 leading-[1.1]">
-                Progetti in evidenza
+                {t('projects.sectionTitle')}
               </h2>
               <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-                Una selezione di progetti realizzati con intenzione, ispirati da prospettive diverse
+                {t('projects.sectionSubtitle')}
               </p>
             </div>
           </ScrollReveal>
@@ -133,7 +152,7 @@ export function Projects() {
                   </div>
                   <div>
                     <h4 className="text-sm tracking-[0.2em] text-[#6B5D4F]/60 mb-4 uppercase">
-                      Approccio
+                      {t('projects.approach')}
                     </h4>
                     <ul className="space-y-3">
                       {featuredProject.approach.map((item, idx) => (
@@ -192,65 +211,65 @@ export function Projects() {
           <ScrollReveal delay={200}>
             <div className="max-w-4xl">
               <h3 className="text-2xl md:text-3xl font-light text-[#2C2416] mb-12 tracking-wide">
-                Altri progetti
+                {t('projects.otherProjects')}
               </h3>
               
-              <article className="group border-t border-[#D4A574]/10 py-10 hover:border-[#D4A574]/30 transition-all duration-500">
-                <div className="grid md:grid-cols-12 gap-8 items-start">
-                  <div className="md:col-span-8">
-                    <h4 className="text-2xl font-light text-[#2C2416] mb-4 group-hover:text-[#6B5D4F] transition-colors duration-500">
-                      {additionalWork.title}
-                    </h4>
-                    <p className="text-lg text-[#6B5D4F]/70 leading-relaxed font-light mb-6">
-                      {additionalWork.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2.5">
-                      {additionalWork.tags.map((tag, idx) => (
-                        <span 
-                          key={idx}
-                          className="text-sm text-[#6B5D4F]/60 tracking-wide"
+              {additionalProjects.map((project, idx) => (
+                <article key={idx} className="group border-t border-[#D4A574]/10 py-10 hover:border-[#D4A574]/30 transition-all duration-500">
+                  <div className="grid md:grid-cols-12 gap-8 items-start">
+                    <div className="md:col-span-8">
+                      <h4 className="text-2xl font-light text-[#2C2416] mb-4 group-hover:text-[#6B5D4F] transition-colors duration-500">
+                        {project.title}
+                      </h4>
+                      <p className="text-lg text-[#6B5D4F]/70 leading-relaxed font-light mb-6">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2.5">
+                        {project.tags.map((tag, tagIdx) => (
+                          <span 
+                            key={tagIdx}
+                            className="text-sm text-[#6B5D4F]/60 tracking-wide"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="md:col-span-4 flex md:justify-end items-start gap-4">
+                      <a 
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
+                        aria-label={t('projects.ariaViewCode')}
+                      >
+                        <Github className="w-5 h-5" />
+                      </a>
+                      {'demo' in project && project.demo && (
+                        <a 
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
+                          aria-label={t('projects.ariaVisitSite')}
                         >
-                          {tag}
-                        </span>
-                      ))}
+                          <ArrowUpRight className="w-5 h-5" />
+                        </a>
+                      )}
                     </div>
                   </div>
-                  <div className="md:col-span-4 flex md:justify-end items-start gap-4">
-                    <a 
-                      href={additionalWork.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
-                      aria-label="Vedi codice"
-                    >
-                      <Github className="w-5 h-5" />
-                    </a>
-                    <a 
-                      href={additionalWork.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
-                      aria-label="Visita il sito"
-                    >
-                      <ArrowUpRight className="w-5 h-5" />
-                    </a>
-                  </div>
-                </div>
-              </article>
+                </article>
+              ))}
 
               {/* Footer note */}
               <div className="mt-20 pt-12 border-t border-[#D4A574]/10">
                 <p className="text-[#6B5D4F]/60 italic leading-relaxed max-w-2xl">
-                  Altri progetti e contributi open source su{' '}
-                  <a 
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#2C2416] hover:text-[#6B5D4F] transition-colors duration-300 link-underline"
-                  >
-                    GitHub
-                  </a>
-                  . In cerca di nuove collaborazioni per esperienze digitali significative.
+                  <Trans
+                    i18nKey="projects.footerNote"
+                    components={{
+                      0: <a href="https://github.com/Kikkocrypto" target="_blank" rel="noopener noreferrer" className="text-[#2C2416] hover:text-[#6B5D4F] transition-colors duration-300 link-underline" />
+                    }}
+                  />
                 </p>
               </div>
             </div>

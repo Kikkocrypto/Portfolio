@@ -1,56 +1,35 @@
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { Code, Zap, Rocket, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER, DURATION } from '../../constants/motion';
 
 type BoxView = 'esperienza' | 'formazione';
 
-const timelineItems: { year: string; label: string; detail?: string }[] = [
-  { year: '2019', label: 'Diploma', detail: 'Diploma di istruzione tecnica, indirizzo chimica e biologia.' },
-  { year: '2020', label: 'Lavori precari', detail: 'Lavori precari come aiuto cuoco e in un calzaturificio.' },
-  { year: '2021', label: 'Lavori precari · Blockchain', detail: 'Proseguono le esperienze come aiuto cuoco e in calzaturificio. Approfondimento della tecnologia Blockchain.' },
-  { year: '2022', label: 'Percorso ufficiale · primi veri passi in SEO e Informatica', detail: 'Inizio del percorso ufficiale: certificazioni SEO e ruolo da community manager per i server Discord. Approfondimento degli smart contracts e dell\'informatica.' },
-  { year: '2023', label: 'Partenza seria · Uni Pegaso e corso Full Stack Bit Spa', detail: 'Anno della mia partenza seria nell\'informatica: iscrizione all\'Università Pegaso (Informatica per le aziende digitali) e corso Full Stack presso Bit Spa con focus sulle seguenti Tecnologie: Spring Boot, Kubernetes, Docker, Angular.' },
-  { year: '2024', label: 'Opentusk Hackathon (Dic 2024)', detail: 'Collaborato con un team per sviluppare un MVP in 10 ore, affrontando problemi e tempistiche ristrette. Sviluppo di un bot Telegram per la registrazione istantanea ad eventi in zona. Tecnologie: Telegram Bot API (RESTful), Python, BotFather.' },
-  { year: '2025', label: 'Erasmus Brașov (Feb-Giu) · Sviluppatore Full-Stack LML', detail: 'Cinque mesi a Brașov, tra i Carpazi: l\'Erasmus che mi ha cambiato la vita. Corsi di Ingegneria del software e Programmazione (C++, Java, .NET, C#), ma soprattutto persone, viaggi e quella spinta a crescere che non avevo mai sentito prima. Soft e hard skill che porto ancora con me. Da Settembre: Sviluppatore Full-Stack presso LML technologies.' },
-  { year: '2026', label: 'In corso', detail: 'Completamento percorso universitario e voglia di crescere internazionalmente.' },
-];
+const highlightIcons = [Code, Zap, Rocket];
 
 export function About() {
+  const { t } = useTranslation();
   const [boxView, setBoxView] = useState<BoxView>('esperienza');
   const [openTimelineIndex, setOpenTimelineIndex] = useState<number | null>(null);
 
+  const timelineItems = t('about.timelineItems', { returnObjects: true }) as { year: string; label: string; detail?: string }[];
   const formazione = {
-    title: 'Formazione',
+    title: t('about.formazioneTitle'),
     items: [
-      {
-        title: 'Laurea in Informatica per le aziende digitali',
-        subtitle: 'Università telematica Pegaso',
-        period: '2023 - 2026',
-      },
-      {
-        title: 'Tesi',
-        subtitle: "Sviluppo di un'applicazione full-stack per la gestione di cliniche private",
-        note: '110/110 con lode',
-      },
+      { title: t('about.formazione.item1Title'), subtitle: t('about.formazione.item1Subtitle'), period: t('about.formazione.item1Period') },
+      { title: t('about.formazione.item2Title'), subtitle: t('about.formazione.item2Subtitle'), note: t('about.formazione.item2Note') },
     ],
   };
-
   const esperienza = {
-    title: 'Esperienza tecnica',
+    title: t('about.esperienzaTitle'),
     items: [
-      {
-        title: 'Sviluppatore Full-Stack',
-        azienda: 'LML technologies SRL',
-        subtitle: 'Progetti AI driven',
-        period: '2025 - In corso',
-      },
-      {
-        title: 'Descrizione',
-        content: 'Sviluppo di applicazioni web full-stack, interfacce curate e soluzioni su misura per il settore AI, seguendo metodologia agile e sviluppo top-bottom.',
-      },
+      { title: t('about.esperienza.item1Title'), azienda: t('about.esperienza.item1Azienda'), subtitle: t('about.esperienza.item1Subtitle'), period: t('about.esperienza.item1Period') },
+      { title: t('about.esperienza.item2Title'), content: t('about.esperienza.item2Content') },
     ],
   };
+  const highlightsData = t('about.highlights', { returnObjects: true }) as { title: string; description: string }[];
+  const highlights = highlightsData.map((item, i) => ({ ...item, icon: highlightIcons[i] }));
 
   const cycleView = (direction: 'prev' | 'next') => {
     setBoxView((current) => {
@@ -59,23 +38,11 @@ export function About() {
     });
   };
 
-  const highlights = [
-    {
-      icon: Code,
-      title: 'Codice curato',
-      description: 'Soluzioni scalabili e manutenibili, pensate per avere impatto nel lungo periodo.'
-    },
-    {
-      icon: Zap,
-      title: 'Sicurezza',
-      description: 'Protezione dei dati e delle informazioni sono il mio focus principale.'
-    },
-    {
-      icon: Rocket,
-      title: 'Velocità e lancio sicuro',
-      description: 'Sviluppo rapido con agenti AI e rilascio di soluzioni sicure in tempi brevi, senza compromettere qualità e protezione dei dati.'
-    }
-  ];
+  const getTimelineAriaLabel = (item: { year: string }, isOpen: boolean) => {
+    if (isOpen) return t('about.closeDetail');
+    const suffix = item.year === '2023' ? t('about.detail2023') : item.year === '2025' ? t('about.detail2025') : '';
+    return t('about.detailYear', { year: item.year }) + suffix;
+  };
 
   return (
     <section id="about" className="py-24 md:py-32 bg-white relative">
@@ -94,10 +61,10 @@ export function About() {
             <div className="mb-20 max-w-3xl">
               <div className="inline-block h-px w-16 bg-[#D4A574] mb-6"></div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#2C2416] mb-6 leading-tight">
-                Chi sono
+                {t('about.title')}
               </h2>
               <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-                Prodotti digitali con un respiro internazionale
+                {t('about.subtitle')}
               </p>
             </div>
           </ScrollReveal>
@@ -107,16 +74,13 @@ export function About() {
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
               <div className="lg:col-span-7 space-y-6 text-lg text-[#3D3122]/80 leading-relaxed font-light">
                 <p>
-                  Mi chiamo Damiano Francesco e sono uno <strong className="font-normal text-[#2C2416]">sviluppatore full-stack</strong> con 
-                  la passione per esperienze digitali e relazioni interpersonali. Il mio percorso nell'informatica si intreccia 
-                  con viaggi e esplorazione culturale: ogni luogo mi insegna a guardare i problemi 
-                  da angolazioni diverse, con una mentalità aperta e curiosa.
+                  <Trans i18nKey="about.intro1" components={{ strong: <strong className="font-normal text-[#2C2416]" /> }} />
                 </p>
                 <p>
-                  Preferisco avere sempre un approccio analitico con un tocco di creatività per affrontare le sfide. Cercando sempre di migliorare sia me che i miei progetti.
+                  {t('about.intro2')}
                 </p>
                 <p>
-                  Quando non mi occupo di sviluppare applicazioni full-stack, mi trovo ad esplorare il mondo e a creare nuove connessioni internazionali.
+                  {t('about.intro3')}
                 </p>
               </div>
 
@@ -128,7 +92,7 @@ export function About() {
                       type="button"
                       onClick={() => cycleView('prev')}
                       className="p-2 cursor-pointer text-[#6B5D4F]/60 hover:text-[#2C2416] hover:bg-white/50 rounded transition-colors duration-300"
-                      aria-label={boxView === 'esperienza' ? 'Vedi formazione' : 'Vedi esperienza'}
+                      aria-label={boxView === 'esperienza' ? t('about.ariaViewFormazione') : t('about.ariaViewEsperienza')}
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -139,7 +103,7 @@ export function About() {
                       type="button"
                       onClick={() => cycleView('next')}
                       className="p-2 cursor-pointer text-[#6B5D4F]/60 hover:text-[#2C2416] hover:bg-white/50 rounded transition-colors duration-300"
-                      aria-label={boxView === 'formazione' ? 'Vedi esperienza' : 'Vedi formazione'}
+                      aria-label={boxView === 'formazione' ? t('about.ariaViewEsperienza') : t('about.ariaViewFormazione')}
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>
@@ -206,13 +170,13 @@ export function About() {
             <div className="mb-20 w-full">
               <div className="inline-block h-px w-16 bg-[#D4A574] mb-6" />
               <h3 className="text-3xl md:text-4xl font-light text-[#2C2416] mb-2 tracking-tight">
-                Il mio percorso
+                {t('about.timelineTitle')}
               </h3>
               <p className="text-lg text-[#6B5D4F]/70 font-light mb-2 max-w-2xl">
-                Dal diploma a oggi.
+                {t('about.timelineSubtitle')}
               </p>
               <p className="text-sm text-[#6B5D4F]/45 font-light mb-10 max-w-2xl" aria-hidden>
-                Clicca sui pallini per i dettagli
+                {t('about.timelineHint')}
               </p>
 
               {/* Mobile: timeline verticale semplice */}
@@ -283,7 +247,7 @@ export function About() {
                                 className={`w-5 h-5 rounded-full relative z-10 timeline-dot timeline-dot-hint animate-scale-in transition-transform duration-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 cursor-pointer ${item.year === '2023' ? 'bg-[#E6B800] focus-visible:ring-[#E6B800]/50 timeline-dot-milestone' : item.year === '2025' ? 'timeline-dot-romania focus-visible:ring-[#CE1126]/50 timeline-dot-erasmus' : 'bg-[#D4A574] focus-visible:ring-[#D4A574]/50'}`}
                                 style={{ animationDuration: `${DURATION.fast}ms`, animationFillMode: 'both' }}
                                 aria-expanded={isOpen}
-                                aria-label={isOpen ? 'Chiudi dettaglio' : `Dettaglio ${item.year}${item.year === '2023' ? ' — Partenza seria nell\'informatica' : item.year === '2025' ? ' — Erasmus, esperienza che mi ha cambiato la vita' : ''}`}
+                                aria-label={getTimelineAriaLabel(item, isOpen)}
                               />
                             </div>
                             {/* Ramo destro: linea dal centro, contenuto più a destra */}
@@ -320,10 +284,10 @@ export function About() {
           <div className="mt-20 md:mt-24">
             <div className="inline-block h-px w-16 bg-[#D4A574] mb-6" />
             <h3 className="text-3xl md:text-4xl font-light text-[#2C2416] mb-2 tracking-tight">
-              Cosa mi contraddistingue
+              {t('about.highlightsTitle')}
             </h3>
             <p className="text-lg text-[#6B5D4F]/70 font-light mb-10 max-w-2xl">
-              I valori che guido nel mio lavoro quotidiano.
+              {t('about.highlightsSubtitle')}
             </p>
             <div className="grid md:grid-cols-3 gap-8 md:items-stretch">
             {highlights.map((item, index) => {

@@ -1,0 +1,183 @@
+{
+  "header": {
+    "menuAria": "Apri/chiudi menu",
+    "nav": {
+      "about": "Chi sono",
+      "skills": "Competenze",
+      "projects": "Progetti",
+      "blog": "Blog",
+      "contact": "Contatti"
+    }
+  },
+  "hero": {
+    "badge": "Aperto a nuove opportunità",
+    "title1": "Creo esperienze",
+    "title2": "digitali",
+    "title3": "senza confini",
+    "subtitle": "Sviluppatore full-stack: interfacce curate, ispirate da culture e connessioni in tutto il mondo.",
+    "ctaProjects": "Vedi progetti",
+    "ctaContact": "Scrivimi",
+    "explore": "Esplora",
+    "ariaScroll": "Scorri alla sezione Chi sono",
+    "ariaGitHub": "GitHub",
+    "ariaLinkedIn": "LinkedIn",
+    "ariaEmail": "Email"
+  },
+  "about": {
+    "title": "Chi sono",
+    "subtitle": "Prodotti digitali con un respiro internazionale",
+    "intro1": "Mi chiamo Damiano Francesco e sono uno <strong>sviluppatore full-stack</strong> con la passione per esperienze digitali e relazioni interpersonali. Il mio percorso nell'informatica si intreccia con viaggi e esplorazione culturale: ogni luogo mi insegna a guardare i problemi da angolazioni diverse, con una mentalità aperta e curiosa.",
+    "intro2": "Preferisco avere sempre un approccio analitico con un tocco di creatività per affrontare le sfide. Cercando sempre di migliorare sia me che i miei progetti.",
+    "intro3": "Quando non mi occupo di sviluppare applicazioni full-stack, mi trovo ad esplorare il mondo e a creare nuove connessioni internazionali.",
+    "formazioneTitle": "Formazione",
+    "esperienzaTitle": "Esperienza tecnica",
+    "ariaViewFormazione": "Vedi formazione",
+    "ariaViewEsperienza": "Vedi esperienza",
+    "formazione": {
+      "item1Title": "Laurea in Informatica per le aziende digitali",
+      "item1Subtitle": "Università telematica Pegaso",
+      "item1Period": "2023 - 2026",
+      "item2Title": "Tesi",
+      "item2Subtitle": "Sviluppo di un'applicazione full-stack per la gestione di cliniche private",
+      "item2Note": "110/110 con lode"
+    },
+    "esperienza": {
+      "item1Title": "Sviluppatore Full-Stack",
+      "item1Azienda": "LML technologies SRL",
+      "item1Subtitle": "Progetti AI driven",
+      "item1Period": "2025 - In corso",
+      "item2Title": "Descrizione",
+      "item2Content": "Sviluppo di applicazioni web full-stack, interfacce curate e soluzioni su misura per il settore AI, seguendo metodologia agile e sviluppo top-bottom."
+    },
+    "timelineTitle": "Il mio percorso",
+    "timelineSubtitle": "Dal diploma a oggi.",
+    "timelineHint": "Clicca sui pallini per i dettagli",
+    "closeDetail": "Chiudi dettaglio",
+    "detailYear": "Dettaglio {{year}}",
+    "detail2023": " — Partenza seria nell'informatica",
+    "detail2025": " — Erasmus, esperienza che mi ha cambiato la vita",
+    "timelineItems": [
+      { "year": "2019", "label": "Diploma", "detail": "Diploma di istruzione tecnica, indirizzo chimica e biologia." },
+      { "year": "2020", "label": "Lavori precari", "detail": "Lavori precari come aiuto cuoco e in un calzaturificio." },
+      { "year": "2021", "label": "Lavori precari · Blockchain", "detail": "Proseguono le esperienze come aiuto cuoco e in calzaturificio. Approfondimento della tecnologia Blockchain." },
+      { "year": "2022", "label": "Percorso ufficiale · primi veri passi in SEO e Informatica", "detail": "Inizio del percorso ufficiale: certificazioni SEO e ruolo da community manager per i server Discord. Approfondimento degli smart contracts e dell'informatica." },
+      { "year": "2023", "label": "Partenza seria · Uni Pegaso e corso Full Stack Bit Spa", "detail": "Anno della mia partenza seria nell'informatica: iscrizione all'Università Pegaso (Informatica per le aziende digitali) e corso Full Stack presso Bit Spa con focus sulle seguenti Tecnologie: Spring Boot, Kubernetes, Docker, Angular." },
+      { "year": "2024", "label": "Opentusk Hackathon (Dic 2024)", "detail": "Collaborato con un team per sviluppare un MVP in 10 ore, affrontando problemi e tempistiche ristrette. Sviluppo di un bot Telegram per la registrazione istantanea ad eventi in zona. Tecnologie: Telegram Bot API (RESTful), Python, BotFather." },
+      { "year": "2025", "label": "Erasmus Brașov (Feb-Giu) · Sviluppatore Full-Stack LML", "detail": "Cinque mesi a Brașov, tra i Carpazi: l'Erasmus che mi ha cambiato la vita. Corsi di Ingegneria del software e Programmazione (C++, Java, .NET, C#), ma soprattutto persone, viaggi e quella spinta a crescere che non avevo mai sentito prima. Soft e hard skill che porto ancora con me. Da Settembre: Sviluppatore Full-Stack presso LML technologies." },
+      { "year": "2026", "label": "In corso", "detail": "Completamento percorso universitario e voglia di crescere internazionalmente." }
+    ],
+    "highlightsTitle": "Cosa mi contraddistingue",
+    "highlightsSubtitle": "I valori che guido nel mio lavoro quotidiano.",
+    "highlights": [
+      { "title": "Codice curato", "description": "Soluzioni scalabili e manutenibili, pensate per avere impatto nel lungo periodo." },
+      { "title": "Sicurezza", "description": "Protezione dei dati e delle informazioni sono il mio focus principale." },
+      { "title": "Velocità e lancio sicuro", "description": "Sviluppo rapido con agenti AI e rilascio di soluzioni sicure in tempi brevi, senza compromettere qualità e protezione dei dati." }
+    ]
+  },
+  "skills": {
+    "title": "Competenze tecniche",
+    "subtitle": "Un set di strumenti per soluzioni complete",
+    "categories": [
+      { "title": "Frontend", "skills": ["React", "TypeScript", "HTML/CSS", "JavaScript", "Responsive Design"] },
+      { "title": "Backend", "skills": ["Spring Boot", "RESTful APIs", "Authenticazione", "Sicurezza", "API Design", "Database Design", "SQL"] },
+      { "title": "Database", "skills": ["PostgreSQL", "MySQL", "SQLite", "pgAdmin"] },
+      { "title": "Strumenti e DevOps", "skills": ["Git & GitHub", "Docker", "CI/CD", "Vite"] }
+    ]
+  },
+  "projects": {
+    "sectionTitle": "Progetti in evidenza",
+    "sectionSubtitle": "Una selezione di progetti realizzati con intenzione, ispirati da prospettive diverse",
+    "challenge": "Sfida",
+    "approach": "Approccio",
+    "viewCode": "Vedi codice",
+    "visitSite": "Vai al sito",
+    "otherProjects": "Altri progetti",
+    "footerNote": "Altri progetti su <0>GitHub</0>. In cerca di nuove collaborazioni per esperienze digitali significative.",
+    "ariaViewCode": "Vedi codice",
+    "ariaVisitSite": "Visita il sito",
+    "featured": {
+      "title": "Piattaforma di gestione pazienti",
+      "subtitle": "Applicazione web full-stack per la gestione dei pazienti, dottori e delle visite mediche.",
+      "description": "Applicazione sviluppata come oggetto della tesi di laurea, per la gestione di una clinica privata, con una interfaccia utente moderna, intuitiva, responsive e una gestione efficiente dei pazienti, dottori e delle visite.",
+      "challenge": "La sfida è stata quella di creare un'applicazione che sia sia facile da usare per pazienti e dottori non tecnici, il tutto, in pochi giorni senza compromettere la qualità. A causa delle tempistiche, non ho potuto integrare un sistema di sicurezza basato su token JWT e gestione dei ruoli, ma un sistema di autenticazione basato su header.",
+      "approach": [
+        "Interfaccia utente moderna e intuitiva",
+        "Deployment e CI/CD",
+        "Gestione efficiente dei pazienti e delle visite",
+        "Sistema di autenticazione basato su header",
+        "Sistema semplice di gestione dei ruoli e delle autorizzazioni"
+      ],
+      "technologies": ["React", "Node.js", "PostgreSQL", "pgAdmin", "Spring Boot", "Java", "Docker", "RESTful API", "Deployment"],
+      "year": "2026 - tesi"
+    },
+    "additional": [
+      { "title": "App di Gestione prenotazioni", "description": "Applicazione mobile per la gestione delle prenotazioni di un pozzo artesiano, utile ad esplorare lo sviluppo di un'applicazione mobile con Kotlin e Android Studio", "tags": ["Kotlin", "Android Studio", "SQLite"] },
+      { "title": "App di gestione studenti - Erasmus", "description": "Applicazione desktop per la gestione degli studenti durante la mia esperienza Erasmus. In questo progetto ho potuto esplorare diversi tipi di database SQL e linguaggi di programmazione.", "tags": [".NET", "Windows Forms", "MySQL"] }
+    ]
+  },
+  "blog": {
+    "title": "Riflessioni",
+    "subtitle": "Cosa ho imparato tra codice e viaggi, caffè e momenti di quiete",
+    "readReflection": "Leggi riflessione",
+    "backToReflections": "Torna alle riflessioni",
+    "readOtherReflections": "Leggi altre riflessioni",
+    "readTimeLabel": "read",
+    "footerNote": "Queste riflessioni sono il risultato di un percorso di crescita, durato molti anni, di sviluppo personale e professionale. Non sono tutorial o guide, solo pensieri su ciò che ho imparato lungo la strada e che sto imparando ogni giorno. Sono qui per ispirare e crescere insieme a voi.",
+    "posts": [
+      {
+        "title": "Imparare a programmare come una lingua",
+        "excerpt": "Riconoscimento di pattern, immersione e i parallelismi inaspettati tra JavaScript e l'italiano parlato a Roma.",
+        "reflection": "L'estate scorsa ho passato tre settimane a Roma. Non in un'aula, ma tra mercati, bar e vicoli: imparando l'italiano come si fa quando non hai scelta e devi parlarlo. All'inizio ogni frase suonava goffa. Poi, a poco a poco, sono emersi i pattern. Il ritmo per chiedere indicazioni. La cadenza per ordinare un caffè. Le piccole vittorie quando capivi ed eri capito.\n\nImparare a programmare mi è sembrato molto simile.\n\nQuando ho iniziato con JavaScript, cercavo di memorizzare la sintassi. Leggevo la documentazione come un manuale. Ma la vera fluidità è arrivata quando ho smesso di \"tradurre\" in testa e ho iniziato a pensare in codice. Quando ho smesso di chiedermi \"come si dice questo?\" e ho iniziato a riconoscere i pattern che avevo già visto.\n\nA Roma ho imparato che le preposizioni cambiano senso con il contesto. \"A Roma\" è \"in Rome\", \"di Roma\" è \"from Rome\". Sottile, ma decisivo. In React ho imparato che prop e state contengono entrambi dati, ma è il contesto a determinare come li usi. Non si tratta di memorizzare regole, ma di sviluppare intuizione con la ripetizione.\n\nI migliori insegnanti di lingue non si fermano alle tabelle di grammatica. Ti immergono nella conversazione, ti lasciano sbagliare, correggono con delicatezza. Il modo migliore in cui ho imparato React non sono stati i tutorial, ma costruire prototipi caotici, rompere le cose e capire piano piano perché si rompevano.\n\nC'è un momento, quando impari una lingua, in cui smetti di tradurre. Senti \"buongiorno\" e sai che è mattina, senti che è un saluto, capisci il calore della parola senza pensarci. È il momento in cui sei fluente.\n\nCon il codice succede lo stesso. Un giorno guardi un componente e ne vedi la struttura. Sai dove vive lo state, come scorrono i dati, cosa si rompe se cambi qualcosa. Non stai più leggendo parole in inglese: stai leggendo logica, ritmo, intenzione.\n\nFaccio ancora fatica con il congiuntivo in italiano. Mi confondo ancora con i generics avanzati di TypeScript. Ma il processo è lo stesso: immersione, riconoscimento di pattern, errori e riprovare. Entrambi richiedono di stare bene nel non sapere, nel sembrare goffo, nel chiedere aiuto.\n\nGli sviluppatori che ammiro di più non sono quelli che si sono memorizzati ogni API. Sono quelli che hanno imparato a pensare per sistemi, a riconoscere pattern tra linguaggi, ad adattare ciò che sanno a contesti nuovi. Come i migliori viaggiatori non sono quelli che memorizzano i phrase book: sono quelli che ascoltano, si adattano e restano curiosi.\n\nOgni lingua—parlata o di programmazione—è uno strumento per connettersi. Per esprimere idee, costruire cose, collaborare. E come ogni lingua, diventa più facile quanto più la usi in contesti reali, non sui libri.\n\nSe stai imparando a programmare e ti senti perso, ricorda: non stai memorizzando un dizionario. Stai imparando ad avere una conversazione. Abbi pazienza. Sbaglia. Continua a costruire. Un giorno ti accorgerai che stai pensando in codice senza nemmeno rendertene conto.\n\nCome un giorno, in un piccolo bar a Trastevere, ho ordinato un caffè in italiano senza pensarci su.",
+        "location": "Scritto a Roma",
+        "date": "15 gen 2024",
+        "readTime": "6 min"
+      },
+      {
+        "title": "Il test del bar",
+        "excerpt": "Perché valuto il mio lavoro chiedendomi se lo userei in un bar rumoroso, con wifi instabile e batteria scarica.",
+        "reflection": "Faccio le mie migliori riflessioni al bar. Non in spazi di co-working trendy o in biblioteche silenziose, ma in bar veri, imperfetti: macchine del caffè che sibilano, baristi che urlano le ordinazioni, wifi che va e viene, batteria del portatile sempre al 12%.\n\nQuesti posti mi hanno insegnato più sullo sviluppo software di qualsiasi corso.\n\nPerché il bar è il peggior ambiente per usare un'app—e quindi il migliore per testarla. Se funziona lì, funziona ovunque.\n\nWifi lento? I tuoi utenti ce l'hanno. Batteria scarica? Sicuro. Connessione che cade ogni tre minuti? Sempre. Schermo sporco che non si vede con il sole dalla finestra? Tutti i giorni.\n\nEro in un bar a Lisbona, cercando di prenotare un biglietto del treno dal telefono. L'app andava in timeout. Ogni tentativo significava reinserire i dati di pagamento. La pagina caricava lentamente. Le immagini erano enormi. L'interfaccia dava per scontata una connessione perfetta e pazienza infinita. Ho mollato e sono andato a piedi in stazione.\n\nQuel momento ha cambiato il modo in cui costruisco le cose.\n\nOra, quando sono in piena fase di sviluppo, comodo alla scrivania con monitor grande e ethernet, mi costringo a chiedermi: funzionerebbe in un bar?\n\nSi carica abbastanza in fretta su 3G? Fa cache quando la connessione cade? Si vedono i pulsanti con il sole forte? Succhia la batteria con chiamate API continue? Tiene conto di chi ha un piano dati limitato?\n\nIl test del bar non è solo performance: è rispetto. Rispetto per il tempo, il contesto e i limiti delle persone. È progettare per persone reali in situazioni reali, non per utenti ideali in condizioni perfette.\n\nLe app più curate che ho usato sono state fatte da chi questo lo capisce. Si caricano subito. Funzionano offline. Salvano i progressi. Non ti fanno ricominciare da capo se cade la connessione. Sembrano progettate da chi vive nel mondo reale.\n\nSono stato in bar a Tokyo con la presa a ogni posto. In bar nel Portogallo rurale con la password wifi scritta a mano su un cartone. In bar a New York dove competi con altre cinquanta persone per la banda.\n\nOgnuno mi ha insegnato qualcosa su come costruire software che funzioni per tutti, non solo per chi ha l'ultimo MacBook e la fibra.\n\nLa parte migliore del test del bar è che ti obbliga a dare priorità. Quando non puoi caricare tutto insieme, capisci cosa conta davvero. Quando non puoi mostrare dieci immagini in HD, diventi creativo con ciò che serve comunicare. Con la batteria che muore, capisci quali funzioni sono essenziali e quali optional.\n\nI vincoli generano creatività. I bar sono pieni di vincoli.\n\nLa prossima volta che costruisci qualcosa, provalo in un bar. Non quello figo con il wifi perfetto: quello caotico dove tutto è un po' rotto, un po' inaffidabile, un po' imperfetto.\n\nPerché è lì che sono i tuoi utenti. È il mondo reale. E se funziona lì, hai costruito qualcosa che vale la pena usare.\n\nOra scusatemi: la batteria del portatile è all'8% e devo trovare una presa.",
+        "location": "Scritto a Lisbona",
+        "date": "28 gen 2024",
+        "readTime": "5 min"
+      },
+      {
+        "title": "Rallentare per andare più veloce",
+        "excerpt": "Cosa mi ha insegnato una settimana nella campagna giapponese sul problem-solving paziente e sul valore del pensiero deliberato.",
+        "reflection": "L'autunno scorso ho passato una settimana nella campagna giapponese, in un ryokan tradizionale vicino a Takayama. Niente scadenze, notifiche Slack o pull request da revisionare. Solo montagne, architettura in legno che resiste da 400 anni e tempo per pensare.\n\nUna mattina ho guardato il proprietario preparare la colazione. Ogni gesto era intenzionale. Non correva. Non era neanche lento: era preciso. Sapeva esattamente cosa stava facendo e lo faceva con piena attenzione.\n\nMi sono reso conto di aver dimenticato come si lavora così.\n\nDa qualche parte lungo la strada avevo fatto mio che \"andare veloce\" significasse scrivere veloce, decidere veloce, rilasciare veloce. Che la velocità fosse di per sé una virtù. Che lo sviluppatore che pusha codice più in fretta sia il migliore.\n\nMa guardando quella colazione—vedere qualcosa di complesso diventare semplice grazie a un'attenzione paziente e allenata—ho capito qualcosa di diverso.\n\nLa velocità viene dalla chiarezza. E la chiarezza richiede di rallentare.\n\nQuando sono tornato a casa ho cambiato approccio ai problemi. Prima di tuffarmi nel codice, dedico tempo a capire davvero cosa sto cercando di risolvere. Schizzo su carta. Mi allontano e rifletto. Faccio domande che prima saltavo perché avevo troppa voglia di costruire.\n\nAll'inizio sembra più lento. Ma ho scoperto che in realtà è più veloce: non devo continuamente tornare indietro, riscrivere o accorgermi a metà strada che sto risolvendo il problema sbagliato.\n\nC'è un concetto giapponese chiamato \"ma\": lo spazio tra le cose, la pausa, il silenzio. Non vuoto, ma spazio intenzionale che dà senso a ciò che lo circonda. In musica è la pausa tra le note. In architettura è lo spazio vuoto che rende una stanza calma.\n\nNello sviluppo è il tempo del pensiero prima del tempo del codice. La pianificazione prima della costruzione. Lo spazio per chiedersi \"perché?\" prima di \"come?\".\n\nUn tempo mi sentivo in colpa per questo tempo. Come se se non stavo scrivendo attivamente, non stavo producendo. Ma alcuni dei miei migliori risultati sono venuti da momenti in cui non ero nemmeno alla tastiera—quando cammino, cucino o fisso la finestra lasciando alla mente il tempo di lavorare su un problema senza forzarla.\n\nLa pressione ad andare veloce è reale. Le scadenze ci sono. Gli stakeholder vogliono risultati. Ma ho imparato che andare veloce senza direzione significa solo arrivare prima alla meta sbagliata.\n\nGli sviluppatori che rispetto di più non sono quelli che sfornano codice più in fretta. Sono quelli che capiscono a fondo il problema prima di risolverlo. Che fanno domande di chiarimento che rallentano la conversazione iniziale ma fanno risparmiare ore dopo. Che dicono \"fammi pensarci\" invece di \"per stasera è fatto\".\n\nC'è una differenza tra essere riflessivo e essere lento. Tra essere accurato e indeciso. Il miglior lavoro nasce dove si incontrano velocità e intenzione: muoversi con purpose verso un obiettivo chiaro.\n\nIn quel ryokan c'era un piccolo giardino di sassi fuori dalla mia finestra. Quindici pietre disposte sulla ghiaia rastrellata. Sembrava semplice. Ho scoperto che al progettista erano serviti sei mesi per posizionare quelle pietre nel modo giusto. Non perché era lento, ma perché era deliberato. Perché sapeva che certe cose non si possono affrettare senza perdere ciò che le rende significative.\n\nNon sto dicendo di passare sei mesi su ogni componente. Sto dicendo che a volte la via più veloce è fermarsi, pensare con chiarezza e poi muoversi con intenzione.\n\nLa colazione in quel ryokan è stato il pasto migliore che ho fatto in Giappone. Non perché era complicata, ma perché ogni elemento era pensato. Niente di fretta. Niente sprecato. Solo un'eccellenza silenziosa nata da pazienza e attenzione.\n\nÈ il tipo di codice che voglio scrivere. Il tipo di sviluppatore che voglio diventare.\n\nNon il più veloce. Solo il più riflessivo. E col tempo sarà abbastanza veloce.",
+        "location": "Scritto a Takayama",
+        "date": "12 feb 2024",
+        "readTime": "7 min"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Mettiamoci in contatto",
+    "subtitle": "Hai un progetto in mente o vuoi solo chiacchierare? Scrivimi.",
+    "contactsTitle": "Contatti",
+    "availability": "Disponibilità",
+    "availabilityText": "Aperto a opportunità full-time, progetti in freelance e collaborazioni. Tempo di risposta: 24-48 ore.",
+    "formName": "Nome e cognome",
+    "formEmail": "Email address",
+    "formMessage": "Messaggio",
+    "placeholderName": "Il tuo nome completo",
+    "placeholderEmail": "latuaemail@email.com",
+    "placeholderMessage": "Dimmi qualcosa...",
+    "submit": "Invia messaggio",
+    "submitSuccess": "Grazie per il messaggio! Ti risponderò al più presto.",
+    "emailLabel": "Email",
+    "phoneLabel": "Telefono",
+    "whereLabel": "Dove sono"
+  },
+  "footer": {
+    "brand": "Damiano Francesco",
+    "tagline": "Sviluppatore full-stack: esperienze digitali curate, ispirate da viaggi e prospettive globali.",
+    "navigate": "Naviga",
+    "connect": "Connect",
+    "copyright": "© {{year}} Damiano Francesco. Realizzato con cura e passione.",
+    "navAbout": "Chi sono",
+    "navSkills": "Competenze",
+    "navProjects": "Progetti",
+    "navBlog": "Blog",
+    "navContact": "Contatti"
+  }
+}
