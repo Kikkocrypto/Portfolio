@@ -57,31 +57,108 @@
     "detail2023": " — Serious start in tech",
     "detail2025": " — Erasmus, life-changing experience",
     "timelineItems": [
-      { "year": "2019", "label": "Diploma", "detail": "Technical education diploma, chemistry and biology track." },
-      { "year": "2020", "label": "Odd jobs", "detail": "Odd jobs as kitchen helper and in a shoe factory." },
-      { "year": "2021", "label": "Odd jobs · Blockchain", "detail": "Continued experience as kitchen helper and in shoe factory. Deep dive into Blockchain technology." },
-      { "year": "2022", "label": "Official path · first steps in SEO and CS", "detail": "Start of official path: SEO certifications and community manager role for Discord servers. Deep dive into smart contracts and computer science." },
-      { "year": "2023", "label": "Serious start · Uni Pegaso and Bit Spa Full Stack course", "detail": "The year I seriously started in tech: enrolment at Pegaso University (Computer Science for Digital Businesses) and Full Stack course at Bit Spa, focusing on Spring Boot, Kubernetes, Docker, Angular." },
-      { "year": "2024", "label": "Opentusk Hackathon (Dec 2024)", "detail": "Worked with a team to build an MVP in 10 hours, dealing with tight deadlines. Built a Telegram bot for instant event registration. Tech: Telegram Bot API (RESTful), Python, BotFather." },
-      { "year": "2025", "label": "Erasmus Brașov (Feb–Jun) · Full-Stack Developer LML", "detail": "Five months in Brașov, in the Carpathians: the Erasmus that changed my life. Courses in Software Engineering and Programming (C++, Java, .NET, C#), and above all people, travel and a drive to grow I had never felt before. Soft and hard skills I still carry. From September: Full-Stack Developer at LML technologies." },
-      { "year": "2026", "label": "Ongoing", "detail": "Completing university and eager to grow internationally." }
+      {
+        "year": "2019",
+        "label": "Diploma",
+        "detail": "Technical education diploma, chemistry and biology track."
+      },
+      {
+        "year": "2020",
+        "label": "Odd jobs",
+        "detail": "Odd jobs as kitchen helper and in a shoe factory."
+      },
+      {
+        "year": "2021",
+        "label": "Odd jobs · Blockchain",
+        "detail": "Continued experience as kitchen helper and in shoe factory. Deep dive into Blockchain technology."
+      },
+      {
+        "year": "2022",
+        "label": "Official path · first steps in SEO and CS",
+        "detail": "Start of official path: SEO certifications and community manager role for Discord servers. Deep dive into smart contracts and computer science."
+      },
+      {
+        "year": "2023",
+        "label": "Serious start · Uni Pegaso and Bit Spa Full Stack course",
+        "detail": "The year I seriously started in tech: enrolment at Pegaso University (Computer Science for Digital Businesses) and Full Stack course at Bit Spa, focusing on Spring Boot, Kubernetes, Docker, Angular."
+      },
+      {
+        "year": "2024",
+        "label": "Opentusk Hackathon (Dec 2024)",
+        "detail": "Worked with a team to build an MVP in 10 hours, dealing with tight deadlines. Built a Telegram bot for instant event registration. Tech: Telegram Bot API (RESTful), Python, BotFather."
+      },
+      {
+        "year": "2025",
+        "label": "Erasmus Brașov (Feb–Jun) · Full-Stack Developer LML",
+        "detail": "Five months in Brașov, in the Carpathians: the Erasmus that changed my life. Courses in Software Engineering and Programming (C++, Java, .NET, C#), and above all people, travel and a drive to grow I had never felt before. Soft and hard skills I still carry. From September: Full-Stack Developer at LML technologies."
+      },
+      {
+        "year": "2026",
+        "label": "Ongoing",
+        "detail": "Completing university and eager to grow internationally."
+      }
     ],
     "highlightsTitle": "What sets me apart",
     "highlightsSubtitle": "The values I bring to my daily work.",
     "highlights": [
-      { "title": "Clean code", "description": "Scalable and maintainable solutions, built for long-term impact." },
-      { "title": "Security", "description": "Data and information protection are my main focus." },
-      { "title": "Speed and safe delivery", "description": "Fast development with AI agents and secure releases in short timeframes, without compromising quality and data protection." }
+      {
+        "title": "Clean code",
+        "description": "Scalable and maintainable solutions, built for long-term impact."
+      },
+      {
+        "title": "Security",
+        "description": "Data and information protection are my main focus."
+      },
+      {
+        "title": "Speed and safe delivery",
+        "description": "Fast development with AI agents and secure releases in short timeframes, without compromising quality and data protection."
+      }
     ]
   },
   "skills": {
     "title": "Technical skills",
     "subtitle": "A toolkit for complete solutions",
     "categories": [
-      { "title": "Frontend", "skills": ["React", "TypeScript", "HTML/CSS", "JavaScript", "Responsive Design"] },
-      { "title": "Backend", "skills": ["Spring Boot", "RESTful APIs", "Authentication", "Security", "API Design", "Database Design", "SQL"] },
-      { "title": "Database", "skills": ["PostgreSQL", "MySQL", "SQLite", "pgAdmin"] },
-      { "title": "Tools & DevOps", "skills": ["Git & GitHub", "Docker", "CI/CD", "Vite"] }
+      {
+        "title": "Frontend",
+        "skills": [
+          "React",
+          "TypeScript",
+          "HTML/CSS",
+          "JavaScript",
+          "Responsive Design"
+        ]
+      },
+      {
+        "title": "Backend",
+        "skills": [
+          "Spring Boot",
+          "RESTful APIs",
+          "Authentication",
+          "Security",
+          "API Design",
+          "Database Design",
+          "SQL"
+        ]
+      },
+      {
+        "title": "Database",
+        "skills": [
+          "PostgreSQL",
+          "MySQL",
+          "SQLite",
+          "pgAdmin"
+        ]
+      },
+      {
+        "title": "Tools & DevOps",
+        "skills": [
+          "Git & GitHub",
+          "Docker",
+          "CI/CD",
+          "Vite"
+        ]
+      }
     ]
   },
   "projects": {
@@ -107,48 +184,65 @@
         "Header-based authentication system",
         "Simple role and permission management"
       ],
-      "technologies": ["React", "Node.js", "PostgreSQL", "pgAdmin", "Spring Boot", "Java", "Docker", "RESTful API", "Deployment"],
+      "technologies": [
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "pgAdmin",
+        "Spring Boot",
+        "Java",
+        "Docker",
+        "RESTful API",
+        "Deployment"
+      ],
       "year": "2026 - thesis"
     },
     "additional": [
-      { "title": "Booking management app", "description": "Mobile app for managing bookings for an artesian well, exploring mobile development with Kotlin and Android Studio", "tags": ["Kotlin", "Android Studio", "SQLite"] },
-      { "title": "Student management app - Erasmus", "description": "Desktop application for managing students during my Erasmus experience. In this project I explored different SQL databases and programming languages.", "tags": [".NET", "Windows Forms", "MySQL"] }
+      {
+        "title": "Booking management app",
+        "description": "Mobile app for managing bookings for an artesian well, exploring mobile development with Kotlin and Android Studio",
+        "tags": [
+          "Kotlin",
+          "Android Studio",
+          "SQLite"
+        ]
+      },
+      {
+        "title": "Student management app - Erasmus",
+        "description": "Desktop application for managing students during my Erasmus experience. In this project I explored different SQL databases and programming languages.",
+        "tags": [
+          ".NET",
+          "Windows Forms",
+          "MySQL"
+        ]
+      }
     ]
   },
   "blog": {
     "title": "Reflections",
     "subtitle": "What I've learned between code and travel, coffee and quiet moments",
+    "loading": "Loading...",
+    "notFound": "Reflection not found.",
     "readReflection": "Read reflection",
     "backToReflections": "Back to reflections",
     "readOtherReflections": "Read more reflections",
     "readTimeLabel": "read",
     "footerNote": "These reflections are the result of a long journey of personal and professional growth. They are not tutorials or guides, just thoughts on what I've learned along the way and am still learning every day. They are here to inspire and grow with you.",
-    "posts": [
-      {
-        "title": "Learning to code like a language",
-        "excerpt": "Pattern recognition, immersion and the unexpected parallels between JavaScript and spoken Italian in Rome.",
-        "reflection": "Last summer I spent three weeks in Rome. Not in a classroom, but in markets, cafés and alleyways: learning Italian the way you do when you have no choice but to speak it. At first every sentence sounded clumsy. Then, little by little, patterns emerged. The rhythm of asking for directions. The cadence of ordering a coffee. The small victories when you were understood and understood others.\n\nLearning to code felt very similar.\n\nWhen I started with JavaScript, I tried to memorise syntax. I read the docs like a manual. But real fluency came when I stopped \"translating\" in my head and started thinking in code. When I stopped asking \"how do you say this?\" and started recognising patterns I had already seen.\n\nIn Rome I learned that prepositions change meaning with context. \"A Roma\" is \"in Rome\", \"di Roma\" is \"from Rome\". Subtle but decisive. In React I learned that props and state both hold data, but context determines how you use them. It's not about memorising rules, but developing intuition through repetition.\n\nThe best language teachers don't stop at grammar tables. They immerse you in conversation, let you make mistakes, correct with care. The best way I learned React wasn't tutorials, but building messy prototypes, breaking things and slowly understanding why they broke.\n\nThere's a moment, when you learn a language, when you stop translating. You hear \"buongiorno\" and you know it's morning, you know it's a greeting, you feel the warmth of the word without thinking. That's when you're fluent.\n\nThe same happens with code. One day you look at a component and see its structure. You know where state lives, how data flows, what breaks when you change something. You're no longer reading English words: you're reading logic, rhythm, intent.\n\nI still struggle with the subjunctive in Italian. I still get confused with advanced TypeScript generics. But the process is the same: immersion, pattern recognition, mistakes and trying again. Both require being comfortable not knowing, seeming clumsy, asking for help.\n\nThe developers I admire most aren't the ones who memorised every API. They're the ones who learned to think in systems, to recognise patterns across languages, to adapt what they know to new contexts. Like the best travellers aren't the ones who memorise phrase books: they're the ones who listen, adapt and stay curious.\n\nEvery language—spoken or programming—is a tool to connect. To express ideas, build things, collaborate. And like every language, it gets easier the more you use it in real contexts, not in books.\n\nIf you're learning to code and feel lost, remember: you're not memorising a dictionary. You're learning to have a conversation. Be patient. Make mistakes. Keep building. One day you'll realise you're thinking in code without even noticing.\n\nLike one day, in a small café in Trastevere, I ordered a coffee in Italian without thinking about it.",
-        "location": "Written in Rome",
-        "date": "15 Jan 2024",
-        "readTime": "6 min"
-      },
-      {
-        "title": "The café test",
-        "excerpt": "Why I judge my work by whether I'd use it in a noisy café, with spotty wifi and a dying battery.",
-        "reflection": "I do my best thinking in cafés. Not in trendy co-working spaces or quiet libraries, but in real, imperfect cafés: hissing espresso machines, baristas shouting orders, wifi that comes and goes, laptop battery always at 12%.\n\nThese places have taught me more about software development than any course.\n\nBecause the café is the worst environment to use an app—and therefore the best to test it. If it works there, it works anywhere.\n\nSlow wifi? Your users have it. Dying battery? Sure. Connection dropping every three minutes? Always. Dirty screen you can't see in the sun? Every day.\n\nI was in a café in Lisbon, trying to book a train ticket on my phone. The app kept timing out. Every attempt meant re-entering payment details. The page loaded slowly. Images were huge. The UI assumed a perfect connection and infinite patience. I gave up and walked to the station.\n\nThat moment changed how I build things.\n\nNow, when I'm deep in development, comfortable at my desk with a big monitor and ethernet, I force myself to ask: would this work in a café?\n\nDoes it load fast enough on 3G? Does it cache when the connection drops? Can you see the buttons in bright sun? Does it drain the battery with constant API calls? Does it respect people with limited data?\n\nThe café test isn't just about performance: it's about respect. Respect for people's time, context and limits. It's designing for real people in real situations, not ideal users in perfect conditions.\n\nThe most thoughtful apps I've used were made by people who get this. They load quickly. They work offline. They save progress. They don't make you start over when the connection drops. They feel built by people who live in the real world.\n\nI've been in cafés in Tokyo with a socket at every seat. In cafés in rural Portugal with the wifi password written on cardboard. In cafés in New York where you compete with fifty others for bandwidth.\n\nEach taught me something about building software that works for everyone, not just those with the latest MacBook and fibre.\n\nThe best part of the café test is that it forces you to prioritise. When you can't load everything at once, you learn what really matters. When you can't show ten HD images, you get creative with what needs to be communicated. With the battery dying, you learn which features are essential and which are optional.\n\nConstraints breed creativity. Cafés are full of constraints.\n\nNext time you build something, try it in a café. Not the fancy one with perfect wifi: the chaotic one where everything's a bit broken, a bit unreliable, a bit imperfect.\n\nBecause that's where your users are. It's the real world. And if it works there, you've built something worth using.\n\nNow excuse me: the laptop is at 8% and I need to find a socket.",
-        "location": "Written in Lisbon",
-        "date": "28 Jan 2024",
-        "readTime": "5 min"
-      },
-      {
-        "title": "Slowing down to go faster",
-        "excerpt": "What a week in the Japanese countryside taught me about patient problem-solving and the value of deliberate thinking.",
-        "reflection": "Last autumn I spent a week in the Japanese countryside, in a traditional ryokan near Takayama. No deadlines, Slack notifications or pull requests to review. Just mountains, wooden architecture that has stood for 400 years and time to think.\n\nOne morning I watched the owner prepare breakfast. Every gesture was intentional. He wasn't rushing. He wasn't slow either: he was precise. He knew exactly what he was doing and did it with full attention.\n\nI realised I had forgotten how to work like that.\n\nSomewhere along the way I had internalised that \"going fast\" meant writing fast, deciding fast, shipping fast. That speed was a virtue in itself. That the developer who pushes code fastest is the best.\n\nBut watching that breakfast—seeing something complex become simple through patient, practised attention—I understood something different.\n\nSpeed comes from clarity. And clarity requires slowing down.\n\nWhen I got home I changed how I approach problems. Before diving into code, I take time to really understand what I'm trying to solve. I sketch on paper. I step back and reflect. I ask questions I used to skip because I was too eager to build.\n\nAt first it feels slower. But I've found it's actually faster: I don't constantly have to go back, rewrite or realise halfway that I'm solving the wrong problem.\n\nThere's a Japanese concept called \"ma\": the space between things, the pause, the silence. Not empty, but intentional space that gives meaning to what surrounds it. In music it's the rest between notes. In architecture it's the empty space that makes a room calm.\n\nIn development it's the time for thought before the time for code. Planning before building. The space to ask \"why?\" before \"how?\".\n\nI used to feel guilty for this time. As if not actively typing meant not producing. But some of my best results have come from moments when I wasn't even at the keyboard—when walking, cooking or staring out the window, giving my mind time to work on a problem without forcing it.\n\nThe pressure to go fast is real. Deadlines exist. Stakeholders want results. But I've learned that going fast without direction just means arriving sooner at the wrong destination.\n\nThe developers I respect most aren't the ones who churn out code fastest. They're the ones who understand the problem deeply before solving it. Who ask clarifying questions that slow the initial conversation but save hours later. Who say \"let me think about it\" instead of \"done by tonight\".\n\nThere's a difference between being reflective and being slow. Between being thorough and being indecisive. The best work happens where speed and intention meet: moving with purpose toward a clear goal.\n\nIn that ryokan there was a small rock garden outside my window. Fifteen stones arranged on raked gravel. It looked simple. I learned the designer had taken six months to place those stones correctly. Not because he was slow, but because he was deliberate. Because he knew that some things can't be rushed without losing what makes them meaningful.\n\nI'm not saying spend six months on every component. I'm saying that sometimes the fastest way is to stop, think clearly and then move with intention.\n\nThat breakfast in the ryokan was the best meal I had in Japan. Not because it was complicated, but because every element was considered. Nothing rushed. Nothing wasted. Just quiet excellence born from patience and attention.\n\nThat's the kind of code I want to write. The kind of developer I want to become.\n\nNot the fastest. Just the most thoughtful. And in time that will be fast enough.",
-        "location": "Written in Takayama",
-        "date": "12 Feb 2024",
-        "readTime": "7 min"
-      }
-    ]
+    "empty": {
+      "title": "No reflections yet",
+      "description": "Check back soon for new stories and insights."
+    },
+    "errors": {
+      "apiNotConfigured": "API not configured. Please check your environment settings.",
+      "postsNotFound": "No posts found.",
+      "serverError": "Server error. Please try again later.",
+      "fetchFailed": "Failed to load posts. Please try again.",
+      "invalidResponseType": "Invalid server response.",
+      "invalidJson": "Failed to parse server response.",
+      "invalidDataStructure": "Posts data structure is invalid.",
+      "networkError": "The server is not available at the moment.",
+      "unknownError": "An unexpected error occurred."
+    }
   },
   "contact": {
     "title": "Get in touch",
@@ -163,7 +257,29 @@
     "placeholderEmail": "your@email.com",
     "placeholderMessage": "Tell me something...",
     "submit": "Send message",
+    "submitSending": "Sending...",
     "submitSuccess": "Thanks for your message! I'll get back to you soon.",
+    "validation": {
+      "nameRequired": "Name is required.",
+      "nameTooShort": "Enter at least 2 characters.",
+      "nameTooLong": "Maximum 255 characters.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Enter a valid email (e.g. name@domain.com).",
+      "emailTooLong": "Maximum 255 characters.",
+      "messageRequired": "Message is required.",
+      "messageTooShort": "Enter at least 10 characters.",
+      "messageTooLong": "Maximum 10,000 characters."
+    },
+    "errors": {
+      "apiNotConfigured": "API not configured. Please check your environment settings.",
+      "validationError": "Please check the fields and try again.",
+      "serverError": "Server error. Please try again later.",
+      "submitFailed": "Failed to send message. Please try again.",
+      "invalidResponseType": "Invalid server response.",
+      "invalidJson": "Failed to parse server response.",
+      "networkError": "The server is not available at the moment.",
+      "unknownError": "An unexpected error occurred."
+    },
     "emailLabel": "Email",
     "phoneLabel": "Phone",
     "whereLabel": "Where I am"

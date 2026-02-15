@@ -33,15 +33,24 @@ public class ContactRequest {
      */
     private String website;
 
+    private static final int MAX_NAME_LENGTH = 255;
+    private static final int MAX_EMAIL_LENGTH = 255;
+    private static final int MAX_MESSAGE_LENGTH = 10000;
+
     /**
      * Normalizza i campi di input:
-     * - name: trim spazi e capitalizza solo la prima lettera (resto minuscolo)
-     * - email: trim spazi iniziali/finali
-     * - message/website: trim spazi (per coerenza)
+     * - name: trim spazi, capitalizza solo la prima lettera (resto minuscolo), tronca a 255 caratteri
+     * - email: trim spazi, tronca a 255 caratteri
+     * - message: trim spazi, tronca a 10000 caratteri
+     * - website: trim spazi
+     * Troncamento difensivo: anche se la validazione (@Size) fosse bypassata, non si persiste mai oltre il limite.
      */
     public void normalize() {
         if (name != null) {
             String trimmed = name.trim();
+            if (trimmed.length() > MAX_NAME_LENGTH) {
+                trimmed = trimmed.substring(0, MAX_NAME_LENGTH);
+            }
             if (!trimmed.isEmpty()) {
                 String lower = trimmed.toLowerCase();
                 this.name = Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
@@ -50,10 +59,12 @@ public class ContactRequest {
             }
         }
         if (email != null) {
-            this.email = email.trim();
+            String trimmed = email.trim();
+            this.email = trimmed.length() > MAX_EMAIL_LENGTH ? trimmed.substring(0, MAX_EMAIL_LENGTH) : trimmed;
         }
         if (message != null) {
-            this.message = message.trim();
+            String trimmed = message.trim();
+            this.message = trimmed.length() > MAX_MESSAGE_LENGTH ? trimmed.substring(0, MAX_MESSAGE_LENGTH) : trimmed;
         }
         if (website != null) {
             this.website = website.trim();
