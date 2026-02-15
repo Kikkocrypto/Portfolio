@@ -35,7 +35,7 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none">
         {/* Soft gradient inspired by golden hour */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F5E6D3]/30 via-[#FAF9F6] to-[#E8DDD0]/20"></div>
-        
+
         {/* Subtle grain texture overlay */}
         <div 
           className="absolute inset-0 opacity-[0.015]"
@@ -49,6 +49,7 @@ export function Hero() {
         {/* Soft atmospheric circles - desaturated warmth */}
         <div className="absolute top-1/4 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[#D4A574]/8 to-transparent blur-3xl"></div>
         <div className="absolute bottom-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-radial from-[#8B9DAF]/6 to-transparent blur-3xl"></div>
+
       </div>
 
       {/* Main content: flex-1 so scroll indicator stays at bottom */}

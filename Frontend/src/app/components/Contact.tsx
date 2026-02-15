@@ -1,29 +1,149 @@
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
+import { useToast } from '../hooks/useToast.tsx';
+import { submitContact, type ContactPayload } from '../api/contact';
+
+const MAX_NAME_LENGTH = 255;
+const MAX_EMAIL_LENGTH = 255;
+const MAX_MESSAGE_LENGTH = 10000;
+
+const INITIAL_FORM: ContactPayload & { website: string } = {
+  name: '',
+  email: '',
+  message: '',
+  website: '',
+};
+
+/** Email valida: almeno una @ e un punto dopo la @ (es. nome@dominio.com). */
+function isValidEmail(value: string): boolean {
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  const atIndex = trimmed.indexOf('@');
+  if (atIndex === -1) return false;
+  const afterAt = trimmed.slice(atIndex + 1);
+  return afterAt.includes('.') && afterAt.indexOf('.') > 0;
+}
 
 export function Contact() {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+  const { showToast, Toast } = useToast();
+  const abortRef = useRef<AbortController | null>(null);
+
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const [loading, setLoading] = useState(false);
+  const [touched, setTouched] = useState<{ name: boolean; email: boolean; message: boolean }>({
+    name: false,
+    email: false,
+    message: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const fieldErrors = {
+    name:
+      touched.name && !formData.name.trim()
+        ? t('contact.validation.nameRequired')
+        : touched.name && formData.name.trim().length < 2
+          ? t('contact.validation.nameTooShort')
+          : touched.name && formData.name.length >= MAX_NAME_LENGTH
+            ? t('contact.validation.nameTooLong')
+            : null,
+    email:
+      touched.email && !formData.email.trim()
+        ? t('contact.validation.emailRequired')
+        : touched.email && formData.email.trim() && !isValidEmail(formData.email)
+          ? t('contact.validation.emailInvalid')
+          : touched.email && formData.email.length >= MAX_EMAIL_LENGTH
+            ? t('contact.validation.emailTooLong')
+            : null,
+    message:
+      touched.message && !formData.message.trim()
+        ? t('contact.validation.messageRequired')
+        : touched.message && formData.message.trim().length < 10
+          ? t('contact.validation.messageTooShort')
+          : touched.message && formData.message.length >= MAX_MESSAGE_LENGTH
+            ? t('contact.validation.messageTooLong')
+            : null,
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert(t('contact.submitSuccess'));
-    setFormData({ name: '', email: '', message: '' });
+
+    if (loading) return;
+
+    setTouched({ name: true, email: true, message: true });
+    const hasClientErrors =
+      !formData.name.trim() ||
+      formData.name.trim().length < 2 ||
+      formData.name.length >= MAX_NAME_LENGTH ||
+      !formData.email.trim() ||
+      !isValidEmail(formData.email) ||
+      formData.email.length >= MAX_EMAIL_LENGTH ||
+      !formData.message.trim() ||
+      formData.message.trim().length < 10 ||
+      formData.message.length >= MAX_MESSAGE_LENGTH;
+    if (hasClientErrors) return;
+
+    abortRef.current = new AbortController();
+    setLoading(true);
+
+    try {
+      await submitContact(
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          website: formData.website || undefined,
+        },
+        abortRef.current.signal
+      );
+
+      showToast({
+        message: t('contact.submitSuccess'),
+        type: 'success',
+        duration: 5000,
+      });
+      setFormData(INITIAL_FORM);
+      setTouched({ name: false, email: false, message: false });
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return;
+      }
+
+      const errorKey = err instanceof Error ? err.message : 'UNKNOWN_ERROR';
+      const messages: Record<string, string> = {
+        API_NOT_CONFIGURED: t('contact.errors.apiNotConfigured'),
+        VALIDATION_ERROR: t('contact.errors.validationError'),
+        SERVER_ERROR: t('contact.errors.serverError'),
+        SUBMIT_FAILED: t('contact.errors.submitFailed'),
+        INVALID_RESPONSE_TYPE: t('contact.errors.invalidResponseType'),
+        INVALID_JSON: t('contact.errors.invalidJson'),
+        NETWORK_ERROR: t('contact.errors.networkError'),
+        UNKNOWN_ERROR: t('contact.errors.unknownError'),
+      };
+      showToast({
+        message: messages[errorKey] ?? messages.UNKNOWN_ERROR,
+        type: 'error',
+        duration: 6000,
+      });
+    } finally {
+      if (!abortRef.current?.signal.aborted) {
+        setLoading(false);
+      }
+      abortRef.current = null;
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleBlur = (field: 'name' | 'email' | 'message') => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
   const contactInfo = [
@@ -34,12 +154,14 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 md:py-32 bg-gradient-to-br from-[#2C2416] via-[#3D3122] to-[#2C2416] text-[#FAF9F6] relative overflow-hidden">
+      <Toast />
+
       {/* Subtle atmospheric elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-gradient-radial from-[#D4A574]/10 to-transparent blur-3xl"></div>
       <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-gradient-radial from-[#8B9DAF]/8 to-transparent blur-3xl"></div>
 
       {/* Texture */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
@@ -106,7 +228,7 @@ export function Contact() {
             {/* Contact Form */}
             <div className="lg:col-span-7">
               <ScrollReveal delay={200}>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="relative space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
                       {t('contact.formName')}
@@ -117,10 +239,24 @@ export function Contact() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      onBlur={() => handleBlur('name')}
                       required
-                      className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
+                      disabled={loading}
+                      maxLength={255}
+                      aria-invalid={!!fieldErrors.name}
+                      aria-describedby={fieldErrors.name ? 'name-error' : undefined}
+                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                        fieldErrors.name
+                          ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
+                          : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
+                      }`}
                       placeholder={t('contact.placeholderName')}
                     />
+                    {fieldErrors.name && (
+                      <p id="name-error" className="mt-1.5 text-sm text-red-400" role="alert">
+                        {fieldErrors.name}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -133,10 +269,24 @@ export function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={() => handleBlur('email')}
                       required
-                      className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
+                      disabled={loading}
+                      maxLength={255}
+                      aria-invalid={!!fieldErrors.email}
+                      aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                        fieldErrors.email
+                          ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
+                          : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
+                      }`}
                       placeholder={t('contact.placeholderEmail')}
                     />
+                    {fieldErrors.email && (
+                      <p id="email-error" className="mt-1.5 text-sm text-red-400" role="alert">
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -148,19 +298,57 @@ export function Contact() {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
+                      onBlur={() => handleBlur('message')}
                       required
+                      disabled={loading}
                       rows={6}
-                      className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all resize-none backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
+                      maxLength={10000}
+                      aria-invalid={!!fieldErrors.message}
+                      aria-describedby={fieldErrors.message ? 'message-error' : undefined}
+                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all resize-none backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                        fieldErrors.message
+                          ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
+                          : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
+                      }`}
                       placeholder={t('contact.placeholderMessage')}
+                    />
+                    {fieldErrors.message && (
+                      <p id="message-error" className="mt-1.5 text-sm text-red-400" role="alert">
+                        {fieldErrors.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Honeypot: nascosto, lasciare vuoto. Se compilato = bot → backend risponde 201 ma non salva. */}
+                  <div className="absolute -left-[9999px] w-1 h-1 overflow-hidden" aria-hidden="true">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="group w-full px-7 py-4 bg-[#FAF9F6] text-[#2C2416] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover-lift"
+                    disabled={loading}
+                    className="group w-full px-7 py-4 bg-[#FAF9F6] text-[#2C2416] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover-lift disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-sm"
                   >
-                    <span className="font-normal tracking-wide">{t('contact.submit')}</span>
-                    <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                        <span className="font-normal tracking-wide">{t('contact.submitSending')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-normal tracking-wide">{t('contact.submit')}</span>
+                        <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </>
+                    )}
                   </button>
                 </form>
               </ScrollReveal>

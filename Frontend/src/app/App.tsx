@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -6,11 +8,11 @@ import { Projects } from './components/Projects';
 import { Blog } from './components/Blog';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ReflectionPostPage } from './pages/ReflectionPostPage';
 
-export default function App() {
+function HomePage() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <Header />
+    <>
       <Hero />
       <About />
       <Skills />
@@ -18,6 +20,32 @@ export default function App() {
       <Blog />
       <Contact />
       <Footer />
-    </div>
+    </>
+  );
+}
+
+function ScrollToHash() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (pathname === '/' && hash === '#blog') {
+      const el = document.getElementById('blog');
+      el?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [pathname, hash]);
+  return null;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen overflow-x-hidden">
+        <Header />
+        <ScrollToHash />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog/:slug" element={<ReflectionPostPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
