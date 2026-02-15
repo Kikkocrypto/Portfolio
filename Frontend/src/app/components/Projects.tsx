@@ -1,30 +1,13 @@
 import { ExternalLink, Github, ArrowUpRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { ScrollReveal } from '../../components/motion';
+import { useScrollProgress } from '../../utils/motion';
+import { DURATION } from '../../constants/motion';
 
 export function Projects() {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const sectionHeight = rect.height;
-      
-      // Calculate scroll progress through the section
-      const scrolled = windowHeight - rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight + windowHeight)));
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const scrollProgress = useScrollProgress(sectionRef);
 
   const featuredProject = {
     title: 'Piattaforma E-Commerce',
@@ -78,49 +61,54 @@ export function Projects() {
       <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-7xl mx-auto">
           {/* Header - asymmetrical */}
-          <div className="mb-24 md:mb-32 max-w-3xl">
-            <div className="inline-block h-px w-20 bg-[#D4A574] mb-8"></div>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2C2416] mb-8 leading-[1.1]">
-              Progetti in evidenza
-            </h2>
-            <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-              Una selezione di progetti realizzati con intenzione, ispirati da prospettive diverse
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="mb-24 md:mb-32 max-w-3xl">
+              <div className="inline-block h-px w-20 bg-[#D4A574] mb-8"></div>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-[#2C2416] mb-8 leading-[1.1]">
+                Progetti in evidenza
+              </h2>
+              <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
+                Una selezione di progetti realizzati con intenzione, ispirati da prospettive diverse
+              </p>
+            </div>
+          </ScrollReveal>
 
           {/* Featured Project - Editorial Layout */}
-          <article className="mb-32 md:mb-40">
-            {/* Year & Title Block */}
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 mb-16">
-              <div className="lg:col-span-3">
-                <div className="sticky top-32">
-                  <span className="block text-sm tracking-[0.3em] text-[#D4A574] mb-4 uppercase">
-                    {featuredProject.year}
-                  </span>
-                  <h3 className="text-4xl md:text-5xl font-light text-[#2C2416] leading-tight mb-4">
-                    {featuredProject.title}
-                  </h3>
-                  <p className="text-lg text-[#6B5D4F]/60 italic">
-                    {featuredProject.subtitle}
-                  </p>
+          <ScrollReveal delay={100}>
+            <article className="mb-32 md:mb-40">
+              {/* Year & Title Block */}
+              <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 mb-16">
+                <div className="lg:col-span-3">
+                  <div className="sticky top-32">
+                    <span className="block text-sm tracking-[0.3em] text-[#D4A574] mb-4 uppercase">
+                      {featuredProject.year}
+                    </span>
+                    <h3 className="text-4xl md:text-5xl font-light text-[#2C2416] leading-tight mb-4">
+                      {featuredProject.title}
+                    </h3>
+                    <p className="text-lg text-[#6B5D4F]/60 italic">
+                      {featuredProject.subtitle}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="lg:col-span-9 space-y-12">
-                {/* Main Image - No card, just image with subtle border */}
-                <div 
-                  className="relative overflow-hidden border border-[#D4A574]/10"
-                  style={{
-                    transform: `translateY(${scrollProgress * -20}px)`,
-                    transition: 'transform 0.1s ease-out'
-                  }}
-                >
-                  <ImageWithFallback
-                    src={featuredProject.image}
-                    alt={featuredProject.title}
-                    className="w-full aspect-[16/10] object-cover"
-                  />
-                </div>
+                <div className="lg:col-span-9 space-y-12">
+                  {/* Main Image - No card, just image with subtle border */}
+                  <div 
+                    className="group relative overflow-hidden border border-[#D4A574]/10 hover:border-[#D4A574]/20 transition-colors duration-500"
+                    style={{
+                      transform: `translateY(${scrollProgress * -20}px)`,
+                      transition: 'transform 0.1s ease-out'
+                    }}
+                  >
+                    <div className="overflow-hidden">
+                      <ImageWithFallback
+                        src={featuredProject.image}
+                        alt={featuredProject.title}
+                        className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
 
                 {/* Description */}
                 <div className="prose prose-lg max-w-none">
@@ -160,7 +148,7 @@ export function Projects() {
                     {featuredProject.technologies.map((tech, idx) => (
                       <span 
                         key={idx}
-                        className="px-4 py-2 text-sm text-[#6B5D4F] border border-[#D4A574]/20 tracking-wide"
+                        className="px-4 py-2 text-sm text-[#6B5D4F] border border-[#D4A574]/20 tracking-wide hover:border-[#D4A574]/40 hover:bg-white/50 transition-all duration-300 cursor-default"
                       >
                         {tech}
                       </span>
@@ -171,10 +159,10 @@ export function Projects() {
                       href={featuredProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-2 text-[#2C2416] hover:text-[#6B5D4F] transition-colors"
+                      className="group flex items-center gap-2 text-[#2C2416] hover:text-[#6B5D4F] transition-colors duration-300"
                     >
                       <Github className="w-5 h-5" />
-                      <span className="text-sm tracking-wide border-b border-transparent group-hover:border-[#6B5D4F] transition-all">
+                      <span className="text-sm tracking-wide link-underline">
                         Vedi codice
                       </span>
                     </a>
@@ -182,10 +170,10 @@ export function Projects() {
                       href={featuredProject.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-2 text-[#2C2416] hover:text-[#6B5D4F] transition-colors"
+                      className="group flex items-center gap-2 text-[#2C2416] hover:text-[#6B5D4F] transition-colors duration-300"
                     >
                       <ExternalLink className="w-5 h-5" />
-                      <span className="text-sm tracking-wide border-b border-transparent group-hover:border-[#6B5D4F] transition-all">
+                      <span className="text-sm tracking-wide link-underline">
                         Visit site
                       </span>
                     </a>
@@ -194,72 +182,75 @@ export function Projects() {
               </div>
             </div>
           </article>
+        </ScrollReveal>
 
           {/* Additional Work - Minimal Mention */}
-          <div className="max-w-4xl">
-            <h3 className="text-2xl md:text-3xl font-light text-[#2C2416] mb-12 tracking-wide">
-              Altri progetti
-            </h3>
-            
-            <article className="group border-t border-[#D4A574]/10 py-10 hover:border-[#D4A574]/30 transition-all duration-500">
-              <div className="grid md:grid-cols-12 gap-8 items-start">
-                <div className="md:col-span-8">
-                  <h4 className="text-2xl font-light text-[#2C2416] mb-4 group-hover:text-[#6B5D4F] transition-colors">
-                    {additionalWork.title}
-                  </h4>
-                  <p className="text-lg text-[#6B5D4F]/70 leading-relaxed font-light mb-6">
-                    {additionalWork.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2.5">
-                    {additionalWork.tags.map((tag, idx) => (
-                      <span 
-                        key={idx}
-                        className="text-sm text-[#6B5D4F]/60 tracking-wide"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+          <ScrollReveal delay={200}>
+            <div className="max-w-4xl">
+              <h3 className="text-2xl md:text-3xl font-light text-[#2C2416] mb-12 tracking-wide">
+                Altri progetti
+              </h3>
+              
+              <article className="group border-t border-[#D4A574]/10 py-10 hover:border-[#D4A574]/30 transition-all duration-500">
+                <div className="grid md:grid-cols-12 gap-8 items-start">
+                  <div className="md:col-span-8">
+                    <h4 className="text-2xl font-light text-[#2C2416] mb-4 group-hover:text-[#6B5D4F] transition-colors duration-500">
+                      {additionalWork.title}
+                    </h4>
+                    <p className="text-lg text-[#6B5D4F]/70 leading-relaxed font-light mb-6">
+                      {additionalWork.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2.5">
+                      {additionalWork.tags.map((tag, idx) => (
+                        <span 
+                          key={idx}
+                          className="text-sm text-[#6B5D4F]/60 tracking-wide"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="md:col-span-4 flex md:justify-end items-start gap-4">
+                    <a 
+                      href={additionalWork.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
+                      aria-label="Vedi codice"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                    <a 
+                      href={additionalWork.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors duration-300 hover-lift"
+                      aria-label="Visita il sito"
+                    >
+                      <ArrowUpRight className="w-5 h-5" />
+                    </a>
                   </div>
                 </div>
-                <div className="md:col-span-4 flex md:justify-end items-start gap-4">
-                  <a 
-                    href={additionalWork.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors"
-                    aria-label="Vedi codice"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                  <a 
-                    href={additionalWork.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/link p-2 text-[#6B5D4F] hover:text-[#2C2416] transition-colors"
-                    aria-label="Visita il sito"
-                  >
-                    <ArrowUpRight className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            </article>
+              </article>
 
-            {/* Footer note */}
-            <div className="mt-20 pt-12 border-t border-[#D4A574]/10">
-              <p className="text-[#6B5D4F]/60 italic leading-relaxed max-w-2xl">
-                Altri progetti e contributi open source su{' '}
-                <a 
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#2C2416] hover:text-[#6B5D4F] transition-colors border-b border-[#D4A574]/30 hover:border-[#6B5D4F]"
-                >
-                  GitHub
-                </a>
-                . In cerca di nuove collaborazioni per esperienze digitali significative.
-              </p>
+              {/* Footer note */}
+              <div className="mt-20 pt-12 border-t border-[#D4A574]/10">
+                <p className="text-[#6B5D4F]/60 italic leading-relaxed max-w-2xl">
+                  Altri progetti e contributi open source su{' '}
+                  <a 
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2C2416] hover:text-[#6B5D4F] transition-colors duration-300 link-underline"
+                  >
+                    GitHub
+                  </a>
+                  . In cerca di nuove collaborazioni per esperienze digitali significative.
+                </p>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

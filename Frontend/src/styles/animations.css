@@ -1,0 +1,262 @@
+/**
+ * Global Motion Styles
+ * Elegant, sophisticated animations for portfolio
+ */
+
+/* Honor reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth scrolling for anchor links; nessuno scroll orizzontale */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Base animation classes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Subtle pulse for scroll indicator */
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+}
+
+/* Utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Timeline: linee che si “disegnano” */
+@keyframes timelineLineV {
+  from {
+    transform: translateX(-50%) scaleY(0);
+  }
+  to {
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+@keyframes timelineLineH {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.timeline-line-v {
+  transform-origin: center top;
+  animation: timelineLineV 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.timeline-line-h {
+  transform-origin: left center;
+  animation: timelineLineH 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Pallini timeline: guida visiva discreta per invitare al click */
+@keyframes timelineDotHint {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 165, 116, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(212, 165, 116, 0);
+  }
+}
+
+.timeline-dot-hint {
+  animation: timelineDotHint 2.5s ease-in-out infinite;
+}
+
+/* Pallino milestone (es. 2023 – partenza seria): pulse con colore scuro */
+@keyframes timelineDotHintMilestone {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(44, 36, 22, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(44, 36, 22, 0);
+  }
+}
+
+.timeline-dot-hint.timeline-dot-milestone {
+  animation: timelineDotHintMilestone 2.5s ease-in-out infinite;
+}
+
+/* Pallino Erasmus 2025: colori bandiera Romania (blu, giallo, rosso) + effetto pulse */
+.timeline-dot-romania {
+  background: linear-gradient(to right, #002B7F 0%, #002B7F 33%, #FCD116 33%, #FCD116 66%, #CE1126 66%, #CE1126 100%) !important;
+}
+
+@keyframes timelineDotHintErasmus {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(252, 209, 22, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(252, 209, 22, 0);
+  }
+}
+
+.timeline-dot-hint.timeline-dot-erasmus {
+  animation: timelineDotHintErasmus 2.5s ease-in-out infinite;
+}
+
+/* Hover effects - minimal and refined */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale-minimal {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-scale-minimal:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-image {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-scale-image:hover {
+  transform: scale(1.05);
+}
+
+/* Underline animation for links */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Focus states - maintain accessibility */
+*:focus-visible {
+  outline: 2px solid rgba(212, 165, 116, 0.5);
+  outline-offset: 2px;
+  transition: outline-offset 0.2s ease;
+}
+
+/* Prevent layout shift during animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Remove will-change after animation completes */
+@media (prefers-reduced-motion: no-preference) {
+  .animation-complete {
+    will-change: auto;
+  }
+}
