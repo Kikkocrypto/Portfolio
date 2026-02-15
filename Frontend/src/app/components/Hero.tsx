@@ -1,5 +1,6 @@
 import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FadeIn } from '../../components/motion';
 import { DURATION, EASE } from '../../constants/motion';
 
@@ -7,6 +8,7 @@ import { DURATION, EASE } from '../../constants/motion';
 const HERO_PORTRAIT_SRC = '/hero-portrait.jpeg';
 
 export function Hero() {
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -59,7 +61,7 @@ export function Hero() {
             <FadeIn delay={100} duration={DURATION.slow}>
               <div className="inline-flex">
                 <span className="px-4 py-1.5 border border-[#D4A574]/30 rounded-full text-[#6B5D4F] text-sm tracking-wide bg-white/40 backdrop-blur-sm">
-                  Aperto a nuove opportunità
+                  {t('hero.badge')}
                 </span>
               </div>
             </FadeIn>
@@ -68,19 +70,18 @@ export function Hero() {
             <div className="space-y-4">
               <FadeIn delay={200} duration={DURATION.slower}>
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-[1.1] tracking-tight text-[#2C2416]">
-                  Creo esperienze
+                  {t('hero.title1')}
                   <br />
-                  <span className="font-normal italic text-[#6B5D4F]">digitali</span>
+                  <span className="font-normal italic text-[#6B5D4F]">{t('hero.title2')}</span>
                   <br />
-                  senza confini
+                  {t('hero.title3')}
                 </h1>
               </FadeIn>
               
               {/* Sharp value proposition */}
               <FadeIn delay={400} duration={DURATION.slower}>
                 <p className="text-xl md:text-2xl text-[#6B5D4F]/80 font-light max-w-xl leading-relaxed">
-                  Sviluppatore full-stack: interfacce curate,
-                  ispirate da culture e connessioni in tutto il mondo.
+                  {t('hero.subtitle')}
                 </p>
               </FadeIn>
             </div>
@@ -92,14 +93,14 @@ export function Hero() {
                   href="#projects" 
                   className="group px-7 py-3.5 bg-[#2C2416] text-[#FAF9F6] hover:bg-[#3D3122] transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md"
                 >
-                  <span className="font-normal tracking-wide">Vedi progetti</span>
+                  <span className="font-normal tracking-wide">{t('hero.ctaProjects')}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
                 <a 
                   href="#contact" 
                   className="px-7 py-3.5 border border-[#6B5D4F]/30 text-[#2C2416] hover:border-[#6B5D4F] hover:bg-white/50 transition-all duration-300 backdrop-blur-sm"
                 >
-                  <span className="font-normal tracking-wide">Scrivimi</span>
+                  <span className="font-normal tracking-wide">{t('hero.ctaContact')}</span>
                 </a>
               </div>
             </FadeIn>
@@ -112,7 +113,7 @@ export function Hero() {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
-                  aria-label="GitHub"
+                  aria-label={t('hero.ariaGitHub')}
                 >
                   <Github className="w-5 h-5" />
                 </a>
@@ -121,14 +122,14 @@ export function Hero() {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
-                  aria-label="LinkedIn"
+                  aria-label={t('hero.ariaLinkedIn')}
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
                 <a 
                   href="mailto:damiano.francesco@example.com"
                   className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
-                  aria-label="Email"
+                  aria-label={t('hero.ariaEmail')}
                 >
                   <Mail className="w-5 h-5" />
                 </a>
@@ -185,9 +186,9 @@ export function Hero() {
           <a
             href="#about"
             className="flex flex-col items-center gap-2 text-[#6B5D4F]/60 hover:text-[#6B5D4F] transition-colors"
-            aria-label="Scorri alla sezione Chi sono"
+            aria-label={t('hero.ariaScroll')}
           >
-            <span className="text-xs tracking-wider uppercase">Esplora</span>
+            <span className="text-xs tracking-wider uppercase">{t('hero.explore')}</span>
             <ChevronDown className="w-4 h-4" />
           </a>
         </div>

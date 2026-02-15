@@ -4,6 +4,7 @@ import com.portfolio.backend.controller.dto.ContactRequest;
 import com.portfolio.backend.entity.Contact;
 import com.portfolio.backend.service.ContactMailService;
 import com.portfolio.backend.service.ContactService;
+import com.portfolio.backend.util.XssSanitizer;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,11 @@ public class ContactController {
                     ));
         }
 
+        // Sanitizzazione XSS: strip HTML da campi che possono essere mostrati in admin/frontend
         Contact contact = new Contact();
-        contact.setName(request.getName());
-        contact.setEmail(request.getEmail());
-        contact.setMessage(request.getMessage());
+        contact.setName(XssSanitizer.stripHtml(request.getName()));
+        contact.setEmail(XssSanitizer.stripHtml(request.getEmail()));
+        contact.setMessage(XssSanitizer.stripHtml(request.getMessage()));
 
         Contact saved = contactService.save(contact);
         // Prova ad inviare una mail di notifica all'owner (eventuali errori sono ignorati)

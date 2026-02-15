@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
@@ -14,12 +15,16 @@ interface Post {
 }
 
 export function Blog() {
+  const { t } = useTranslation();
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  const posts: Post[] = [
+  const postsRaw = t('blog.posts', { returnObjects: true }) as { title: string; excerpt: string; reflection: string; location: string; date: string; readTime: string }[];
+  const posts: Post[] = postsRaw.map((p, i) => ({ ...p, id: i + 1 }));
+
+  const _removed = [
     {
       id: 1,
-      title: 'Imparare a programmare come una lingua',
+      title: '',
       excerpt: 'Riconoscimento di pattern, immersione e i parallelismi inaspettati tra JavaScript e l\'italiano parlato a Roma.',
       reflection: `L\'estate scorsa ho passato tre settimane a Roma. Non in un’aula, ma tra mercati, bar e vicoli: imparando l’italiano come si fa quando non hai scelta e devi parlarlo. All’inizio ogni frase suonava goffa. Poi, a poco a poco, sono emersi i pattern. Il ritmo per chiedere indicazioni. La cadenza per ordinare un caffè. Le piccole vittorie quando capivi ed eri capito.
 

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
 
 export function Contact() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,7 +15,7 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    alert('Thanks for reaching out! I will get back to you soon.');
+    alert(t('contact.submitSuccess'));
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -25,24 +27,9 @@ export function Contact() {
   };
 
   const contactInfo = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'damianofrancesco71@gmail.com',
-      link: 'mailto:damianofrancesco71@gmail.com'
-    },
-    {
-      icon: Phone,
-      label: 'Telefono',
-      value: '+39 329 242 3053',
-      link: 'tel:+39329242305'
-    },
-    {
-      icon: MapPin,
-      label: 'Dove sono',
-      value: 'Canosa di Puglia, Italia',
-      link: null
-    }
+    { icon: Mail, label: t('contact.emailLabel'), value: 'damianofrancesco71@gmail.com', link: 'mailto:damianofrancesco71@gmail.com' },
+    { icon: Phone, label: t('contact.phoneLabel'), value: '+39 329 242 3053', link: 'tel:+39329242305' },
+    { icon: MapPin, label: t('contact.whereLabel'), value: 'Canosa di Puglia, Italia', link: null }
   ];
 
   return (
@@ -65,10 +52,10 @@ export function Contact() {
             <div className="mb-20 max-w-3xl">
               <div className="inline-block h-px w-16 bg-[#D4A574] mb-6"></div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 leading-tight">
-                Mettiamoci in contatto
+                {t('contact.title')}
               </h2>
               <p className="text-xl md:text-2xl text-[#FAF9F6]/70 font-light leading-relaxed">
-                Hai un progetto in mente o vuoi solo chiacchierare? Scrivimi.
+                {t('contact.subtitle')}
               </p>
             </div>
           </ScrollReveal>
@@ -79,7 +66,7 @@ export function Contact() {
               <ScrollReveal delay={100}>
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-2xl font-light mb-8 tracking-wide">Contatti</h3>
+                    <h3 className="text-2xl font-light mb-8 tracking-wide">{t('contact.contactsTitle')}</h3>
                     <div className="space-y-6">
                       {contactInfo.map((info, idx) => {
                         const Icon = info.icon;
@@ -107,10 +94,9 @@ export function Contact() {
                   </div>
 
                   <div className="border border-[#FAF9F6]/10 p-8 bg-white/5 backdrop-blur-sm hover:border-[#FAF9F6]/20 transition-all duration-500">
-                    <h4 className="font-normal mb-3 text-[#D4A574] tracking-wide">Disponibilità</h4>
+                    <h4 className="font-normal mb-3 text-[#D4A574] tracking-wide">{t('contact.availability')}</h4>
                     <p className="text-[#FAF9F6]/70 leading-relaxed">
-                      Aperto a opportunità full-time, progetti in freelance e collaborazioni. 
-                      Tempo di risposta: 24-48 ore.
+                      {t('contact.availabilityText')}
                     </p>
                   </div>
                 </div>
@@ -123,7 +109,7 @@ export function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
-                      Nome e cognome
+                      {t('contact.formName')}
                     </label>
                     <input
                       type="text"
@@ -133,13 +119,13 @@ export function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
-                      placeholder="Il tuo nome completo"
+                      placeholder={t('contact.placeholderName')}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="email" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
-                      Email address
+                      {t('contact.formEmail')}
                     </label>
                     <input
                       type="email"
@@ -149,13 +135,13 @@ export function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
-                      placeholder="latuaemail@email.com"
+                      placeholder={t('contact.placeholderEmail')}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
-                      Messaggio
+                      {t('contact.formMessage')}
                     </label>
                     <textarea
                       id="message"
@@ -165,7 +151,7 @@ export function Contact() {
                       required
                       rows={6}
                       className="w-full px-5 py-4 bg-white/5 border border-[#FAF9F6]/10 text-[#FAF9F6] focus:border-[#D4A574]/50 focus:outline-none focus:ring-2 focus:ring-[#D4A574]/20 transition-all resize-none backdrop-blur-sm placeholder:text-[#FAF9F6]/30"
-                      placeholder="Dimmi qualcosa..."
+                      placeholder={t('contact.placeholderMessage')}
                     />
                   </div>
 
@@ -173,7 +159,7 @@ export function Contact() {
                     type="submit"
                     className="group w-full px-7 py-4 bg-[#FAF9F6] text-[#2C2416] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover-lift"
                   >
-                    <span className="font-normal tracking-wide">Invia messaggio</span>
+                    <span className="font-normal tracking-wide">{t('contact.submit')}</span>
                     <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </button>
                 </form>

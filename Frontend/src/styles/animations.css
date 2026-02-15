@@ -159,13 +159,13 @@ body {
   animation: timelineDotHint 2.5s ease-in-out infinite;
 }
 
-/* Pallino milestone (es. 2023 – partenza seria): pulse con colore scuro */
+/* Pallino milestone (es. 2023 – partenza seria): pulse giallo */
 @keyframes timelineDotHintMilestone {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(44, 36, 22, 0.25);
+    box-shadow: 0 0 0 0 rgba(230, 184, 0, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(44, 36, 22, 0);
+    box-shadow: 0 0 0 6px rgba(230, 184, 0, 0);
   }
 }
 

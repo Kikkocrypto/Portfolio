@@ -1,54 +1,14 @@
-import { Code, Database, Layers, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Code, Container, Database, Layers } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
 
+const categoryIcons = [Code, Layers, Database, Container];
+
 export function Skills() {
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      icon: Code,
-      skills: [
-        'React',
-        'TypeScript',
-        'HTML/CSS',
-        'JavaScript',
-        'Responsive Design'
-      ]
-    },
-    {
-      title: 'Backend',
-      icon: Layers,
-      skills: [
-        'Spring Boot',
-        'RESTful APIs',
-        'Authenticazione',
-        'Sicurezza',
-        'API Design',
-        'Database Design',
-        'SQL'
-      ]
-    },
-    {
-      title: 'Database',
-      icon: Database,
-      skills: [
-        'PostgreSQL',
-        'MySQL',
-        'SQLite',
-        'pgAdmin'
-      ]
-    },
-    {
-      title: 'Strumenti e DevOps',
-      icon: Sparkles,
-      skills: [
-        'Git & GitHub',
-        'Docker',
-        'CI/CD',
-        'Vite'
-      ]
-    }
-  ];
+  const { t } = useTranslation();
+  const categoriesData = t('skills.categories', { returnObjects: true }) as { title: string; skills: string[] }[];
+  const skillCategories = categoriesData.map((cat, i) => ({ ...cat, icon: categoryIcons[i] }));
 
   return (
     <section id="skills" className="py-24 md:py-32 bg-[#FAF9F6] relative">
@@ -67,10 +27,10 @@ export function Skills() {
             <div className="mb-20 max-w-3xl">
               <div className="inline-block h-px w-16 bg-[#8B9DAF] mb-6"></div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#2C2416] mb-6 leading-tight">
-                Competenze tecniche
+                {t('skills.title')}
               </h2>
               <p className="text-xl md:text-2xl text-[#6B5D4F]/70 font-light leading-relaxed">
-                Un set di strumenti per soluzioni complete
+                {t('skills.subtitle')}
               </p>
             </div>
           </ScrollReveal>

@@ -103,6 +103,13 @@
             <version>8.10.1</version>
         </dependency>
 
+        <!-- Sanitizzazione HTML per protezione XSS (strip tag da input utente) -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -141,6 +148,32 @@
                 <configuration>
                     <mavenDistributionType>only-script</mavenDistributionType>
                 </configuration>
+            </plugin>
+            <!-- OWASP Dependency-Check: scan dipendenze per CVE/vulnerabilità note -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>11.0.0</version>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Fallisce la build solo se esistono vulnerabilità con CVSS >= 7 (High/Critical) -->
+                            <failBuildOnCVSS>7</failBuildOnCVSS>
+                            <!-- Formato report: HTML in target + console summary -->
+                            <formats>
+                                <format>HTML</format>
+                                <format>JUNIT</format>
+                            </formats>
+                            <!-- Skip con: mvn verify -Ddependency-check.skip=true -->
+                            <skip>${dependency-check.skip,false}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
