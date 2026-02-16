@@ -29,6 +29,18 @@ public class AdminMessageService {
     }
 
     /**
+     * Deletes a contact message by ID. No-op if already deleted.
+     * @throws MessageNotFoundException if no contact exists with the given ID
+     */
+    @Transactional
+    public void deleteMessage(String id) {
+        if (!contactRepository.existsById(id)) {
+            throw new MessageNotFoundException();
+        }
+        contactRepository.deleteById(id);
+    }
+
+    /**
      * Returns a single contact message by ID.
      * @throws MessageNotFoundException if no contact exists with the given ID
      */
