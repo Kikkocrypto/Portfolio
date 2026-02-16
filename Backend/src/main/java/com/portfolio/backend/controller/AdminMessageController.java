@@ -6,6 +6,7 @@ import com.portfolio.backend.service.AdminMessageService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,16 @@ public class AdminMessageController {
 
     public AdminMessageController(AdminMessageService adminMessageService) {
         this.adminMessageService = adminMessageService;
+    }
+
+    /**
+     * Deletes a contact message by ID. Admin only; missing message 404.
+     */
+    @DeleteMapping("/{messageId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteMessage(@PathVariable String messageId) {
+        adminMessageService.deleteMessage(messageId);
+        return ResponseEntity.noContent().build();
     }
 
     /**

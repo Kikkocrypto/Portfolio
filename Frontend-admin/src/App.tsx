@@ -4,8 +4,10 @@ import { AuthProvider, useAuthContext } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AdminGuard } from '@/components/RoleGuard';
+import { AdminLayout } from '@/components/AdminLayout';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { MessagesPage } from '@/pages/MessagesPage';
 
 function AppRoutes() {
   const { setUnauthorized } = useAuthContext();
@@ -26,11 +28,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <AdminGuard>
-              <DashboardPage />
+              <AdminLayout />
             </AdminGuard>
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<DashboardPage />} />
+        <Route path="messages" element={<MessagesPage />} />
+      </Route>
       <Route path="/" element={<Navigate to="/admin" replace />} />
       <Route path="*" element={<Navigate to="/admin" replace />} />
     </Routes>
