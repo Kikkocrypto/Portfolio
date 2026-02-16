@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,19 +42,28 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Page<Post> findAllWithTranslations(Pageable pageable) {
-        Page<Post> page = postRepository.findAllByOrderByCreatedAtDesc(pageable);
-        if (page.getContent().isEmpty()) return page;
-        List<String> ids = page.getContent().stream().map(Post::getId).toList();
-        List<Post> withTrans = postRepository.findByIdInOrderByCreatedAtDesc(ids);
-        return new PageImpl<>(withTrans, page.getPageable(), page.getTotalElements());
+        return findAllWithTranslationsForAdmin(null, null, pageable);
     }
 
     @Transactional(readOnly = true)
     public Page<Post> findAllWithTranslationsByStatus(String status, Pageable pageable) {
-        Page<Post> page = postRepository.findAllByStatusOrderByCreatedAtDesc(status, pageable);
+        return findAllWithTranslationsForAdmin(status, null, pageable);
+    }
+
+    /**
+     * Lista admin con ordinamento: prima published, poi per createdAt desc; filtri opzionali status e ricerca per titolo.
+     */
+    @Transactional(readOnly = true)
+    public Page<Post> findAllWithTranslationsForAdmin(String status, String titleSearch, Pageable pageable) {
+        String normalizedTitle = (titleSearch != null && !titleSearch.isBlank()) ? titleSearch.trim() : null;
+        String normalizedStatus = (status != null && !status.isBlank()) ? status.trim() : null;
+        Page<Post> page = postRepository.findForAdminOrderByPublishedFirst(normalizedTitle, normalizedStatus, pageable);
         if (page.getContent().isEmpty()) return page;
         List<String> ids = page.getContent().stream().map(Post::getId).toList();
         List<Post> withTrans = postRepository.findByIdInOrderByCreatedAtDesc(ids);
+        Map<String, Integer> order = new java.util.HashMap<>();
+        for (int i = 0; i < ids.size(); i++) order.put(ids.get(i), i);
+        withTrans.sort(Comparator.comparingInt(p -> order.getOrDefault(p.getId(), Integer.MAX_VALUE)));
         return new PageImpl<>(withTrans, page.getPageable(), page.getTotalElements());
     }
 
@@ -152,6 +162,7 @@ public class PostService {
 
     @Transactional
     public void deleteById(String id) {
+        postTranslationRepository.deleteByPostId(id);
         postRepository.deleteById(id);
     }
 

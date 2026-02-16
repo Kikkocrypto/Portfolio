@@ -63,39 +63,48 @@ function createExcerpt(content: string, maxLength: number = 200): string {
 }
 
 /**
- * Selects the appropriate translation based on current language.
- * Falls back to English, then to first available translation.
- * 
+ * Result of selecting a translation, with optional fallback info.
+ */
+interface SelectTranslationResult {
+  translation: PostTranslation;
+  /** Lingua richiesta dall'utente per cui non esiste traduzione (se abbiamo usato fallback). */
+  requestedLocaleNotAvailable: string | null;
+}
+
+/**
+ * Selects the translation: current language, then fallback to English, then first available.
+ * When fallback is used, requestedLocaleNotAvailable is set so the UI can show a notice.
+ *
  * @param translations - Array of post translations
  * @param currentLang - Current i18n language code
- * @returns Selected translation or null if none available
+ * @returns Selected translation and fallback flag, or null if no translation at all
  */
 function selectTranslation(
   translations: PostTranslation[],
   currentLang: string
-): PostTranslation | null {
+): SelectTranslationResult | null {
   if (!translations || translations.length === 0) {
     return null;
   }
 
-  // 1. Try current language
   const currentLangTranslation = translations.find(
     (t) => t.locale.toLowerCase() === currentLang.toLowerCase()
   );
   if (currentLangTranslation) {
-    return currentLangTranslation;
+    return { translation: currentLangTranslation, requestedLocaleNotAvailable: null };
   }
 
-  // 2. Fallback to English
   const englishTranslation = translations.find(
     (t) => t.locale.toLowerCase() === 'en'
   );
   if (englishTranslation) {
-    return englishTranslation;
+    return { translation: englishTranslation, requestedLocaleNotAvailable: currentLang };
   }
 
-  // 3. Fallback to first available translation
-  return translations[0];
+  return {
+    translation: translations[0],
+    requestedLocaleNotAvailable: currentLang,
+  };
 }
 
 /**
@@ -110,12 +119,13 @@ export function mapBackendPostToUIPost(
   backendPost: PostBackendResponse,
   currentLang: string
 ): Post | null {
-  const translation = selectTranslation(backendPost.translations, currentLang);
+  const result = selectTranslation(backendPost.translations, currentLang);
   
-  if (!translation) {
+  if (!result) {
     return null;
   }
 
+  const { translation, requestedLocaleNotAvailable } = result;
   return {
     id: backendPost.id,
     slug: translation.slug || backendPost.slug || '',
@@ -126,6 +136,9 @@ export function mapBackendPostToUIPost(
     locale: translation.locale,
     createdAt: backendPost.createdAt,
     readTime: estimateReadTime(translation.content),
+    ...(requestedLocaleNotAvailable && {
+      translationNotAvailableForLocale: requestedLocaleNotAvailable,
+    }),
   };
 }
 
@@ -224,23 +237,24 @@ export async function fetchAllPosts(signal?: AbortSignal): Promise<PostBackendRe
  * @param signal - AbortSignal for request cancellation
  * @returns Array of UI-ready Post objects
  */
+function getSortDate(post: PostBackendResponse): number {
+  const updated = post.updatedAt?.trim();
+  const iso = updated || post.createdAt || '';
+  const t = new Date(iso).getTime();
+  return Number.isNaN(t) ? 0 : t;
+}
+
 export async function fetchPostsForLanguage(
   currentLang: string,
   signal?: AbortSignal
 ): Promise<Post[]> {
   const backendPosts = await fetchAllPosts(signal);
-  
-  return backendPosts
+  // Ordine: ultima modifica (updatedAt), fallback su data di creazione (createdAt), più recenti prima
+  const sorted = [...backendPosts].sort((a, b) => getSortDate(b) - getSortDate(a));
+
+  return sorted
     .map((post) => mapBackendPostToUIPost(post, currentLang))
-    .filter((post): post is Post => post !== null)
-    .sort((a, b) => {
-      // Sort by date descending (newest first)
-      try {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      } catch {
-        return 0;
-      }
-    });
+    .filter((post): post is Post => post !== null);
 }
 
 /**

@@ -186,7 +186,7 @@ export function Projects() {
                     >
                       <Github className="w-5 h-5" />
                       <span className="text-sm tracking-wide link-underline">
-                        Vedi codice
+                        {t('projects.viewCode')}
                       </span>
                     </a>
                     <a 
@@ -197,7 +197,7 @@ export function Projects() {
                     >
                       <ExternalLink className="w-5 h-5" />
                       <span className="text-sm tracking-wide link-underline">
-                        Vai al sito
+                        {t('projects.visitSite')}
                       </span>
                     </a>
                   </div>

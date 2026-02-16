@@ -80,11 +80,12 @@ export function ReflectionPostPage() {
           </header>
 
           <div className="prose prose-lg max-w-none">
-            <div className="text-lg md:text-xl text-[#3D3122]/90 leading-relaxed font-light space-y-6">
-              {post.reflection.split('\n\n').map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
+            <div
+              className="text-lg md:text-xl text-[#3D3122]/90 leading-relaxed font-light space-y-6"
+              dangerouslySetInnerHTML={{
+                __html: typeof post.content === 'string' ? post.content : '',
+              }}
+            />
           </div>
 
           <footer className="mt-20 pt-12 border-t border-[#D4A574]/10">

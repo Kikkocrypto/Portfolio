@@ -25,13 +25,19 @@ export function AdminLayout() {
     <div style={{ minHeight: '100vh', background: 'var(--admin-bg, #f5f0e8)', display: 'flex' }}>
       <aside
         style={{
+          position: 'sticky',
+          top: 0,
+          alignSelf: 'flex-start',
           width: SIDEBAR_WIDTH,
           minWidth: SIDEBAR_WIDTH,
+          height: '100vh',
+          maxHeight: '100vh',
           background: 'var(--admin-card, #ebe6dc)',
           borderRight: '1px solid var(--admin-border, #d4cdc0)',
           display: 'flex',
           flexDirection: 'column',
           flexShrink: 0,
+          overflowY: 'auto',
         }}
       >
         <div
@@ -61,6 +67,9 @@ export function AdminLayout() {
           </Link>
           <Link to={`${base}/audit-logs`} style={{ ...linkStyle(`${base}/audit-logs`), margin: '0 0.5rem' }}>
             Log di audit
+          </Link>
+          <Link to={`${base}/posts`} style={{ ...linkStyle(`${base}/posts`), margin: '0 0.5rem' }}>
+            Articoli
           </Link>
         </nav>
         <div
