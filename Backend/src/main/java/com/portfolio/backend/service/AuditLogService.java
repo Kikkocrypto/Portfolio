@@ -4,13 +4,16 @@ import com.portfolio.backend.controller.dto.AuditLogResponse;
 import com.portfolio.backend.entity.AuditLog;
 import com.portfolio.backend.exception.AuditLogNotFoundException;
 import com.portfolio.backend.repository.AuditLogRepository;
+import com.portfolio.backend.repository.AuditLogSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -102,9 +105,32 @@ public class AuditLogService {
      */
     @Transactional(readOnly = true)
     public Page<AuditLogResponse> getAuditLogs(int page) {
+        return getAuditLogs(page, null, null, null, null);
+    }
+
+    /**
+     * Returns a page of audit logs with optional filters, ordered by timestamp DESC.
+     *
+     * @param page     0-based page index
+     * @param action   optional exact action filter (e.g. LOGIN_FAILURE)
+     * @param actor    optional substring match on actor (e.g. user email)
+     * @param dateFrom optional start of timestamp range (inclusive)
+     * @param dateTo   optional end of timestamp range (inclusive)
+     */
+    @Transactional(readOnly = true)
+    public Page<AuditLogResponse> getAuditLogs(int page, String action, String actor,
+                                                Instant dateFrom, Instant dateTo) {
         int safePage = Math.max(0, page);
         Pageable pageable = PageRequest.of(safePage, AUDIT_LOGS_PAGE_SIZE);
-        return auditLogRepository.findAllByOrderByCreatedAtDesc(pageable).map(this::toAuditLogResponse);
+        boolean hasFilters = (action != null && !action.isBlank())
+                || (actor != null && !actor.isBlank())
+                || dateFrom != null
+                || dateTo != null;
+        if (!hasFilters) {
+            return auditLogRepository.findAllByOrderByCreatedAtDesc(pageable).map(this::toAuditLogResponse);
+        }
+        Specification<AuditLog> spec = AuditLogSpecification.withFilters(action, actor, dateFrom, dateTo);
+        return auditLogRepository.findAll(spec, pageable).map(this::toAuditLogResponse);
     }
 
     private AuditLogResponse toAuditLogResponse(AuditLog log) {

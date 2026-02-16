@@ -8,6 +8,7 @@ import { AdminLayout } from '@/components/AdminLayout';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { MessagesPage } from '@/pages/MessagesPage';
+import { AuditLogsPage } from '@/pages/AuditLogsPage';
 
 function AppRoutes() {
   const { setUnauthorized } = useAuthContext();
@@ -35,6 +36,7 @@ function AppRoutes() {
       >
         <Route index element={<DashboardPage />} />
         <Route path="messages" element={<MessagesPage />} />
+        <Route path="audit-logs" element={<AuditLogsPage />} />
       </Route>
       <Route path="/" element={<Navigate to="/admin" replace />} />
       <Route path="*" element={<Navigate to="/admin" replace />} />
