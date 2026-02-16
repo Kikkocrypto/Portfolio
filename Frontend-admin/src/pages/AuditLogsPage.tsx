@@ -7,7 +7,6 @@ import {
 } from 'react';
 import { getAuditLogs } from '@/api/auditLogsService';
 import { useToastContext } from '@/context/ToastContext';
-import { DataRetentionNextRun } from '@/components/DataRetentionNextRun';
 import type { AuditLogEntry } from '@/types/auditLogs';
 
 const CRITICAL_ACTIONS = new Set(['DELETE', 'DELETE_MESSAGE', 'LOGIN_FAILED', 'LOGIN_FAILURE']);
@@ -160,9 +159,6 @@ export function AuditLogsPage() {
       >
         Solo lettura. I log non possono essere modificati né eliminati da questa interfaccia.
       </p>
-      <div style={{ marginBottom: '1.25rem' }}>
-        <DataRetentionNextRun />
-      </div>
 
       {/* Filters */}
       <div

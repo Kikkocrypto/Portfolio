@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { ScrollReveal } from '../../components/motion';
 import { STAGGER } from '../../constants/motion';
+import type { Post } from '../types/post';
 import { usePosts } from '../hooks/usePosts';
 import { useToast } from '../hooks/useToast.tsx';
 import { BlogPostListSkeleton } from './BlogPostSkeleton';
@@ -45,10 +46,9 @@ export function Blog() {
     }
   }, [error, showToast, t]);
 
-  const handlePostClick = (postSlug: string) => {
-    // Navigate to post detail page
-    // Security: slug is already validated by backend response validation
-    navigate(`/blog/${encodeURIComponent(postSlug)}`);
+  const handlePostClick = (post: Post) => {
+    // Pass post in state so detail page can show it without fetching (avoids 404 for fallback locale)
+    navigate(`/blog/${encodeURIComponent(post.slug)}`, { state: { post } });
   };
 
   return (
@@ -97,7 +97,7 @@ export function Blog() {
                 {posts.map((post, index) => (
                   <ScrollReveal key={post.id} delay={index * STAGGER.comfortable}>
                     <article
-                      onClick={() => handlePostClick(post.slug)}
+                      onClick={() => handlePostClick(post)}
                       className="group cursor-pointer py-12 border-t border-[#D4A574]/10 hover:border-[#D4A574]/30 transition-all duration-500"
                     >
                       <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -126,6 +126,12 @@ export function Blog() {
                           <p className="text-lg md:text-xl text-[#6B5D4F]/70 leading-relaxed font-light group-hover:text-[#6B5D4F]/80 transition-colors duration-500">
                             {post.excerpt}
                           </p>
+
+                          {post.translationNotAvailableForLocale && (
+                            <p className="text-xs text-[#6B5D4F]/60 italic">
+                              {t('blog.translationNotAvailable')}
+                            </p>
+                          )}
 
                           <div className="flex items-center gap-3 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                             <span className="text-sm text-[#2C2416] tracking-wide link-underline">

@@ -227,6 +227,7 @@
     "backToReflections": "Back to reflections",
     "readOtherReflections": "Read more reflections",
     "readTimeLabel": "read",
+    "translationNotAvailable": "Translation not available in selected language.",
     "footerNote": "These reflections are the result of a long journey of personal and professional growth. They are not tutorials or guides, just thoughts on what I've learned along the way and am still learning every day. They are here to inspire and grow with you.",
     "empty": {
       "title": "No reflections yet",

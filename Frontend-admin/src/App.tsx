@@ -9,6 +9,9 @@ import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { MessagesPage } from '@/pages/MessagesPage';
 import { AuditLogsPage } from '@/pages/AuditLogsPage';
+import { BlogListPage } from '@/pages/BlogListPage';
+import { BlogEditPage } from '@/pages/BlogEditPage';
+import { BlogCreatePage } from '@/pages/BlogCreatePage';
 
 function AppRoutes() {
   const { setUnauthorized } = useAuthContext();
@@ -37,6 +40,9 @@ function AppRoutes() {
         <Route index element={<DashboardPage />} />
         <Route path="messages" element={<MessagesPage />} />
         <Route path="audit-logs" element={<AuditLogsPage />} />
+        <Route path="posts" element={<BlogListPage />} />
+        <Route path="posts/new" element={<BlogCreatePage />} />
+        <Route path="posts/:id/edit" element={<BlogEditPage />} />
       </Route>
       <Route path="/" element={<Navigate to="/admin" replace />} />
       <Route path="*" element={<Navigate to="/admin" replace />} />

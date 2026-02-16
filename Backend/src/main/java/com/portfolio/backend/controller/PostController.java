@@ -38,10 +38,10 @@ public class PostController {
     @GetMapping
     public ResponseEntity<Page<Post>> list(
             @RequestParam(required = false) String status,
-            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Post> page = (status != null && !status.isBlank())
-                ? postService.findAllWithTranslationsByStatus(normalizeStatus(status), pageable)
-                : postService.findAllWithTranslations(pageable);
+            @RequestParam(required = false) String title,
+            @PageableDefault(size = 100, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        String statusFilter = (status != null && !status.isBlank()) ? normalizeStatus(status) : null;
+        Page<Post> page = postService.findAllWithTranslationsForAdmin(statusFilter, title, pageable);
         return ResponseEntity.ok(page);
     }
 
@@ -99,6 +99,17 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Map.of("success", true, "post", postWithTranslations));
     }
+    // Elimina post e relative traduzioni.
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        if (postService.findById(id).isEmpty()) {
+            return ApiErrorUtil.notFound("Post non trovato con id: " + id);
+        }
+        postService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // Aggiorna post. Slug: da titolo prima traduzione se presenti, altrimenti da request. Slug traduzioni: da titolo se non fornito.
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @Valid @RequestBody UpdatePostRequest request) {

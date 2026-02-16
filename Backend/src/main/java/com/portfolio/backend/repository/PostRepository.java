@@ -26,6 +26,22 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
     Page<Post> findAllByStatusOrderByCreatedAtDesc(String status, Pageable pageable);
 
+    /**
+     * Lista admin: ordinamento published prima, poi createdAt desc; filtri opzionali status e titolo (in qualsiasi traduzione).
+     */
+    @Query("""
+           SELECT p FROM Post p
+           WHERE (:statusFilter IS NULL OR :statusFilter = '' OR p.status = :statusFilter)
+             AND (:titleSearch IS NULL OR :titleSearch = '' OR EXISTS (
+               SELECT 1 FROM PostTranslation t WHERE t.post = p AND LOWER(t.title) LIKE LOWER(CONCAT('%', :titleSearch, '%'))
+             ))
+           ORDER BY CASE WHEN p.status = 'published' THEN 0 ELSE 1 END, p.createdAt DESC
+           """)
+    Page<Post> findForAdminOrderByPublishedFirst(
+            @Param("titleSearch") String titleSearch,
+            @Param("statusFilter") String statusFilter,
+            Pageable pageable);
+
     @Query("SELECT p FROM Post p LEFT JOIN FETCH p.translations WHERE p.id IN :ids ORDER BY p.createdAt DESC")
     List<Post> findByIdInOrderByCreatedAtDesc(@Param("ids") List<String> ids);
 

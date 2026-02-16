@@ -12,6 +12,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,6 +98,18 @@ public class GlobalExceptionHandler {
         ApiError apiError = new ApiError(HttpStatus.FORBIDDEN.value(),
                 "Accesso negato. Non hai i permessi per questa risorsa.");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiError);
+    }
+
+    /**
+     * Nessun controller ha gestito il path richiesto (Spring Boot 3.2+).
+     * Restituisce 404 invece di 500 per evitare log di errore fuorvianti.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ApiError> handleNoResourceFound(NoResourceFoundException ex) {
+        log.warn("Richiesta senza handler: {} {}", ex.getHttpMethod(), ex.getResourcePath());
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND.value(),
+                "Endpoint o risorsa non trovata.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
     /**

@@ -38,6 +38,8 @@ export interface Post {
   createdAt: string;
   readTime?: string;
   location?: string;
+  /** Se impostato, la traduzione nella lingua richiesta non era disponibile; il post è mostrato in fallback (es. inglese). */
+  translationNotAvailableForLocale?: string;
 }
 
 /**
