@@ -1,0 +1,34 @@
+:root {
+  --admin-bg: #f5f0e8;
+  --admin-card: #ebe6dc;
+  --admin-border: #d4cdc0;
+  --admin-text: #3d3832;
+  --admin-muted: #6b6560;
+  --admin-accent: #7d6e5c;
+  --admin-error: #8b4513;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
