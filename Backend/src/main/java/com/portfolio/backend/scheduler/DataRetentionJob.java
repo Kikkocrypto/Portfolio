@@ -1,5 +1,6 @@
 package com.portfolio.backend.scheduler;
 
+import com.portfolio.backend.service.DataRetentionScheduleHolder;
 import com.portfolio.backend.service.DataRetentionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class DataRetentionJob {
     private static final Logger log = LoggerFactory.getLogger(DataRetentionJob.class);
 
     private final DataRetentionService dataRetentionService;
+    private final DataRetentionScheduleHolder scheduleHolder;
 
     /**
      * Retention in giorni: record con {@code createdAt} più vecchio vengono eliminati.
@@ -35,8 +37,10 @@ public class DataRetentionJob {
     /** Lock per evitare esecuzioni concorrenti (thread-safe). */
     private final AtomicBoolean running = new AtomicBoolean(false);
 
-    public DataRetentionJob(DataRetentionService dataRetentionService) {
+    public DataRetentionJob(DataRetentionService dataRetentionService,
+                            DataRetentionScheduleHolder scheduleHolder) {
         this.dataRetentionService = dataRetentionService;
+        this.scheduleHolder = scheduleHolder;
     }
 
     /**
@@ -62,6 +66,7 @@ public class DataRetentionJob {
             log.error("Data retention job failed", e);
         } finally {
             running.set(false);
+            scheduleHolder.updateNextRun(Instant.now());
         }
     }
 

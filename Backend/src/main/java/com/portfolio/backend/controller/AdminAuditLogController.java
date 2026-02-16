@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
+
 /**
  * REST controller for admin-only retrieval of audit logs.
  * Requires JWT and role ADMIN. Audit logs are read-only.
@@ -39,13 +44,19 @@ public class AdminAuditLogController {
 
     /**
      * Returns paginated audit logs ordered by timestamp DESC.
-     * Page size is fixed to 20; page index defaults to 0.
+     * Optional filters: action (exact), userEmail (substring on actor), dateFrom, dateTo (ISO date or date-time).
      */
     @GetMapping
     public ResponseEntity<PagedAuditLogsResponse> getAuditLogs(
-            @RequestParam(defaultValue = "0") int page) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) String action,
+            @RequestParam(required = false) String userEmail,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo) {
         int safePage = Math.max(0, page);
-        Page<AuditLogResponse> logs = auditLogService.getAuditLogs(safePage);
+        Instant from = parseDateParam(dateFrom, true);
+        Instant to = parseDateParam(dateTo, false);
+        Page<AuditLogResponse> logs = auditLogService.getAuditLogs(safePage, action, userEmail, from, to);
         PagedAuditLogsResponse body = PagedAuditLogsResponse.builder()
                 .content(logs.getContent())
                 .totalPages(logs.getTotalPages())
@@ -56,5 +67,20 @@ public class AdminAuditLogController {
                 .last(logs.isLast())
                 .build();
         return ResponseEntity.ok(body);
+    }
+
+    /** Parse date string (YYYY-MM-DD or ISO-8601) to start-of-day or end-of-day Instant. Returns null on invalid. */
+    private static Instant parseDateParam(String value, boolean startOfDay) {
+        if (value == null || value.isBlank()) return null;
+        try {
+            if (value.length() <= 10) {
+                LocalDate d = LocalDate.parse(value.trim());
+                return startOfDay ? d.atStartOfDay(ZoneOffset.UTC).toInstant()
+                        : d.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant().minusNanos(1);
+            }
+            return Instant.parse(value.trim());
+        } catch (DateTimeParseException e) {
+            return null;
+        }
     }
 }

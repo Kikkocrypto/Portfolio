@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { getMessages, deleteMessage } from '@/api/messagesService';
 import { useToastContext } from '@/context/ToastContext';
+import { DataRetentionNextRun } from '@/components/DataRetentionNextRun';
 import type { AdminMessage } from '@/types/messages';
 
 function formatDate(iso: string): string {
@@ -141,9 +142,12 @@ export function MessagesPage() {
 
   return (
     <div style={{ padding: '1.5rem 2rem', maxWidth: 960, margin: '0 auto' }}>
-      <h1 style={{ margin: '0 0 1rem', fontSize: '1.5rem', color: 'var(--admin-text, #3d3832)' }}>
+      <h1 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem', color: 'var(--admin-text, #3d3832)' }}>
         Messaggi di contatto
       </h1>
+      <div style={{ marginBottom: '1rem' }}>
+        <DataRetentionNextRun />
+      </div>
 
       {loading && memoizedList.length === 0 && (
         <p style={{ color: 'var(--admin-muted, #6b6560)' }}>Caricamento…</p>
