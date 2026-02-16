@@ -23,11 +23,11 @@ spring:
 # ---------------------------------------------------------------------------
 # CORS (origini consentite per richieste browser cross-origin)
 # ---------------------------------------------------------------------------
-# In produzione impostare CORS_ALLOWED_ORIGINS (es. https://tuodomain.com).
-# Separare più origini con virgola (es. https://app.example.com,https://www.example.com).
+# In SecurityConfig: se CORS_ALLOWED_ORIGINS è impostata in .env, viene usata;
+# altrimenti le origini sono costruite da FRONTEND_URL + ADMIN_FRONTEND_URL (.env).
+# Nessun URL hardcoded nel codice.
 app:
-  cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+  cors: {}
 
   # ---------------------------------------------------------------------------
   # Data retention (cancellazione automatica dati vecchi)

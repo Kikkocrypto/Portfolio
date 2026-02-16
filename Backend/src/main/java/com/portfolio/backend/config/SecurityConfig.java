@@ -29,6 +29,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -46,8 +47,14 @@ public class SecurityConfig {
     private final AdminMessagesRateLimitFilter adminMessagesRateLimitFilter;
     private final ObjectMapper objectMapper;
 
-    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000}")
-    private String corsAllowedOrigins;
+    @Value("${CORS_ALLOWED_ORIGINS:}")
+    private String corsAllowedOriginsEnv;
+
+    @Value("${FRONTEND_URL:}")
+    private String frontendUrl;
+
+    @Value("${ADMIN_FRONTEND_URL:}")
+    private String adminFrontendUrl;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
                           ContactRateLimitFilter contactRateLimitFilter,
@@ -65,14 +72,32 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        List<String> origins = resolveCorsOrigins();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(false);
-        config.setAllowedOrigins(Arrays.asList(corsAllowedOrigins.split(",\\s*")));
+        config.setAllowedOrigins(origins);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", config);
         return source;
+    }
+
+    /**
+     * Origini CORS: da CORS_ALLOWED_ORIGINS (lista separata da virgola) se impostata,
+     * altrimenti da FRONTEND_URL e ADMIN_FRONTEND_URL (.env). Nessun URL hardcoded.
+     */
+    private List<String> resolveCorsOrigins() {
+        if (corsAllowedOriginsEnv != null && !corsAllowedOriginsEnv.isBlank()) {
+            return Arrays.stream(corsAllowedOriginsEnv.split(",\\s*"))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+        }
+        return Stream.of(frontendUrl, adminFrontendUrl)
+                .filter(s -> s != null && !s.isBlank())
+                .map(String::trim)
+                .toList();
     }
 
     @Bean

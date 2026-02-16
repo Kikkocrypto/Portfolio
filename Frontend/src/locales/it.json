@@ -163,6 +163,7 @@
       "emailRequired": "L'email è obbligatoria.",
       "emailInvalid": "Inserisci un'email valida (es. nome@dominio.com).",
       "emailTooLong": "Massimo 255 caratteri.",
+      "emailValid": "Email valida.",
       "messageRequired": "Il messaggio è obbligatorio.",
       "messageTooShort": "Inserisci almeno 10 caratteri.",
       "messageTooLong": "Massimo 10.000 caratteri."

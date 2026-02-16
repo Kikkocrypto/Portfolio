@@ -40,6 +40,10 @@ export function Contact() {
     message: false,
   });
 
+  /** Email: validazione in tempo reale (attiva da primo carattere o da blur). */
+  const emailValidationActive = touched.email || formData.email.length > 0;
+  const emailValid = formData.email.trim() && isValidEmail(formData.email) && formData.email.length < MAX_EMAIL_LENGTH;
+
   const fieldErrors = {
     name:
       touched.name && !formData.name.trim()
@@ -49,13 +53,14 @@ export function Contact() {
           : touched.name && formData.name.length >= MAX_NAME_LENGTH
             ? t('contact.validation.nameTooLong')
             : null,
-    email:
-      touched.email && !formData.email.trim()
+    email: !emailValidationActive
+      ? null
+      : !formData.email.trim()
         ? t('contact.validation.emailRequired')
-        : touched.email && formData.email.trim() && !isValidEmail(formData.email)
-          ? t('contact.validation.emailInvalid')
-          : touched.email && formData.email.length >= MAX_EMAIL_LENGTH
-            ? t('contact.validation.emailTooLong')
+        : formData.email.length >= MAX_EMAIL_LENGTH
+          ? t('contact.validation.emailTooLong')
+          : !isValidEmail(formData.email)
+            ? t('contact.validation.emailInvalid')
             : null,
     message:
       touched.message && !formData.message.trim()
@@ -262,6 +267,11 @@ export function Contact() {
                   <div>
                     <label htmlFor="email" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
                       {t('contact.formEmail')}
+                      {emailValid && (
+                        <span id="email-valid" className="ml-2 text-emerald-400 text-xs font-normal" aria-live="polite">
+                          ✓ {t('contact.validation.emailValid')}
+                        </span>
+                      )}
                     </label>
                     <input
                       type="email"
@@ -272,19 +282,26 @@ export function Contact() {
                       onBlur={() => handleBlur('email')}
                       required
                       disabled={loading}
-                      maxLength={255}
+                      maxLength={MAX_EMAIL_LENGTH}
                       aria-invalid={!!fieldErrors.email}
-                      aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                      aria-describedby={fieldErrors.email ? 'email-error' : emailValid ? 'email-valid' : undefined}
                       className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
                         fieldErrors.email
                           ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
-                          : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
+                          : emailValid
+                            ? 'border-emerald-500/50 focus:border-emerald-500/50 focus:ring-emerald-500/20'
+                            : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
                       }`}
                       placeholder={t('contact.placeholderEmail')}
                     />
                     {fieldErrors.email && (
                       <p id="email-error" className="mt-1.5 text-sm text-red-400" role="alert">
                         {fieldErrors.email}
+                      </p>
+                    )}
+                    {formData.email.length > 200 && (
+                      <p className="mt-1.5 text-sm text-[#FAF9F6]/50" aria-live="polite">
+                        {formData.email.length}/{MAX_EMAIL_LENGTH}
                       </p>
                     )}
                   </div>
