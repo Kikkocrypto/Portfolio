@@ -1,6 +1,7 @@
 {
   "header": {
     "menuAria": "Apri/chiudi menu",
+    "language": "Lingua",
     "nav": {
       "about": "Chi sono",
       "skills": "Competenze",
@@ -21,7 +22,9 @@
     "ariaScroll": "Scorri alla sezione Chi sono",
     "ariaGitHub": "GitHub",
     "ariaLinkedIn": "LinkedIn",
-    "ariaEmail": "Email"
+    "ariaEmail": "Email",
+    "portraitReveal": "Chi c'è dall'altra parte? Tocca e scoprilo",
+    "portraitRevealed": "Eccomi!"
   },
   "about": {
     "title": "Chi sono",
@@ -127,8 +130,8 @@
     "translationNotAvailable": "Traduzione nella lingua selezionata non disponibile.",
     "footerNote": "Queste riflessioni sono il risultato di un percorso di crescita, durato molti anni, di sviluppo personale e professionale. Non sono tutorial o guide, solo pensieri su ciò che ho imparato lungo la strada e che sto imparando ogni giorno. Sono qui per ispirare e crescere insieme a voi.",
     "empty": {
-      "title": "Nessuna riflessione disponibile",
-      "description": "Torna presto per nuove storie e approfondimenti."
+      "title": "Qui per ora c'è solo silenzio... e un po' di polvere digitale.",
+      "description": "Le riflessioni stanno ancora facendo i bagagli. Torna a dare un'occhiata!"
     },
     "errors": {
       "apiNotConfigured": "API non configurata. Controlla le impostazioni dell'ambiente.",
@@ -193,6 +196,8 @@
     "navSkills": "Competenze",
     "navProjects": "Progetti",
     "navBlog": "Blog",
-    "navContact": "Contatti"
+    "navContact": "Contatti",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy"
   }
 }

@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useToastContext } from '@/context/ToastContext';
 import { BACKEND_UNREACHABLE_MESSAGE } from '@/api/auth';
@@ -22,6 +22,7 @@ export function LoginPage() {
   const failureCountRef = useRef(0);
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/admin';
+  const passwordResetSuccess = (location.state as { passwordResetSuccess?: boolean })?.passwordResetSuccess;
   const isLockedOut = lockoutUntil > Date.now();
 
   const handleSubmit = useCallback(
@@ -102,6 +103,11 @@ export function LoginPage() {
             className="login-input"
           />
 
+          {passwordResetSuccess && (
+            <p className="login-success" role="status">
+              Password aggiornata. Accedi con la nuova password.
+            </p>
+          )}
           {error && (
             <p className="login-error" role="alert">
               {error}
@@ -115,6 +121,10 @@ export function LoginPage() {
           >
             {isSubmitting ? 'Signing in…' : isLockedOut ? 'Wait…' : 'Sign in'}
           </button>
+
+          <Link to="/admin/forgot-password" className="login-link">
+            Recupera password
+          </Link>
         </form>
       </div>
 
@@ -189,6 +199,7 @@ export function LoginPage() {
         .login-button {
           margin-top: 0.25rem;
           padding: 0.65rem 1rem;
+          min-height: 44px;
           font-size: 1rem;
           font-weight: 500;
           color: #fff;
@@ -203,6 +214,20 @@ export function LoginPage() {
         .login-button:disabled {
           opacity: 0.7;
           cursor: not-allowed;
+        }
+        .login-link {
+          margin-top: 0.5rem;
+          font-size: 0.9rem;
+          color: var(--admin-accent);
+          text-decoration: none;
+        }
+        .login-link:hover {
+          text-decoration: underline;
+        }
+        .login-success {
+          margin: 0;
+          font-size: 0.9rem;
+          color: #2d6a2d;
         }
       `}</style>
     </div>

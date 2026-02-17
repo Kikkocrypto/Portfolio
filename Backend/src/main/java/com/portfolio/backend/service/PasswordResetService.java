@@ -47,7 +47,7 @@ public class PasswordResetService {
     @Value("${app.password-reset.token-expiration-minutes:60}")
     private int tokenExpirationMinutes;
 
-    @Value("${app.password-reset.frontend-url:http://localhost:3000}")
+    @Value("${app.password-reset.frontend-url:http://localhost:5173}")
     private String frontendUrl;
 
     @Value("${app.password-reset.email-enabled:false}")

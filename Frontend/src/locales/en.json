@@ -1,6 +1,7 @@
 {
   "header": {
     "menuAria": "Open/close menu",
+    "language": "Language",
     "nav": {
       "about": "About",
       "skills": "Skills",
@@ -21,7 +22,9 @@
     "ariaScroll": "Scroll to About section",
     "ariaGitHub": "GitHub",
     "ariaLinkedIn": "LinkedIn",
-    "ariaEmail": "Email"
+    "ariaEmail": "Email",
+    "portraitReveal": "Who's on the other side? Tap to find out",
+    "portraitRevealed": "That's me!"
   },
   "about": {
     "title": "About me",
@@ -230,8 +233,8 @@
     "translationNotAvailable": "Translation not available in selected language.",
     "footerNote": "These reflections are the result of a long journey of personal and professional growth. They are not tutorials or guides, just thoughts on what I've learned along the way and am still learning every day. They are here to inspire and grow with you.",
     "empty": {
-      "title": "No reflections yet",
-      "description": "Check back soon for new stories and insights."
+      "title": "Nothing here yet—just a few digital tumbleweeds.",
+      "description": "The thoughts are still brewing. Grab a coffee and check back soon!"
     },
     "errors": {
       "apiNotConfigured": "API not configured. Please check your environment settings.",
@@ -296,6 +299,8 @@
     "navSkills": "Skills",
     "navProjects": "Projects",
     "navBlog": "Blog",
-    "navContact": "Contact"
+    "navContact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy"
   }
 }

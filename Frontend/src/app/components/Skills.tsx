@@ -20,7 +20,7 @@ export function Skills() {
         }}
       ></div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <ScrollReveal>

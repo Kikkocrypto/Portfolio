@@ -16,10 +16,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-  # Profilo dev disattivato. Per attivarlo: mvn spring-boot:run -Dspring-boot.run.profiles=dev
-  # profiles:
-  #   active: dev
-
 # ---------------------------------------------------------------------------
 # CORS (origini consentite per richieste browser cross-origin)
 # ---------------------------------------------------------------------------
@@ -45,7 +41,7 @@ app:
     token-expiration-minutes: 60
     # Cron per pulizia token scaduti (ogni giorno alle 3:00 AM)
     cleanup-cron: "0 0 3 * * ?"
-    # URL frontend per costruire link di reset (es. https://tuodomain.com)
-    frontend-url: ${FRONTEND_URL:http://localhost:3000}
+    # URL dell'app admin per il link nella mail (deve essere la base dell'admin, es. https://admin.tuodomain.com o http://localhost:5173)
+    frontend-url: ${ADMIN_FRONTEND_URL:}
     # Abilita invio email (false = solo log, true = invia email via SMTP)
     email-enabled: ${PASSWORD_RESET_EMAIL_ENABLED:true}
