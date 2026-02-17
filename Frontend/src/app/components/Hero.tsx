@@ -1,28 +1,22 @@
-import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ArrowRight, Github, Linkedin, Mail, ChevronDown, Sparkles } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FadeIn } from '../../components/motion';
 import { DURATION, EASE } from '../../constants/motion';
+import { useIsMobile } from './ui/use-mobile';
 
-// Immagine hero: file in public/hero-portrait.jpeg (o in src/assets se usi import)
 const HERO_PORTRAIT_SRC = '/hero-portrait.jpeg';
 
 export function Hero() {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  const isMobile = useIsMobile();
   const [imgLoaded, setImgLoaded] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [imgError, setImgError] = useState(false);
+  const [portraitRevealed, setPortraitRevealed] = useState(false);
 
   const handleImgError = () => {
     setImgError(true);
-    console.error('[Hero] Immagine non caricata.', {
-      src: HERO_PORTRAIT_SRC,
-      hint: 'Controlla: 1) File in Frontend/public/hero-portrait.jpeg 2) Dev server avviato da Frontend (npm run dev) 3) Tab Rete (Network) → cerca hero-portrait.jpeg → status 404?',
-    });
+    console.error('[Hero] Immagine non caricata.', { src: HERO_PORTRAIT_SRC });
   };
 
   const handleImgLoad = () => {
@@ -54,7 +48,7 @@ export function Hero() {
 
       {/* Main content: flex-1 so scroll indicator stays at bottom */}
       <div className="flex-1 flex items-center relative z-10">
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 w-full">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 w-full">
           {/* Grid: 1 col mobile (text then image), 12 col desktop */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-8 order-1 pt-20 md:pt-28 lg:pt-16">
@@ -92,14 +86,14 @@ export function Hero() {
               <div className="flex flex-wrap gap-4 pt-4">
                 <a 
                   href="#projects" 
-                  className="group px-7 py-3.5 bg-[#2C2416] text-[#FAF9F6] hover:bg-[#3D3122] transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md"
+                  className="group px-7 py-4 min-h-[44px] bg-[#2C2416] text-[#FAF9F6] hover:bg-[#3D3122] transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md"
                 >
                   <span className="font-normal tracking-wide">{t('hero.ctaProjects')}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
                 <a 
                   href="#contact" 
-                  className="px-7 py-3.5 border border-[#6B5D4F]/30 text-[#2C2416] hover:border-[#6B5D4F] hover:bg-white/50 transition-all duration-300 backdrop-blur-sm"
+                  className="px-7 py-4 min-h-[44px] flex items-center border border-[#6B5D4F]/30 text-[#2C2416] hover:border-[#6B5D4F] hover:bg-white/50 transition-all duration-300 backdrop-blur-sm"
                 >
                   <span className="font-normal tracking-wide">{t('hero.ctaContact')}</span>
                 </a>
@@ -113,7 +107,7 @@ export function Hero() {
                   href="https://github.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
+                  className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
                   aria-label={t('hero.ariaGitHub')}
                 >
                   <Github className="w-5 h-5" />
@@ -122,14 +116,14 @@ export function Hero() {
                   href="https://linkedin.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
+                  className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
                   aria-label={t('hero.ariaLinkedIn')}
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>
                 <a 
                   href="mailto:damiano.francesco@example.com"
-                  className="p-2.5 border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
+                  className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
                   aria-label={t('hero.ariaEmail')}
                 >
                   <Mail className="w-5 h-5" />
@@ -138,44 +132,84 @@ export function Hero() {
             </FadeIn>
           </div>
 
-            {/* Right side - portrait (sotto il testo su mobile, a destra su desktop) */}
+            {/* Right side - portrait (solo su mobile: overlay "clicca per scoprire") */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end order-2 mt-12 lg:mt-24">
-              <div className="relative w-full max-w-[280px] sm:max-w-sm aspect-[3/4] overflow-hidden rounded-[2px] bg-[#E8DDD0]/30">
-                <img
-                  src={HERO_PORTRAIT_SRC}
-                  alt="Damiano Francesco"
-                  className={`absolute inset-0 w-full h-full object-cover object-[center_28%] ${imgLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-                  style={{
-                    filter: 'brightness(1.06) contrast(1.04) saturate(0.92) sepia(0.06)',
-                    transition: `opacity ${DURATION.slow}ms ${EASE.elegant}, transform ${DURATION.slow}ms ${EASE.elegant}`,
-                  }}
-                  onError={handleImgError}
-                  onLoad={handleImgLoad}
-                  decoding="async"
-                />
-                  {/* Debug: messaggio visibile se l'immagine non carica */}
+              {isMobile ? (
+                <button
+                  type="button"
+                  onClick={() => setPortraitRevealed(true)}
+                  className="relative w-full max-w-[280px] sm:max-w-sm aspect-[3/4] overflow-hidden rounded-[2px] bg-[#E8DDD0]/30 text-left cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/50 focus-visible:ring-offset-2"
+                  aria-label={portraitRevealed ? t('hero.portraitRevealed') : t('hero.portraitReveal')}
+                >
+                  <img
+                    src={HERO_PORTRAIT_SRC}
+                    alt="Damiano Francesco"
+                    className={`absolute inset-0 w-full h-full object-cover object-[center_28%] ${imgLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                    style={{
+                      filter: 'brightness(1.06) contrast(1.04) saturate(0.92) sepia(0.06)',
+                      transition: `opacity ${DURATION.slow}ms ${EASE.elegant}, transform ${DURATION.slow}ms ${EASE.elegant}`,
+                    }}
+                    onError={handleImgError}
+                    onLoad={handleImgLoad}
+                    decoding="async"
+                    draggable={false}
+                  />
                   {imgError && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-[#FAF9F6] border border-[#D4A574]/40 text-left text-sm text-[#2C2416]">
                       <span className="font-medium text-[#6B5D4F] mb-2">Immagine hero non caricata</span>
-                      <span className="text-xs text-[#6B5D4F]/80 mb-2 break-all">URL richiesta: {HERO_PORTRAIT_SRC}</span>
-                      <ol className="list-decimal list-inside text-xs text-[#6B5D4F]/80 space-y-1">
-                        <li>Verifica che il file esista in <code className="bg-white/80 px-1">Frontend/public/hero-portrait.jpeg</code></li>
-                        <li>Avvia il dev server dalla cartella Frontend: <code className="bg-white/80 px-1">npm run dev</code></li>
-                        <li>F12 → tab Rete (Network) → ricarica → cerca &quot;hero-portrait&quot; → controlla se status è 404</li>
-                        <li>Alternativa: copia il file in <code className="bg-white/80 px-1">src/assets/hero-portrait.jpeg</code> e chiedi di usare l&apos;import nel componente</li>
-                      </ol>
+                      <span className="text-xs text-[#6B5D4F]/80 break-all">Verifica che hero-portrait.jpeg sia in Frontend/public/</span>
                     </div>
                   )}
-                {/* Bond overlay: warm cream/gold tint from site palette */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  aria-hidden
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(250,249,246,0.12) 0%, transparent 40%, transparent 70%, rgba(232,221,208,0.15) 100%)',
-                    mixBlendMode: 'soft-light',
-                  }}
-                />
-              </div>
+                  <div
+                    className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 transition-all duration-500 ${EASE.elegant} ${portraitRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100 bg-[#2C2416]'}`}
+                    aria-hidden={portraitRevealed}
+                  >
+                    <Sparkles className="w-8 h-8 text-[#D4A574]" />
+                    <span className="text-[#FAF9F6] text-sm font-light tracking-wide text-center leading-relaxed">
+                      {t('hero.portraitReveal')}
+                    </span>
+                  </div>
+                  {portraitRevealed && (
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      aria-hidden
+                      style={{
+                        background: 'linear-gradient(180deg, rgba(250,249,246,0.12) 0%, transparent 40%, transparent 70%, rgba(232,221,208,0.15) 100%)',
+                        mixBlendMode: 'soft-light',
+                      }}
+                    />
+                  )}
+                </button>
+              ) : (
+                <div className="relative w-full max-w-[280px] sm:max-w-sm aspect-[3/4] overflow-hidden rounded-[2px] bg-[#E8DDD0]/30">
+                  <img
+                    src={HERO_PORTRAIT_SRC}
+                    alt="Damiano Francesco"
+                    className={`absolute inset-0 w-full h-full object-cover object-[center_28%] ${imgLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                    style={{
+                      filter: 'brightness(1.06) contrast(1.04) saturate(0.92) sepia(0.06)',
+                      transition: `opacity ${DURATION.slow}ms ${EASE.elegant}, transform ${DURATION.slow}ms ${EASE.elegant}`,
+                    }}
+                    onError={handleImgError}
+                    onLoad={handleImgLoad}
+                    decoding="async"
+                  />
+                  {imgError && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-[#FAF9F6] border border-[#D4A574]/40 text-left text-sm text-[#2C2416]">
+                      <span className="font-medium text-[#6B5D4F] mb-2">Immagine hero non caricata</span>
+                      <span className="text-xs text-[#6B5D4F]/80 break-all">Verifica che hero-portrait.jpeg sia in Frontend/public/</span>
+                    </div>
+                  )}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    aria-hidden
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(250,249,246,0.12) 0%, transparent 40%, transparent 70%, rgba(232,221,208,0.15) 100%)',
+                      mixBlendMode: 'soft-light',
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

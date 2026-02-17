@@ -64,7 +64,7 @@ export function Blog() {
         }}
       ></div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <ScrollReveal>

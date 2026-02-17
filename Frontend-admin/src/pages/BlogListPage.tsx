@@ -38,8 +38,8 @@ function safeText(s: unknown, maxLen: number): string {
 function SkeletonTable() {
   return (
     <div
+      className="admin-table-wrapper"
       style={{
-        overflowX: 'auto',
         border: '1px solid var(--admin-border, #d4cdc0)',
         borderRadius: 8,
         background: 'var(--admin-card, #ebe6dc)',
@@ -231,7 +231,7 @@ export function BlogListPage() {
   );
 
   return (
-    <div style={{ padding: '1.5rem 2rem', maxWidth: 1100, margin: '0 auto' }}>
+    <div style={{ padding: 'clamp(1rem, 3vw, 2rem)', maxWidth: 1100, margin: '0 auto', width: '100%' }}>
       <h1
         style={{
           margin: '0 0 1rem',
@@ -246,7 +246,7 @@ export function BlogListPage() {
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
-          gap: '1rem',
+          gap: 'clamp(0.75rem, 2vw, 1rem)',
           marginBottom: '1.25rem',
         }}
       >
@@ -259,7 +259,15 @@ export function BlogListPage() {
         >
           Elenco articoli del blog. Clicca su una riga per modificare.
         </p>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <label
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '0.5rem',
+            minWidth: 0,
+          }}
+        >
           <span style={{ fontSize: '0.9rem', color: 'var(--admin-muted)' }}>
             Cerca per titolo:
           </span>
@@ -270,11 +278,13 @@ export function BlogListPage() {
             placeholder="Titolo..."
             aria-label="Cerca articoli per titolo"
             style={{
-              padding: '0.4rem 0.6rem',
+              padding: '0.5rem 0.75rem',
               fontSize: '0.9rem',
               border: '1px solid var(--admin-border, #d4cdc0)',
               borderRadius: 6,
-              minWidth: 180,
+              minWidth: 160,
+              flex: '1 1 180px',
+              maxWidth: '100%',
             }}
           />
         </label>
@@ -309,8 +319,8 @@ export function BlogListPage() {
 
       {memoizedRows.length > 0 && (
         <div
+          className="admin-table-wrapper"
           style={{
-            overflowX: 'auto',
             border: '1px solid var(--admin-border, #d4cdc0)',
             borderRadius: 8,
             background: 'var(--admin-card, #ebe6dc)',
@@ -319,8 +329,9 @@ export function BlogListPage() {
           <table
             style={{
               width: '100%',
+              minWidth: 700,
               borderCollapse: 'collapse',
-              fontSize: '0.9rem',
+              fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)',
             }}
             role="grid"
           >

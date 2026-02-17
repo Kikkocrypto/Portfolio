@@ -80,7 +80,7 @@ export function Projects() {
         }}
       ></div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-7xl mx-auto">
           {/* Header - asymmetrical */}
           <ScrollReveal>
@@ -101,7 +101,7 @@ export function Projects() {
               {/* Year & Title Block */}
               <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 mb-16">
                 <div className="lg:col-span-3">
-                  <div className="sticky top-32">
+                  <div className="lg:sticky lg:top-32">
                     <span className="block text-sm tracking-[0.3em] text-[#D4A574] mb-4 uppercase">
                       {featuredProject.year}
                     </span>

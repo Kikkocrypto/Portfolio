@@ -6,6 +6,8 @@
   --admin-muted: #6b6560;
   --admin-accent: #7d6e5c;
   --admin-error: #8b4513;
+  --admin-sidebar-width: 220px;
+  --touch-target-min: 44px;
 }
 
 *,
@@ -21,10 +23,56 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--admin-bg);
   color: var(--admin-text);
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* Touch-friendly: ensure primary action buttons meet 44px minimum (WCAG) */
+.admin-button-primary {
+  min-height: var(--touch-target-min);
+  padding: 0.6rem 1rem;
+}
+
+/* Main content area - responsive padding */
+.admin-main {
+  padding: clamp(1rem, 3vw, 2rem);
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Tables: horizontal scroll on mobile/tablet */
+.admin-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
+  scrollbar-width: thin;
+}
+
+.admin-table-wrapper table {
+  /* min-width set per table; prevents collapse on narrow screens */
+}
+
+/* Breakpoints: 640px (sm), 768px (md), 1024px (lg) */
+@media (max-width: 1023px) {
+  .admin-main {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .admin-main {
+    padding: 0.75rem;
+  }
+
+  .admin-table-wrapper {
+    margin: 0 -0.75rem;
+    padding: 0 0.75rem;
+    border-radius: 0;
+  }
 }
 
 @keyframes spin {

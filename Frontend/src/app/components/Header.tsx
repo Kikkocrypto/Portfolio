@@ -78,7 +78,7 @@ export function Header() {
           : 'bg-[#FAF9F6]/95 backdrop-blur-md shadow-sm border-b border-[#D4A574]/10'
       }`}
     >
-      <div className="container mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <button
@@ -133,10 +133,10 @@ export function Header() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - touch-friendly min 44x44 */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-all duration-300 ${
+            className={`md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center transition-all duration-300 ${
               isTop ? 'text-[#2C2416]' : 'text-[#2C2416]'
             } hover:text-[#6B5D4F]`}
             aria-label={t('header.menuAria')}
@@ -157,13 +157,13 @@ export function Header() {
             <button
               key={idx}
               onClick={() => handleNavClick(item.href)}
-              className="block w-full text-left px-6 py-4 text-[#2C2416] hover:text-[#6B5D4F] hover:bg-white/50 transition-all duration-300 tracking-wider text-sm border-b border-[#D4A574]/5 last:border-b-0"
+              className="block w-full text-left px-6 py-4 min-h-[44px] text-[#2C2416] hover:text-[#6B5D4F] hover:bg-white/50 transition-all duration-300 tracking-wider text-sm border-b border-[#D4A574]/5 last:border-b-0"
             >
               {t(item.labelKey)}
             </button>
           ))}
           <div className="flex items-center gap-4 px-6 py-4 border-t border-[#D4A574]/10">
-            <span className="text-xs text-[#6B5D4F]/60 tracking-wider uppercase">Idioma</span>
+            <span className="text-xs text-[#6B5D4F]/60 tracking-wider uppercase">{t('header.language')}</span>
             <button
               onClick={() => { i18n.changeLanguage('it'); setIsMobileMenuOpen(false); }}
               className={`px-3 py-1.5 text-sm ${i18n.language === 'it' ? 'text-[#2C2416] font-medium bg-white/50' : 'text-[#6B5D4F]'}`}

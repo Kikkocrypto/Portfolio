@@ -45,7 +45,7 @@ export function ReflectionPostPage() {
         }}
       />
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-3xl mx-auto">
           <button
             onClick={handleBack}
@@ -83,7 +83,9 @@ export function ReflectionPostPage() {
             <div
               className="text-lg md:text-xl text-[#3D3122]/90 leading-relaxed font-light space-y-6"
               dangerouslySetInnerHTML={{
-                __html: typeof post.content === 'string' ? post.content : '',
+                __html: typeof post.content === 'string'
+                  ? post.content.replace(/&nbsp;|&amp;nbsp;/g, ' ')
+                  : '',
               }}
             />
           </div>

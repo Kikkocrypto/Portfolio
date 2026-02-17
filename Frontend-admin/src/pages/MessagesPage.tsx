@@ -140,7 +140,7 @@ export function MessagesPage() {
   const canNext = page < totalPages - 1;
 
   return (
-    <div style={{ padding: '1.5rem 2rem', maxWidth: 960, margin: '0 auto' }}>
+    <div style={{ padding: 'clamp(1rem, 3vw, 2rem)', maxWidth: 960, margin: '0 auto', width: '100%' }}>
       <h1 style={{ margin: '0 0 0.5rem', fontSize: '1.5rem', color: 'var(--admin-text, #3d3832)' }}>
         Messaggi di contatto
       </h1>
@@ -174,14 +174,21 @@ export function MessagesPage() {
 
       {memoizedList.length > 0 && (
         <div
+          className="admin-table-wrapper"
           style={{
-            overflowX: 'auto',
             border: '1px solid var(--admin-border, #d4cdc0)',
             borderRadius: 8,
             background: 'var(--admin-card, #ebe6dc)',
           }}
         >
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
+          <table
+            style={{
+              width: '100%',
+              minWidth: 600,
+              borderCollapse: 'collapse',
+              fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)',
+            }}
+          >
             <thead>
               <tr style={{ borderBottom: '2px solid var(--admin-border, #d4cdc0)' }}>
                 <th style={{ textAlign: 'left', padding: '0.75rem', color: 'var(--admin-muted)' }}>Data</th>
@@ -272,7 +279,7 @@ export function MessagesPage() {
             alignItems: 'center',
             justifyContent: 'center',
             background: 'rgba(0,0,0,0.4)',
-            padding: '1rem',
+            padding: 'clamp(0.5rem, 2vw, 1.5rem)',
           }}
           onClick={() => setViewingMessage(null)}
         >
@@ -281,9 +288,9 @@ export function MessagesPage() {
               background: 'var(--admin-card, #ebe6dc)',
               border: '1px solid var(--admin-border, #d4cdc0)',
               borderRadius: 8,
-              maxWidth: 480,
+              maxWidth: 'min(480px, 95vw)',
               width: '100%',
-              maxHeight: '90vh',
+              maxHeight: 'min(90vh, 85dvh)',
               overflow: 'auto',
               boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
             }}

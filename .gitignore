@@ -23,11 +23,11 @@ Backend/.flattened-pom.xml
 *.swo
 *~
 
-# Environment / secrets
+# Environment / secrets (non committare)
 .env
 .env.local
 .env.*.local
-*.env
+# .env.example va committato (template per deploy)
 
 # OS
 .DS_Store
@@ -41,3 +41,5 @@ build/
 out/
 to-do.md
 Documentazione/
+extra.md
+DEPLOY.md

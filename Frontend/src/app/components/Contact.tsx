@@ -152,7 +152,7 @@ export function Contact() {
   };
 
   const contactInfo = [
-    { icon: Mail, label: t('contact.emailLabel'), value: 'damianofrancesco71@gmail.com', link: 'mailto:damianofrancesco71@gmail.com' },
+    { icon: Mail, label: t('contact.emailLabel'), value: 'f.damiano@francescodamiano.tech', link: 'mailto:f.damiano@francescodamiano.tech' },
     { icon: Phone, label: t('contact.phoneLabel'), value: '+39 329 242 3053', link: 'tel:+39329242305' },
     { icon: MapPin, label: t('contact.whereLabel'), value: 'Canosa di Puglia, Italia', link: null }
   ];
@@ -173,8 +173,8 @@ export function Contact() {
         }}
       ></div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
-        <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto px-3 sm:px-6 md:px-12 lg:px-16 relative w-full max-w-full">
+        <div className="max-w-6xl mx-auto min-w-0">
           <ScrollReveal>
             <div className="mb-20 max-w-3xl">
               <div className="inline-block h-px w-16 bg-[#D4A574] mb-6"></div>
@@ -187,9 +187,9 @@ export function Contact() {
             </div>
           </ScrollReveal>
 
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 min-w-0">
             {/* Contact Info */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 min-w-0">
               <ScrollReveal delay={100}>
                 <div className="space-y-8">
                   <div>
@@ -231,9 +231,9 @@ export function Contact() {
             </div>
 
             {/* Contact Form */}
-            <div className="lg:col-span-7">
-              <ScrollReveal delay={200}>
-                <form onSubmit={handleSubmit} className="relative space-y-6">
+            <div className="lg:col-span-7 min-w-0 overflow-hidden">
+              <ScrollReveal delay={200} className="min-w-0 w-full">
+                <form onSubmit={handleSubmit} className="relative space-y-6 w-full min-w-0 max-w-full">
                   <div>
                     <label htmlFor="name" className="block text-sm font-normal mb-3 tracking-wide text-[#FAF9F6]/70">
                       {t('contact.formName')}
@@ -250,7 +250,7 @@ export function Contact() {
                       maxLength={255}
                       aria-invalid={!!fieldErrors.name}
                       aria-describedby={fieldErrors.name ? 'name-error' : undefined}
-                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                      className={`w-full max-w-full min-w-0 px-4 sm:px-5 py-4 min-h-[44px] bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed box-border ${
                         fieldErrors.name
                           ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
                           : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
@@ -285,7 +285,7 @@ export function Contact() {
                       maxLength={MAX_EMAIL_LENGTH}
                       aria-invalid={!!fieldErrors.email}
                       aria-describedby={fieldErrors.email ? 'email-error' : emailValid ? 'email-valid' : undefined}
-                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                      className={`w-full max-w-full min-w-0 px-4 sm:px-5 py-4 min-h-[44px] bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed box-border ${
                         fieldErrors.email
                           ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
                           : emailValid
@@ -322,7 +322,7 @@ export function Contact() {
                       maxLength={10000}
                       aria-invalid={!!fieldErrors.message}
                       aria-describedby={fieldErrors.message ? 'message-error' : undefined}
-                      className={`w-full px-5 py-4 bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all resize-none backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed ${
+                      className={`w-full max-w-full min-w-0 px-4 sm:px-5 py-4 min-h-[120px] bg-white/5 border text-[#FAF9F6] focus:outline-none focus:ring-2 transition-all resize-none backdrop-blur-sm placeholder:text-[#FAF9F6]/30 disabled:opacity-60 disabled:cursor-not-allowed box-border ${
                         fieldErrors.message
                           ? 'border-red-400 focus:border-red-400 focus:ring-red-400/30'
                           : 'border-[#FAF9F6]/10 focus:border-[#D4A574]/50 focus:ring-[#D4A574]/20'
@@ -353,7 +353,7 @@ export function Contact() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="group w-full px-7 py-4 bg-[#FAF9F6] text-[#2C2416] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover-lift disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-sm"
+                    className="group w-full px-7 py-4 min-h-[44px] bg-[#FAF9F6] text-[#2C2416] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover-lift disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-sm"
                   >
                     {loading ? (
                       <>

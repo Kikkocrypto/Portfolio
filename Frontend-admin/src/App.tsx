@@ -6,6 +6,8 @@ import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AdminGuard } from '@/components/RoleGuard';
 import { AdminLayout } from '@/components/AdminLayout';
 import { LoginPage } from '@/pages/LoginPage';
+import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
+import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { MessagesPage } from '@/pages/MessagesPage';
 import { AuditLogsPage } from '@/pages/AuditLogsPage';
@@ -27,6 +29,8 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/admin/login" element={<LoginPage />} />
+      <Route path="/admin/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route
         path="/admin"
         element={

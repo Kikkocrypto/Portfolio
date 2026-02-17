@@ -1,8 +1,21 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
+function loadIubendaScript() {
+  if (document.querySelector('script[src="https://cdn.iubenda.com/iubenda.js"]')) return;
+  const s = document.createElement('script');
+  s.src = 'https://cdn.iubenda.com/iubenda.js';
+  const tag = document.getElementsByTagName('script')[0];
+  tag?.parentNode?.insertBefore(s, tag);
+}
+
 export function Footer() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    loadIubendaScript();
+  }, []);
   return (
     <footer className="bg-[#2C2416] text-[#FAF9F6]/60 py-16 border-t border-[#FAF9F6]/5 relative">
       {/* Texture */}
@@ -13,9 +26,9 @@ export function Footer() {
         }}
       ></div>
 
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 relative">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 mb-12">
             {/* Brand */}
             <div>
               <h3 className="text-[#FAF9F6] font-light text-2xl mb-4 tracking-wide">{t('footer.brand')}</h3>
@@ -64,7 +77,7 @@ export function Footer() {
                   href="https://github.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
+                  className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
                   aria-label="GitHub"
                 >
                   <Github className="w-5 h-5 text-[#FAF9F6]/60" />
@@ -73,14 +86,14 @@ export function Footer() {
                   href="https://linkedin.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
+                  className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="w-5 h-5 text-[#FAF9F6]/60" />
                 </a>
                 <a 
                   href="mailto:damiano.francesco@example.com"
-                  className="w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
+                  className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
                   aria-label="Email"
                 >
                   <Mail className="w-5 h-5 text-[#FAF9F6]/60" />
@@ -93,6 +106,23 @@ export function Footer() {
           <div className="pt-8 border-t border-[#FAF9F6]/5 text-center space-y-2">
             <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
               {t('footer.copyright', { year: new Date().getFullYear() })}
+            </p>
+            <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
+              <a
+                href="https://www.iubenda.com/privacy-policy/87858834"
+                className="iubenda-white iubenda-noiframe iubenda-embed text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors"
+                title="Privacy Policy"
+              >
+                {t('footer.privacyPolicy')}
+              </a>
+              {' · '}
+              <a
+                href="https://www.iubenda.com/privacy-policy/87858834/cookie-policy"
+                className="iubenda-white iubenda-noiframe iubenda-embed text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors"
+                title="Cookie Policy"
+              >
+                {t('footer.cookiePolicy')}
+              </a>
             </p>
           </div>
         </div>
