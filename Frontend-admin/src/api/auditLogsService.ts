@@ -38,7 +38,18 @@ function parseAuditLogEntry(raw: unknown): AuditLogEntry {
   };
 }
 
-function isPagedAuditLogsResponse(raw: unknown): raw is Record<string, unknown> {
+/** Forma grezza validata della risposta paginata (content ancora unknown[]). */
+interface PagedAuditLogsRaw {
+  content: unknown[];
+  totalPages: number;
+  totalElements: number;
+  number: number;
+  size: number;
+  first: boolean;
+  last: boolean;
+}
+
+function isPagedAuditLogsResponse(raw: unknown): raw is PagedAuditLogsRaw {
   if (!raw || typeof raw !== 'object') return false;
   const o = raw as Record<string, unknown>;
   return Array.isArray(o.content)
