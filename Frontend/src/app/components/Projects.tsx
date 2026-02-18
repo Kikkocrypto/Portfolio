@@ -144,7 +144,7 @@ export function Projects() {
                 <div className="grid md:grid-cols-2 gap-12 pt-8 border-t border-[#D4A574]/10">
                   <div>
                     <h4 className="text-sm tracking-[0.2em] text-[#6B5D4F]/60 mb-4 uppercase">
-                      Sfida
+                      {t('projects.challenge')}
                     </h4>
                     <p className="text-lg text-[#3D3122]/80 leading-relaxed font-light">
                       {featuredProject.challenge}

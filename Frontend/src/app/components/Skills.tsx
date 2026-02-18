@@ -71,13 +71,10 @@ export function Skills() {
           <ScrollReveal delay={500}>
             <div className="bg-gradient-to-r from-[#D4A574]/5 to-[#8B9DAF]/5 border border-[#D4A574]/10 p-10 md:p-12 hover:border-[#D4A574]/20 hover:shadow-sm transition-all duration-500">
               <h3 className="text-2xl md:text-3xl font-light text-[#2C2416] mb-4 tracking-wide">
-                Crescita continua (professionale e personale)
+                {t('skills.growthTitle')}
               </h3>
               <p className="text-lg text-[#6B5D4F]/70 leading-relaxed">
-                Sto approfondendo temi di <strong className="font-normal text-[#2C2416]">Sicurezza web</strong>, 
-                <strong className="font-normal text-[#2C2416]"> DevOps</strong> e 
-                <strong className="font-normal text-[#2C2416]"> Docker</strong> per costruire sistemi più robusti e scalabili.
-                <br />Quando ho del tempo libero, mi piace esplorare soluzioni per problemi reali in ambito travel.
+                {t('skills.growthDescription')}
               </p>
             </div>
           </ScrollReveal>

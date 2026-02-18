@@ -80,6 +80,8 @@
   "skills": {
     "title": "Competenze tecniche",
     "subtitle": "Un set di strumenti per soluzioni complete",
+    "growthTitle": "Crescita continua (professionale e personale)",
+    "growthDescription": "Sto approfondendo temi di Sicurezza web, DevOps e Docker per costruire sistemi più robusti e scalabili. Quando ho del tempo libero, mi piace esplorare soluzioni per problemi reali in ambito travel.",
     "categories": [
       { "title": "Frontend", "skills": ["React", "TypeScript", "HTML/CSS", "JavaScript", "Responsive Design"] },
       { "title": "Backend", "skills": ["Spring Boot", "RESTful APIs", "Authenticazione", "Sicurezza", "API Design", "Database Design", "SQL"] },

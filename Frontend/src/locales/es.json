@@ -121,6 +121,8 @@
   "skills": {
     "title": "Habilidades técnicas",
     "subtitle": "Un conjunto de herramientas para soluciones completas",
+    "growthTitle": "Crecimiento continuo (profesional y personal)",
+    "growthDescription": "Estoy profundizando en temas de Seguridad web, DevOps y Docker para construir sistemas más robustos y escalables. En mi tiempo libre me gusta explorar soluciones para problemas reales en el ámbito travel.",
     "categories": [
       {
         "title": "Frontend",
