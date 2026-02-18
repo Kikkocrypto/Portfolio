@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useToastContext } from '@/context/ToastContext';
 import { BACKEND_UNREACHABLE_MESSAGE } from '@/api/auth';
+import { BackendStatusDot } from '@/components/BackendStatusDot';
 
 const MAX_FAILURES_BEFORE_DELAY = 3;
 const LOCKOUT_MS = 15_000;
@@ -72,7 +73,10 @@ export function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1 className="login-title">Admin</h1>
+        <div className="login-header">
+          <h1 className="login-title">Admin</h1>
+          <BackendStatusDot />
+        </div>
         <p className="login-subtitle">Sign in to continue</p>
 
         <form onSubmit={handleSubmit} className="login-form">
@@ -153,8 +157,14 @@ export function LoginPage() {
           border-radius: 8px;
           box-shadow: 0 2px 8px rgba(61, 56, 50, 0.06);
         }
+        .login-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.25rem;
+        }
         .login-title {
-          margin: 0 0 0.25rem;
+          margin: 0;
           font-size: 1.5rem;
           font-weight: 600;
           color: var(--admin-text);

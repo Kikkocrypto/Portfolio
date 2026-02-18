@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { BackendStatusDot } from './BackendStatusDot';
 
 const SIDEBAR_WIDTH = 220;
 const MOBILE_BREAKPOINT = 1024;
@@ -130,7 +131,7 @@ export function AdminLayout() {
           >
             Admin
           </Link>
-          <div style={{ width: 44 }} />
+          <BackendStatusDot />
         </header>
       )}
 
@@ -213,9 +214,12 @@ export function AdminLayout() {
             gap: '0.5rem',
           }}
         >
-          <span style={{ fontSize: '0.85rem', color: 'var(--admin-muted, #6b6560)' }}>
-            {user?.username ?? ''}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <BackendStatusDot />
+            <span style={{ fontSize: '0.85rem', color: 'var(--admin-muted, #6b6560)' }}>
+              {user?.username ?? ''}
+            </span>
+          </div>
           <button
             type="button"
             onClick={() => logout()}

@@ -128,6 +128,7 @@ public class SecurityConfig {
                             res.getWriter().write(objectMapper.writeValueAsString(apiError));
                         }))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/health").permitAll()
                         .requestMatchers("/api/contacts").permitAll()
                         .requestMatchers("/api/admin/login").permitAll()
                         .requestMatchers("/api/admin/auth/password-reset-email").permitAll()

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { BackendStatusDot } from './BackendStatusDot';
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -107,6 +108,7 @@ export function Header() {
               ))}
             </nav>
             <div className="flex items-center gap-1 border-l border-[#D4A574]/20 pl-6">
+              <BackendStatusDot />
               <button
                 onClick={() => i18n.changeLanguage('it')}
                 className={`px-2 py-1 text-sm tracking-wider transition-colors ${i18n.language === 'it' ? 'text-[#2C2416] font-medium' : 'text-[#6B5D4F]/70 hover:text-[#6B5D4F]'}`}
@@ -163,6 +165,7 @@ export function Header() {
             </button>
           ))}
           <div className="flex items-center gap-4 px-6 py-4 border-t border-[#D4A574]/10">
+            <BackendStatusDot />
             <span className="text-xs text-[#6B5D4F]/60 tracking-wider uppercase">{t('header.language')}</span>
             <button
               onClick={() => { i18n.changeLanguage('it'); setIsMobileMenuOpen(false); }}
