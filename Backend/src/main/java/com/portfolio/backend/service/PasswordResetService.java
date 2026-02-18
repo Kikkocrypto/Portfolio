@@ -82,10 +82,8 @@ public class PasswordResetService {
         Optional<AdminUser> userOpt = adminUserRepository.findByEmail(email);
 
         if (userOpt.isEmpty()) {
-            // SICUREZZA: Non rivelare che l'email non esiste
-            // Log per debug interno, ma risposta all'utente è identica
-            log.info("Password reset richiesto per email non registrata: {}", maskEmail(email));
-            return true; // risposta uniforme
+            // SICUREZZA: Non rivelare che l'email non esiste; risposta identica a quella per email registrata
+            return true;
         }
 
         AdminUser user = userOpt.get();

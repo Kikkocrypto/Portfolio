@@ -67,9 +67,7 @@ public class EmailService {
                     from = "Portfolio <onboarding@resend.dev>";
                 }
                 boolean sent = resendClient.sendEmail(from, toEmail, RESET_SUBJECT, htmlContent);
-                if (sent) {
-                    log.info("Email di reset password inviata via Resend a: {}", maskEmail(toEmail));
-                } else {
+                if (!sent) {
                     throw new MessagingException("Resend send returned false");
                 }
                 return;
