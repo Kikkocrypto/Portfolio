@@ -1,5 +1,5 @@
-# Build stage: Maven + JDK 17
-FROM eclipse-temurin:17-jdk-alpine AS builder
+# Build stage: immagine con Maven + JDK 17
+FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 WORKDIR /app
 
 # Copia solo i file di definizione dipendenze (cache layer)
