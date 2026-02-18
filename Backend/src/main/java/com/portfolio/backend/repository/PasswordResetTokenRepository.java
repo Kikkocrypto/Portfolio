@@ -9,10 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, UUID> {
+public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, String> {
 
     /**
      * Trova un token valido per stringa token.

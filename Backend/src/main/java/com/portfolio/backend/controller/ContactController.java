@@ -1,5 +1,6 @@
 package com.portfolio.backend.controller;
 
+import com.portfolio.backend.controller.dto.ApiError;
 import com.portfolio.backend.controller.dto.ContactRequest;
 import com.portfolio.backend.entity.Contact;
 import com.portfolio.backend.service.ContactMailService;
@@ -7,6 +8,7 @@ import com.portfolio.backend.service.ContactService;
 import com.portfolio.backend.util.XssSanitizer;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/contacts")
 public class ContactController {
+
+    private static final String MSG_NO_HTML = "Nome, email e messaggio non possono contenere tag HTML o i caratteri < e >. Usa solo testo semplice.";
 
     private final ContactService contactService;
     private final ContactMailService contactMailService;
@@ -40,6 +44,14 @@ public class ContactController {
                     ));
         }
 
+        // Rifiuta input che contengono HTML/tag: messaggio chiaro invece di errore 500
+        if (containsHtmlOrAngleBrackets(request.getName()) || containsHtmlOrAngleBrackets(request.getEmail()) || containsHtmlOrAngleBrackets(request.getMessage())) {
+            ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST.value(), MSG_NO_HTML);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(apiError);
+        }
+
         // Sanitizzazione XSS: strip HTML da campi che possono essere mostrati in admin/frontend
         Contact contact = new Contact();
         contact.setName(XssSanitizer.stripHtml(request.getName()));
@@ -55,5 +67,14 @@ public class ContactController {
                         "success", true,
                         "message", "Messaggio inviato con successo."
                 ));
+    }
+
+    /**
+     * Indica se la stringa contiene caratteri che suggeriscono HTML/tag (es. &lt; &gt;).
+     * Usato per restituire 400 con messaggio chiaro invece di procedere con sanitizzazione.
+     */
+    private static boolean containsHtmlOrAngleBrackets(String value) {
+        if (value == null || value.isEmpty()) return false;
+        return value.indexOf('<') >= 0 || value.indexOf('>') >= 0;
     }
 }

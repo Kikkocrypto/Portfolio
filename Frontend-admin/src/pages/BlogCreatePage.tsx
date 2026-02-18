@@ -274,6 +274,7 @@ export function BlogCreatePage() {
           >
             <option value="draft">Bozza</option>
             <option value="published">Pubblicato</option>
+            <option value="archived">Archiviato</option>
           </select>
         </div>
 

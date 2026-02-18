@@ -440,7 +440,8 @@ export function BlogEditPage() {
           >
             <option value="draft">Bozza</option>
             <option value="published">Pubblicato</option>
-            {status && status !== 'draft' && status !== 'published' && (
+            <option value="archived">Archiviato</option>
+            {status && status !== 'draft' && status !== 'published' && status !== 'archived' && (
               <option value={status}>{status}</option>
             )}
           </select>

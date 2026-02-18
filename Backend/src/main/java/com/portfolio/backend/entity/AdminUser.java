@@ -8,7 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "admin_users", uniqueConstraints = {
@@ -20,9 +21,10 @@ import java.util.UUID;
 public class AdminUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "TEXT")
-    private UUID id;
+    @GeneratedValue(generator = "uuid-string")
+    @GenericGenerator(name = "uuid-string", strategy = "uuid2")
+    @Column(length = 36)
+    private String id;
 
     @NotBlank
     @Size(max = 100)
