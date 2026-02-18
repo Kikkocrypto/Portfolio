@@ -29,12 +29,30 @@ app:
   cors: {}
 
   # ---------------------------------------------------------------------------
+  # Contatti (form + email)
+  # ---------------------------------------------------------------------------
+  contact:
+    # Email dove ricevere le notifiche dei messaggi (obbligatoria per invio notifica)
+    notification-email: ${APP_CONTACT_NOTIFICATION_EMAIL:}
+    # Invia una risposta automatica al mittente del form (template contact-reply-email.html)
+    send-reply-to-sender: ${APP_CONTACT_SEND_REPLY_TO_SENDER:true}
+
+  # ---------------------------------------------------------------------------
   # Data retention (cancellazione automatica dati vecchi)
   # ---------------------------------------------------------------------------
   data-retention:
     retention-days: 90
     cron: "0 0 2 * * ?"
     batch-size: 500
+
+  # ---------------------------------------------------------------------------
+  # Resend (invio email via API HTTPS, funziona su Render free tier)
+  # Se RESEND_API_KEY è impostata, le notifiche contatti (e opz. reset password) usano Resend invece di SMTP.
+  # ---------------------------------------------------------------------------
+  resend:
+    api-key: ${RESEND_API_KEY:}
+    # Mittente: per test usa "Portfolio <onboarding@resend.dev>"; in produzione verifica il dominio su Resend e usa es. "Portfolio <noreply@tuodominio.com>"
+    from-email: ${RESEND_FROM_EMAIL:}
 
   # ---------------------------------------------------------------------------
   # Password Reset (reset password via email)
