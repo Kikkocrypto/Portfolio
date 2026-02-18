@@ -86,17 +86,26 @@ public class SecurityConfig {
     /**
      * Origini CORS: da CORS_ALLOWED_ORIGINS (lista separata da virgola) se impostata,
      * altrimenti da FRONTEND_URL e ADMIN_FRONTEND_URL (.env). Nessun URL hardcoded.
+     * Normalizza le origini aggiungendo https:// se manca lo schema (per match con header Origin).
      */
     private List<String> resolveCorsOrigins() {
+        List<String> raw;
         if (corsAllowedOriginsEnv != null && !corsAllowedOriginsEnv.isBlank()) {
-            return Arrays.stream(corsAllowedOriginsEnv.split(",\\s*"))
+            raw = Arrays.stream(corsAllowedOriginsEnv.split(",\\s*"))
                     .map(String::trim)
                     .filter(s -> !s.isEmpty())
                     .toList();
+        } else {
+            raw = Stream.of(frontendUrl, adminFrontendUrl)
+                    .filter(s -> s != null && !s.isBlank())
+                    .map(String::trim)
+                    .toList();
         }
-        return Stream.of(frontendUrl, adminFrontendUrl)
-                .filter(s -> s != null && !s.isBlank())
-                .map(String::trim)
+        return raw.stream()
+                .map(origin -> {
+                    if (origin.startsWith("http://") || origin.startsWith("https://")) return origin;
+                    return "https://" + origin;
+                })
                 .toList();
     }
 
