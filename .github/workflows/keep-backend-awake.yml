@@ -1,0 +1,19 @@
+name: Keep Backend Awake
+
+on:
+  schedule:
+    # Ogni 5 minuti
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Permette anche di lanciare manualmente
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping backend health
+        run: |
+          echo "Pinging backend at $(date)"
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://portfolio-mp9q.onrender.com/api/health")
+          echo "Response: $CODE"
+          if [ "$CODE" != "200" ]; then exit 1; fi
