@@ -55,7 +55,8 @@ public class PostService {
      */
     @Transactional(readOnly = true)
     public Page<Post> findAllWithTranslationsForAdmin(String status, String titleSearch, Pageable pageable) {
-        String normalizedTitle = (titleSearch != null && !titleSearch.isBlank()) ? titleSearch.trim() : null;
+        // "" invece di null per titleSearch evita binding bytea su PostgreSQL (lower(bytea))
+        String normalizedTitle = (titleSearch != null && !titleSearch.isBlank()) ? titleSearch.trim() : "";
         String normalizedStatus = (status != null && !status.isBlank()) ? status.trim() : null;
         Page<Post> page = postRepository.findForAdminOrderByPublishedFirst(normalizedTitle, normalizedStatus, pageable);
         if (page.getContent().isEmpty()) return page;
@@ -110,7 +111,8 @@ public class PostService {
             String titleSearch,
             Instant createdFrom,
             Instant createdTo) {
-        String normalizedTitle = isTitleSearchPresent(titleSearch) ? titleSearch.trim() : null;
+        // Passare "" invece di null evita che PostgreSQL bindi il parametro come bytea (errore lower(bytea))
+        String normalizedTitle = isTitleSearchPresent(titleSearch) ? titleSearch.trim() : "";
         Page<Post> page = postRepository.findPublishedByLocaleWithFilters(
                 "published",
                 locale,

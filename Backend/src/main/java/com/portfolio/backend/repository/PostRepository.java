@@ -32,7 +32,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query("""
            SELECT p FROM Post p
            WHERE (:statusFilter IS NULL OR :statusFilter = '' OR p.status = :statusFilter)
-             AND (:titleSearch IS NULL OR :titleSearch = '' OR EXISTS (
+             AND (:titleSearch = '' OR EXISTS (
                SELECT 1 FROM PostTranslation t WHERE t.post = p AND LOWER(t.title) LIKE LOWER(CONCAT('%', :titleSearch, '%'))
              ))
            ORDER BY CASE WHEN p.status = 'published' THEN 0 ELSE 1 END, p.createdAt DESC
@@ -71,7 +71,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
            INNER JOIN p.translations t
            WHERE p.status = :status
              AND t.locale = :locale
-             AND (:titleSearch IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', :titleSearch, '%')))
+             AND (:titleSearch = '' OR LOWER(t.title) LIKE LOWER(CONCAT('%', :titleSearch, '%')))
              AND (:createdFrom IS NULL OR p.createdAt >= :createdFrom)
              AND (:createdTo IS NULL OR p.createdAt <= :createdTo)
            ORDER BY p.createdAt DESC
