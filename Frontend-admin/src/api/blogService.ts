@@ -283,6 +283,31 @@ export async function createPost(
 }
 
 /**
+ * Updates only the post status (or slug). PATCH /api/admin/posts/:id. ADMIN only.
+ * Throws UNAUTHORIZED, FORBIDDEN, NOT_FOUND, CONFLICT, or FETCH_FAILED.
+ */
+export async function patchPostStatus(
+  id: string,
+  payload: { status?: string; slug?: string },
+  signal?: AbortSignal
+): Promise<void> {
+  if (!id?.trim()) throw new Error('INVALID_ID');
+  const res = await adminFetch(`/posts/${encodeURIComponent(id.trim())}`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    signal,
+  });
+
+  if (res.status === 401) throw new Error('UNAUTHORIZED');
+  if (res.status === 403) throw new Error('FORBIDDEN');
+  if (res.status === 404) throw new Error('NOT_FOUND');
+  if (res.status === 409) throw new Error('CONFLICT');
+  if (!res.ok) throw new Error('FETCH_FAILED');
+}
+
+/**
  * Deletes a post and its translations. DELETE /api/admin/posts/:id. ADMIN only.
  * Throws UNAUTHORIZED, FORBIDDEN, NOT_FOUND, or FETCH_FAILED.
  */

@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { getAllPosts, deletePost } from '@/api/blogService';
+import { getAllPosts, deletePost, patchPostStatus } from '@/api/blogService';
 import { useToastContext } from '@/context/ToastContext';
 import { useLanguage, getTitleForLocale } from '@/hooks/useLanguage';
 import type { ApiPost, BlogPostDisplay } from '@/types/blog';
@@ -120,6 +120,7 @@ export function BlogListPage() {
   const [searchInput, setSearchInput] = useState('');
   const [titleSearch, setTitleSearch] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [archivingId, setArchivingId] = useState<string | null>(null);
 
   const abortRef = useRef<AbortController | null>(null);
 
@@ -228,6 +229,37 @@ export function BlogListPage() {
       navigate(`/admin/posts/${encodeURIComponent(id)}/edit`);
     },
     [navigate]
+  );
+
+  const handleArchive = useCallback(
+    (id: string, e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!id || archivingId) return;
+      setArchivingId(id);
+      patchPostStatus(id, { status: 'archived' })
+        .then(() => {
+          showToast('Articolo archiviato.', 'success');
+          setPosts((prev) =>
+            prev.map((p) => (p.id === id ? { ...p, status: 'archived' } : p))
+          );
+        })
+        .catch((err) => {
+          if (err instanceof Error && err.name === 'AbortError') return;
+          const msg = err instanceof Error ? err.message : 'Errore';
+          if (msg === 'UNAUTHORIZED' || msg === 'FORBIDDEN') {
+            showToast(
+              msg === 'UNAUTHORIZED' ? 'Sessione scaduta.' : 'Non hai i permessi per archiviare.',
+              'error'
+            );
+          } else if (msg === 'NOT_FOUND') {
+            showToast('Articolo non trovato.', 'error');
+          } else {
+            showToast('Impossibile archiviare l\'articolo.', 'error');
+          }
+        })
+        .finally(() => setArchivingId(null));
+    },
+    [archivingId, showToast]
   );
 
   return (
@@ -450,7 +482,9 @@ export function BlogListPage() {
                       ? 'Pubblicato'
                       : row.status === 'draft'
                         ? 'Bozza'
-                        : row.status || '—'}
+                        : row.status === 'archived'
+                          ? 'Archiviato'
+                          : row.status || '—'}
                   </td>
                   <td
                     style={{
@@ -489,6 +523,27 @@ export function BlogListPage() {
                       >
                         Modifica
                       </button>
+                      {row.status !== 'archived' && (
+                        <button
+                          type="button"
+                          onClick={(e) => handleArchive(row.id, e)}
+                          disabled={archivingId === row.id}
+                          aria-label="Archivia articolo"
+                          title="Archivia articolo"
+                          style={{
+                            padding: '0.35rem 0.65rem',
+                            fontSize: '0.85rem',
+                            background: 'transparent',
+                            color: 'var(--admin-muted, #6b6560)',
+                            border: '1px solid var(--admin-border, #d4cdc0)',
+                            borderRadius: 6,
+                            cursor: archivingId === row.id ? 'not-allowed' : 'pointer',
+                            opacity: archivingId === row.id ? 0.6 : 1,
+                          }}
+                        >
+                          {archivingId === row.id ? '…' : 'Archivia'}
+                        </button>
+                      )}
                       <button
                         type="button"
                         onClick={(e) => handleDelete(row.id, e)}

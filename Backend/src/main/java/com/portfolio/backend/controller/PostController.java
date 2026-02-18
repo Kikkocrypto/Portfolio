@@ -21,9 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin/posts")
@@ -131,18 +134,39 @@ public class PostController {
         toUpdate.setSlug(slug);
         toUpdate.setStatus(status);
         if (request.getTranslations() != null) {
-            toUpdate.getTranslations().clear();
+            Set<String> requestLocales = request.getTranslations().stream()
+                    .map(CreatePostTranslationRequest::getLocale)
+                    .collect(Collectors.toSet());
+            // Rimuovi traduzioni il cui locale non è più nella request (orphanRemoval le elimina)
+            List<PostTranslation> toRemove = new ArrayList<>();
+            for (PostTranslation t : toUpdate.getTranslations()) {
+                if (!requestLocales.contains(t.getLocale())) {
+                    toRemove.add(t);
+                }
+            }
+            toRemove.forEach(toUpdate.getTranslations()::remove);
+            // Per ogni traduzione nella request: aggiorna se esiste (stesso locale), altrimenti crea nuova
             for (CreatePostTranslationRequest tr : request.getTranslations()) {
-                PostTranslation t = new PostTranslation();
-                t.setPostId(id);
-                t.setPost(toUpdate);
-                t.setLocale(tr.getLocale());
                 String tSlug = resolveTranslationSlug(tr.getSlug(), tr.getTitle());
                 if (tSlug.isBlank()) tSlug = tr.getLocale();
-                t.setSlug(ensureTranslationSlugUnique(tSlug, tr.getLocale()));
-                t.setTitle(XssSanitizer.stripHtml(tr.getTitle()));
-                t.setContent(XssSanitizer.stripHtml(tr.getContent()));
-                toUpdate.getTranslations().add(t);
+                Optional<PostTranslation> existingTr = toUpdate.getTranslations().stream()
+                        .filter(t -> tr.getLocale().equals(t.getLocale()))
+                        .findFirst();
+                if (existingTr.isPresent()) {
+                    PostTranslation t = existingTr.get();
+                    t.setSlug(ensureTranslationSlugUnique(tSlug, tr.getLocale(), t.getId()));
+                    t.setTitle(XssSanitizer.stripHtml(tr.getTitle()));
+                    t.setContent(XssSanitizer.stripHtml(tr.getContent()));
+                } else {
+                    PostTranslation t = new PostTranslation();
+                    t.setPostId(id);
+                    t.setPost(toUpdate);
+                    t.setLocale(tr.getLocale());
+                    t.setSlug(ensureTranslationSlugUnique(tSlug, tr.getLocale()));
+                    t.setTitle(XssSanitizer.stripHtml(tr.getTitle()));
+                    t.setContent(XssSanitizer.stripHtml(tr.getContent()));
+                    toUpdate.getTranslations().add(t);
+                }
             }
         }
         Post updated = postService.save(toUpdate);

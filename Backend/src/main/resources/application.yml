@@ -4,17 +4,20 @@ spring:
   application:
     name: portfolio-backend
 
-  # DataSource: SQLite. URL da variabile DB_URL o default (relativo alla working dir, es. Backend).
+  # DataSource: usa DB_URL (default SQLite) oppure le variabili standard Spring.
+  # Con Supabase pooler (porta 6543) aggiungi alla URL: &prepareThreshold=0 (compatibile PgBouncer/Hibernate).
   datasource:
-    url: ${DB_URL:jdbc:sqlite:../Database/portfolio.db}
-    driver-class-name: org.sqlite.JDBC
+    url: ${SPRING_DATASOURCE_URL:${DB_URL:jdbc:sqlite:../Database/portfolio.db}}
+    username: ${SPRING_DATASOURCE_USERNAME:}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.sqlite.JDBC}
 
   # JPA/Hibernate: ddl-auto crea/aggiorna le tabelle dalle entity (es. password_reset_tokens).
   # update = crea tabelle mancanti e nuove colonne, non elimina dati (ok per dev/small prod).
   # In produzione con migrazioni (Flyway/Liquibase) usa: validate o none.
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 # ---------------------------------------------------------------------------
 # CORS (origini consentite per richieste browser cross-origin)

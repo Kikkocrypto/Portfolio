@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Token temporaneo per il reset della password.
@@ -23,9 +24,10 @@ import java.util.UUID;
 public class PasswordResetToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "TEXT")
-    private UUID id;
+    @GeneratedValue(generator = "uuid-string")
+    @GenericGenerator(name = "uuid-string", strategy = "uuid2")
+    @Column(length = 36)
+    private String id;
 
     /**
      * Token UUID generato in modo sicuro.

@@ -28,7 +28,7 @@ public class PostTranslation {
     @Column(length = 36)
     private String id;
 
-    /** FK come stringa per evitare BLOB/hex con SQLite. Impostare alla creazione con post.getId().toString(). */
+    /** FK: id del post. Impostare alla creazione con post.getId(). */
     @Column(name = "post_id", nullable = false, length = 36)
     private String postId;
 

@@ -267,6 +267,7 @@
       "nameRequired": "Name is required.",
       "nameTooShort": "Enter at least 2 characters.",
       "nameTooLong": "Maximum 255 characters.",
+      "noHtml": "Do not use HTML tags or the characters < and >. Use plain text only.",
       "emailRequired": "Email is required.",
       "emailInvalid": "Enter a valid email (e.g. name@domain.com).",
       "emailTooLong": "Maximum 255 characters.",

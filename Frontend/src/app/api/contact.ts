@@ -89,9 +89,10 @@ export async function submitContact(
     }
 
     if (response.status === 400) {
-      // Validazione backend (campi obbligatori, email non valida, ecc.)
+      // Validazione backend (campi obbligatori, email non valida, HTML non ammesso, ecc.)
       const details = (data as { details?: unknown })?.details;
-      throw new Error('VALIDATION_ERROR');
+      const serverMessage = typeof details === 'string' && details.trim().length > 0 ? details.trim() : null;
+      throw new Error(serverMessage ?? 'VALIDATION_ERROR');
     }
 
     if (response.status >= 500) {

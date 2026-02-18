@@ -27,6 +27,11 @@ function isValidEmail(value: string): boolean {
   return afterAt.includes('.') && afterAt.indexOf('.') > 0;
 }
 
+/** Controllo in tempo reale: caratteri non ammessi (tag HTML). Allineato al backend. */
+function containsDisallowedChars(value: string): boolean {
+  return value.indexOf('<') >= 0 || value.indexOf('>') >= 0;
+}
+
 export function Contact() {
   const { t } = useTranslation();
   const { showToast, Toast } = useToast();
@@ -44,32 +49,41 @@ export function Contact() {
   const emailValidationActive = touched.email || formData.email.length > 0;
   const emailValid = formData.email.trim() && isValidEmail(formData.email) && formData.email.length < MAX_EMAIL_LENGTH;
 
+  const noHtmlMessage = t('contact.validation.noHtml');
+
   const fieldErrors = {
     name:
-      touched.name && !formData.name.trim()
-        ? t('contact.validation.nameRequired')
-        : touched.name && formData.name.trim().length < 2
-          ? t('contact.validation.nameTooShort')
-          : touched.name && formData.name.length >= MAX_NAME_LENGTH
-            ? t('contact.validation.nameTooLong')
-            : null,
-    email: !emailValidationActive
-      ? null
-      : !formData.email.trim()
-        ? t('contact.validation.emailRequired')
-        : formData.email.length >= MAX_EMAIL_LENGTH
-          ? t('contact.validation.emailTooLong')
-          : !isValidEmail(formData.email)
-            ? t('contact.validation.emailInvalid')
-            : null,
+      containsDisallowedChars(formData.name)
+        ? noHtmlMessage
+        : touched.name && !formData.name.trim()
+          ? t('contact.validation.nameRequired')
+          : touched.name && formData.name.trim().length < 2
+            ? t('contact.validation.nameTooShort')
+            : touched.name && formData.name.length >= MAX_NAME_LENGTH
+              ? t('contact.validation.nameTooLong')
+              : null,
+    email:
+      containsDisallowedChars(formData.email)
+        ? noHtmlMessage
+        : !emailValidationActive
+          ? null
+          : !formData.email.trim()
+            ? t('contact.validation.emailRequired')
+            : formData.email.length >= MAX_EMAIL_LENGTH
+              ? t('contact.validation.emailTooLong')
+              : !isValidEmail(formData.email)
+                ? t('contact.validation.emailInvalid')
+                : null,
     message:
-      touched.message && !formData.message.trim()
-        ? t('contact.validation.messageRequired')
-        : touched.message && formData.message.trim().length < 10
-          ? t('contact.validation.messageTooShort')
-          : touched.message && formData.message.length >= MAX_MESSAGE_LENGTH
-            ? t('contact.validation.messageTooLong')
-            : null,
+      containsDisallowedChars(formData.message)
+        ? noHtmlMessage
+        : touched.message && !formData.message.trim()
+          ? t('contact.validation.messageRequired')
+          : touched.message && formData.message.trim().length < 10
+            ? t('contact.validation.messageTooShort')
+            : touched.message && formData.message.length >= MAX_MESSAGE_LENGTH
+              ? t('contact.validation.messageTooLong')
+              : null,
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,6 +93,9 @@ export function Contact() {
 
     setTouched({ name: true, email: true, message: true });
     const hasClientErrors =
+      containsDisallowedChars(formData.name) ||
+      containsDisallowedChars(formData.email) ||
+      containsDisallowedChars(formData.message) ||
       !formData.name.trim() ||
       formData.name.trim().length < 2 ||
       formData.name.length >= MAX_NAME_LENGTH ||
@@ -116,8 +133,8 @@ export function Contact() {
         return;
       }
 
-      const errorKey = err instanceof Error ? err.message : 'UNKNOWN_ERROR';
-      const messages: Record<string, string> = {
+      const errMessage = err instanceof Error ? err.message : 'UNKNOWN_ERROR';
+      const knownKeys: Record<string, string> = {
         API_NOT_CONFIGURED: t('contact.errors.apiNotConfigured'),
         VALIDATION_ERROR: t('contact.errors.validationError'),
         SERVER_ERROR: t('contact.errors.serverError'),
@@ -127,8 +144,12 @@ export function Contact() {
         NETWORK_ERROR: t('contact.errors.networkError'),
         UNKNOWN_ERROR: t('contact.errors.unknownError'),
       };
+      // Se il backend ha inviato un messaggio specifico (es. "non sono ammessi tag HTML"), mostralo
+      const message = Object.prototype.hasOwnProperty.call(knownKeys, errMessage)
+        ? knownKeys[errMessage]
+        : errMessage;
       showToast({
-        message: messages[errorKey] ?? messages.UNKNOWN_ERROR,
+        message,
         type: 'error',
         duration: 6000,
       });
