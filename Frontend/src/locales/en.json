@@ -262,6 +262,7 @@
     "placeholderName": "Your full name",
     "placeholderEmail": "your@email.com",
     "placeholderMessage": "Tell me something...",
+    "gdprLabel": "I consent to the processing of my personal data (name, email, message) in accordance with the GDPR. Your email address will only be used to respond to your request and for no other purpose.",
     "submit": "Send message",
     "submitSending": "Sending...",
     "submitSuccess": "Thanks for your message! I'll get back to you soon.",
@@ -276,7 +277,8 @@
       "emailValid": "Valid email.",
       "messageRequired": "Message is required.",
       "messageTooShort": "Enter at least 10 characters.",
-      "messageTooLong": "Maximum 10,000 characters."
+      "messageTooLong": "Maximum 10,000 characters.",
+      "gdprRequired": "You must accept the data processing to send the message."
     },
     "errors": {
       "apiNotConfigured": "API not configured. Please check your environment settings.",

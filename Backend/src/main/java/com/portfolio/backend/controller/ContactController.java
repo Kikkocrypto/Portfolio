@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.Map;
 @RequestMapping("/api/contacts")
 public class ContactController {
 
+    private static final Logger log = LoggerFactory.getLogger(ContactController.class);
     private static final String MSG_NO_HTML = "Nome, email e messaggio non possono contenere tag HTML o i caratteri < e >. Usa solo testo semplice.";
 
     private final ContactService contactService;
@@ -31,6 +34,8 @@ public class ContactController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ContactRequest request) {
+        long requestStartMs = System.currentTimeMillis();
+        log.info("POST /api/contacts ricevuta thread={}", Thread.currentThread().getName());
         // Normalizza input (trim email/name, formatta il nome, ecc.)
         request.normalize();
 
@@ -59,8 +64,12 @@ public class ContactController {
         contact.setMessage(XssSanitizer.stripHtml(request.getMessage()));
 
         Contact saved = contactService.save(contact);
+        long saveMs = System.currentTimeMillis() - requestStartMs;
+        log.info("POST /api/contacts contact salvato id={} in {}ms, avvio invio email async thread={}", saved.getId(), saveMs, Thread.currentThread().getName());
         // Prova ad inviare una mail di notifica all'owner (eventuali errori sono ignorati)
         contactMailService.sendContactNotification(saved);
+        long totalMs = System.currentTimeMillis() - requestStartMs;
+        log.info("POST /api/contacts risposta 201 in {}ms (email in background) thread={}", totalMs, Thread.currentThread().getName());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Map.of(

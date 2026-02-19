@@ -262,6 +262,7 @@
     "placeholderName": "Tu nombre completo",
     "placeholderEmail": "tu@email.com",
     "placeholderMessage": "Cuéntame algo...",
+    "gdprLabel": "Consiento el tratamiento de mis datos personales (nombre, correo, mensaje) conforme al RGPD. La dirección de correo se utilizará exclusivamente para responder a tu solicitud y para ningún otro fin.",
     "submit": "Enviar mensaje",
     "submitSending": "Enviando...",
     "submitSuccess": "¡Gracias por tu mensaje! Te responderé pronto.",
@@ -276,7 +277,8 @@
       "emailValid": "Email válido.",
       "messageRequired": "El mensaje es obligatorio.",
       "messageTooShort": "Introduce al menos 10 caracteres.",
-      "messageTooLong": "Máximo 10.000 caracteres."
+      "messageTooLong": "Máximo 10.000 caracteres.",
+      "gdprRequired": "Debes aceptar el tratamiento de datos para enviar el mensaje."
     },
     "errors": {
       "apiNotConfigured": "API no configurada. Verifica la configuración del entorno.",

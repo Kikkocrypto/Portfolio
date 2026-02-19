@@ -61,9 +61,19 @@ public class ContactMailService {
      */
     @Async
     public void sendContactNotification(@NonNull Contact contact) {
-        sendNotificationToOwner(contact);
-        if (sendReplyToSender) {
-            sendReplyToSender(contact);
+        String contactId = contact.getId();
+        log.info("ContactMail: invio avviato contactId={} thread={}", contactId, Thread.currentThread().getName());
+        long totalStartMs = System.currentTimeMillis();
+        try {
+            sendNotificationToOwner(contact);
+            if (sendReplyToSender) {
+                sendReplyToSender(contact);
+            }
+            long totalMs = System.currentTimeMillis() - totalStartMs;
+            log.info("ContactMail: invio completato contactId={} in {}ms thread={}", contactId, totalMs, Thread.currentThread().getName());
+        } catch (Exception e) {
+            long totalMs = System.currentTimeMillis() - totalStartMs;
+            log.error("ContactMail: invio fallito contactId={} dopo {}ms thread={} - {}", contactId, totalMs, Thread.currentThread().getName(), e.getMessage(), e);
         }
     }
 
@@ -72,6 +82,7 @@ public class ContactMailService {
             log.debug("Notifica contatti disabilitata: app.contact.notification-email non configurata");
             return;
         }
+        long startMs = System.currentTimeMillis();
         try {
             String html = loadTemplate(TEMPLATE_NOTIFICATION);
             String name = escapeHtml(safe(contact.getName()));
@@ -87,9 +98,13 @@ public class ContactMailService {
                 if (from.isEmpty()) {
                     from = "Portfolio <onboarding@resend.dev>";
                 }
+                log.debug("ContactMail: invio notifica owner (Resend) avviato");
                 boolean sent = resendClient.sendEmail(from, notificationEmail, SUBJECT_NOTIFICATION, html);
+                long durationMs = System.currentTimeMillis() - startMs;
                 if (sent) {
-                    log.info("Email di notifica contatto inviata via Resend a {}", notificationEmail);
+                    log.info("ContactMail: notifica owner inviata via Resend in {}ms", durationMs);
+                } else {
+                    log.warn("ContactMail: notifica owner Resend ha restituito false dopo {}ms", durationMs);
                 }
                 return;
             }
@@ -108,9 +123,11 @@ public class ContactMailService {
             helper.setText(html, true);
 
             mailSender.send(mimeMessage);
-            log.info("Email di notifica contatto inviata (SMTP) a {}", notificationEmail);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.info("ContactMail: notifica owner inviata (SMTP) in {}ms", durationMs);
         } catch (Exception e) {
-            log.error("Errore invio email notifica contatto: {}", e.getMessage(), e);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.error("ContactMail: notifica owner fallita dopo {}ms - {}", durationMs, e.getMessage(), e);
         }
     }
 
@@ -123,6 +140,7 @@ public class ContactMailService {
             log.debug("Risposta al mittente saltata: email contatto vuota");
             return;
         }
+        long startMs = System.currentTimeMillis();
         try {
             String html = loadTemplate(TEMPLATE_REPLY);
             String name = escapeHtml(safe(contact.getName()));
@@ -136,9 +154,13 @@ public class ContactMailService {
                 if (from.isEmpty()) {
                     from = "Portfolio <onboarding@resend.dev>";
                 }
+                log.debug("ContactMail: invio risposta automatica (Resend) avviato");
                 boolean sent = resendClient.sendEmail(from, toEmail.trim(), SUBJECT_REPLY, html);
+                long durationMs = System.currentTimeMillis() - startMs;
                 if (sent) {
-                    log.info("Risposta automatica contatto inviata via Resend a {}", toEmail);
+                    log.info("ContactMail: risposta automatica inviata via Resend in {}ms", durationMs);
+                } else {
+                    log.warn("ContactMail: risposta automatica Resend ha restituito false dopo {}ms", durationMs);
                 }
                 return;
             }
@@ -157,9 +179,11 @@ public class ContactMailService {
             helper.setText(html, true);
 
             mailSender.send(mimeMessage);
-            log.info("Risposta automatica contatto inviata (SMTP) a {}", toEmail);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.info("ContactMail: risposta automatica inviata (SMTP) in {}ms", durationMs);
         } catch (Exception e) {
-            log.error("Errore invio risposta automatica al mittente contatto: {}", e.getMessage(), e);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.error("ContactMail: risposta automatica fallita dopo {}ms - {}", durationMs, e.getMessage(), e);
         }
     }
 
