@@ -2,7 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language && ['it', 'en', 'es'].includes(i18n.language) ? i18n.language : 'it';
+  const privacyHref = `/privacy-${lang}.html`;
+  const cookieHref = `/cookie-${lang}.html`;
+  const termsHref = `/terms-${lang}.html`;
 
   return (
     <footer className="bg-[#2C2416] text-[#FAF9F6]/60 py-16 border-t border-[#FAF9F6]/5 relative">
@@ -91,9 +95,22 @@ export function Footer() {
           </div>
 
           {/* Bottom */}
-          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center">
+          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center space-y-2">
             <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
               {t('footer.copyright', { year: new Date().getFullYear() })}
+            </p>
+            <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
+              <a href={privacyHref} className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors" title="Privacy Policy">
+                {t('footer.privacyPolicy')}
+              </a>
+              {' · '}
+              <a href={cookieHref} className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors" title="Cookie Policy">
+                {t('footer.cookiePolicy')}
+              </a>
+              {' · '}
+              <a href={termsHref} className="text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors" title="Terms of Service">
+                {t('footer.termsOfService')}
+              </a>
             </p>
           </div>
         </div>
