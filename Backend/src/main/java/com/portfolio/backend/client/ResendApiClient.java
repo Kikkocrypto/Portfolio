@@ -50,6 +50,8 @@ public class ResendApiClient {
             log.warn("Resend: from address is empty, skip send");
             return false;
         }
+        long startMs = System.currentTimeMillis();
+        log.info("Resend: invio richiesta avviata thread={}", Thread.currentThread().getName());
         try {
             Map<String, Object> body = Map.of(
                     "from", effectiveFrom,
@@ -61,15 +63,34 @@ public class ResendApiClient {
                     .body(body)
                     .retrieve()
                     .toBodilessEntity();
-            log.debug("Resend: email sent to {}", to);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.info("Resend: invio completato in {}ms thread={}", durationMs, Thread.currentThread().getName());
             return true;
         } catch (Exception e) {
-            log.error("Resend: send failed - {}", e.getMessage(), e);
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.error("Resend: invio fallito dopo {}ms thread={} - {} (class={})", durationMs, Thread.currentThread().getName(), e.getMessage(), e.getClass().getSimpleName(), e);
             return false;
         }
     }
 
     public String getFromEmail() {
         return fromEmail;
+    }
+
+    /**
+     * Apre la connessione verso api.resend.com (warm-up).
+     * Utile su Render free: la prima richiesta in uscita dopo cold start può andare in timeout;
+     * chiamando warmUp() all'avvio, il primo invio email dell'utente usa già una connessione calda.
+     */
+    public void warmUp() {
+        long startMs = System.currentTimeMillis();
+        log.info("Resend: warm-up avviato thread={}", Thread.currentThread().getName());
+        try {
+            restClient.get().retrieve().toBodilessEntity();
+        } catch (Exception e) {
+            // GET su /emails restituisce 405; va bene: serve solo ad aprire TCP/TLS
+            long durationMs = System.currentTimeMillis() - startMs;
+            log.info("Resend: warm-up completato in {}ms (connessione aperta, risposta attesa: {})", durationMs, e.getClass().getSimpleName());
+        }
     }
 }

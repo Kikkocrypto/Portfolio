@@ -10,11 +10,12 @@ const MAX_NAME_LENGTH = 255;
 const MAX_EMAIL_LENGTH = 255;
 const MAX_MESSAGE_LENGTH = 10000;
 
-const INITIAL_FORM: ContactPayload & { website: string } = {
+const INITIAL_FORM: ContactPayload & { website: string; gdprConsent: boolean } = {
   name: '',
   email: '',
   message: '',
   website: '',
+  gdprConsent: false,
 };
 
 /** Email valida: almeno una @ e un punto dopo la @ (es. nome@dominio.com). */
@@ -39,10 +40,11 @@ export function Contact() {
 
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
-  const [touched, setTouched] = useState<{ name: boolean; email: boolean; message: boolean }>({
+  const [touched, setTouched] = useState<{ name: boolean; email: boolean; message: boolean; gdprConsent: boolean }>({
     name: false,
     email: false,
     message: false,
+    gdprConsent: false,
   });
 
   /** Email: validazione in tempo reale (attiva da primo carattere o da blur). */
@@ -91,7 +93,7 @@ export function Contact() {
 
     if (loading) return;
 
-    setTouched({ name: true, email: true, message: true });
+    setTouched({ name: true, email: true, message: true, gdprConsent: true });
     const hasClientErrors =
       containsDisallowedChars(formData.name) ||
       containsDisallowedChars(formData.email) ||
@@ -104,7 +106,8 @@ export function Contact() {
       formData.email.length >= MAX_EMAIL_LENGTH ||
       !formData.message.trim() ||
       formData.message.trim().length < 10 ||
-      formData.message.length >= MAX_MESSAGE_LENGTH;
+      formData.message.length >= MAX_MESSAGE_LENGTH ||
+      !formData.gdprConsent;
     if (hasClientErrors) return;
 
     abortRef.current = new AbortController();
@@ -127,7 +130,7 @@ export function Contact() {
         duration: 5000,
       });
       setFormData(INITIAL_FORM);
-      setTouched({ name: false, email: false, message: false });
+      setTouched({ name: false, email: false, message: false, gdprConsent: false });
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         return;
@@ -162,10 +165,14 @@ export function Contact() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [target.name]: target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value,
     }));
+    if (target.name === 'gdprConsent') {
+      setTouched((prev) => ({ ...prev, gdprConsent: true }));
+    }
   };
 
   const handleBlur = (field: 'name' | 'email' | 'message') => {
@@ -369,6 +376,31 @@ export function Contact() {
                       tabIndex={-1}
                       autoComplete="off"
                     />
+                  </div>
+
+                  {/* GDPR: consenso al trattamento dati; email solo per risposta */}
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        id="gdprConsent"
+                        name="gdprConsent"
+                        checked={formData.gdprConsent}
+                        onChange={handleChange}
+                        disabled={loading}
+                        aria-invalid={touched.gdprConsent && !formData.gdprConsent}
+                        aria-describedby={touched.gdprConsent && !formData.gdprConsent ? 'gdpr-error' : undefined}
+                        className="mt-1.5 h-4 w-4 shrink-0 rounded border-[#FAF9F6]/30 bg-white/5 text-[#D4A574] focus:ring-2 focus:ring-[#D4A574]/50 focus:ring-offset-0 focus:ring-offset-transparent disabled:opacity-60"
+                      />
+                      <label htmlFor="gdprConsent" className="text-sm text-[#FAF9F6]/80 leading-snug cursor-pointer">
+                        {t('contact.gdprLabel')}
+                      </label>
+                    </div>
+                    {touched.gdprConsent && !formData.gdprConsent && (
+                      <p id="gdpr-error" className="text-sm text-red-400" role="alert">
+                        {t('contact.validation.gdprRequired')}
+                      </p>
+                    )}
                   </div>
 
                   <button

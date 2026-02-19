@@ -1,21 +1,9 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Github, Linkedin, Mail } from 'lucide-react';
-
-function loadIubendaScript() {
-  if (document.querySelector('script[src="https://cdn.iubenda.com/iubenda.js"]')) return;
-  const s = document.createElement('script');
-  s.src = 'https://cdn.iubenda.com/iubenda.js';
-  const tag = document.getElementsByTagName('script')[0];
-  tag?.parentNode?.insertBefore(s, tag);
-}
 
 export function Footer() {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    loadIubendaScript();
-  }, []);
   return (
     <footer className="bg-[#2C2416] text-[#FAF9F6]/60 py-16 border-t border-[#FAF9F6]/5 relative">
       {/* Texture */}
@@ -103,26 +91,9 @@ export function Footer() {
           </div>
 
           {/* Bottom */}
-          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center space-y-2">
+          <div className="pt-8 border-t border-[#FAF9F6]/5 text-center">
             <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
               {t('footer.copyright', { year: new Date().getFullYear() })}
-            </p>
-            <p className="text-sm text-[#FAF9F6]/40 tracking-wide">
-              <a
-                href="https://www.iubenda.com/privacy-policy/87858834"
-                className="iubenda-white iubenda-noiframe iubenda-embed text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors"
-                title="Privacy Policy"
-              >
-                {t('footer.privacyPolicy')}
-              </a>
-              {' · '}
-              <a
-                href="https://www.iubenda.com/privacy-policy/87858834/cookie-policy"
-                className="iubenda-white iubenda-noiframe iubenda-embed text-[#FAF9F6]/60 hover:text-[#D4A574] transition-colors"
-                title="Cookie Policy"
-              >
-                {t('footer.cookiePolicy')}
-              </a>
             </p>
           </div>
         </div>
