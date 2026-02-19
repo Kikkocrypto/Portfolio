@@ -3,6 +3,7 @@ package com.portfolio.backend.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
@@ -68,7 +69,12 @@ public class ResendApiClient {
             return true;
         } catch (Exception e) {
             long durationMs = System.currentTimeMillis() - startMs;
-            log.error("Resend: invio fallito dopo {}ms thread={} - {} (class={})", durationMs, Thread.currentThread().getName(), e.getMessage(), e.getClass().getSimpleName(), e);
+            boolean connectionReset = e instanceof ResourceAccessException && e.getMessage() != null && e.getMessage().contains("Connection reset");
+            if (connectionReset) {
+                log.warn("Resend: connection reset dopo {}ms - la richiesta può essere stata comunque elaborata da Resend; verificare la casella (class={})", durationMs, e.getClass().getSimpleName());
+            } else {
+                log.error("Resend: invio fallito dopo {}ms thread={} - {} (class={})", durationMs, Thread.currentThread().getName(), e.getMessage(), e.getClass().getSimpleName(), e);
+            }
             return false;
         }
     }
