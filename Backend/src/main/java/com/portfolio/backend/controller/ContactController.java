@@ -3,8 +3,8 @@ package com.portfolio.backend.controller;
 import com.portfolio.backend.controller.dto.ApiError;
 import com.portfolio.backend.controller.dto.ContactRequest;
 import com.portfolio.backend.entity.Contact;
-import com.portfolio.backend.service.ContactMailService;
 import com.portfolio.backend.service.ContactService;
+import com.portfolio.backend.service.EmailQueueService;
 import com.portfolio.backend.util.XssSanitizer;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,12 +24,12 @@ public class ContactController {
     private static final String MSG_NO_HTML = "Nome, email e messaggio non possono contenere tag HTML o i caratteri < e >. Usa solo testo semplice.";
 
     private final ContactService contactService;
-    private final ContactMailService contactMailService;
+    private final EmailQueueService emailQueueService;
 
     public ContactController(ContactService contactService,
-                             ContactMailService contactMailService) {
+                             EmailQueueService emailQueueService) {
         this.contactService = contactService;
-        this.contactMailService = contactMailService;
+        this.emailQueueService = emailQueueService;
     }
 
     @PostMapping
@@ -65,11 +65,15 @@ public class ContactController {
 
         Contact saved = contactService.save(contact);
         long saveMs = System.currentTimeMillis() - requestStartMs;
-        log.info("POST /api/contacts contact salvato id={} in {}ms, avvio invio email async thread={}", saved.getId(), saveMs, Thread.currentThread().getName());
-        // Prova ad inviare una mail di notifica all'owner (eventuali errori sono ignorati)
-        contactMailService.sendContactNotification(saved);
+        log.info("POST /api/contacts contact salvato in {}ms, accodo email jobs thread={}", saveMs, Thread.currentThread().getName());
+        // Accoda invii email su DB (worker in background con retry/backoff)
+        try {
+            emailQueueService.enqueueContactEmails(saved);
+        } catch (Exception e) {
+            log.error("POST /api/contacts enqueue email jobs fallito - {}", e.getMessage(), e);
+        }
         long totalMs = System.currentTimeMillis() - requestStartMs;
-        log.info("POST /api/contacts risposta 201 in {}ms (email in background) thread={}", totalMs, Thread.currentThread().getName());
+        log.info("POST /api/contacts risposta 201 in {}ms (email via coda) thread={}", totalMs, Thread.currentThread().getName());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Map.of(

@@ -38,6 +38,15 @@ app:
     send-reply-to-sender: ${APP_CONTACT_SEND_REPLY_TO_SENDER:true}
 
   # ---------------------------------------------------------------------------
+  # Email queue (outbox): invio email affidabile con retry e persistenza su DB
+  # ---------------------------------------------------------------------------
+  email-queue:
+    poll-ms: 5000
+    batch-size: 10
+    max-attempts: 8
+    stale-lock-ms: 300000
+
+  # ---------------------------------------------------------------------------
   # Data retention (cancellazione automatica dati vecchi)
   # ---------------------------------------------------------------------------
   data-retention:
