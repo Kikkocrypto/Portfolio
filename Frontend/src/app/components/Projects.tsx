@@ -46,7 +46,7 @@ export function Projects() {
   const featuredProject = {
     ...featuredData,
     image: projectImage,
-    github: 'https://github.com/your-username/your-project-name',
+    github: 'https://github.com/Kikkocrypto/pw-16-sviluppo-full-stack-API-pegaso',
     demo: 'https://dottori-dolori.xyz/',
   };
 

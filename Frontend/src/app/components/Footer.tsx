@@ -66,7 +66,7 @@ export function Footer() {
               <h4 className="text-[#FAF9F6] font-normal mb-6 tracking-wide">{t('footer.connect')}</h4>
               <div className="flex gap-3">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/Kikkocrypto" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
@@ -75,7 +75,7 @@ export function Footer() {
                   <Github className="w-5 h-5 text-[#FAF9F6]/60" />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://www.linkedin.com/in/francesco-damiano-09259b22b/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
@@ -84,7 +84,7 @@ export function Footer() {
                   <Linkedin className="w-5 h-5 text-[#FAF9F6]/60" />
                 </a>
                 <a 
-                  href="mailto:damiano.francesco@example.com"
+                  href="mailto:f.damiano@francescodamiano.tech"
                   className="min-w-[44px] min-h-[44px] w-11 h-11 border border-[#FAF9F6]/10 hover:border-[#D4A574]/40 flex items-center justify-center transition-all hover:bg-white/5"
                   aria-label="Email"
                 >

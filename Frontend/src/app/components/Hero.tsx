@@ -104,7 +104,7 @@ export function Hero() {
             <FadeIn delay={750} duration={DURATION.slow}>
               <div className="flex gap-3 pt-4">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/Kikkocrypto" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
@@ -113,7 +113,7 @@ export function Hero() {
                   <Github className="w-5 h-5" />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://www.linkedin.com/in/francesco-damiano-09259b22b/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
@@ -122,7 +122,7 @@ export function Hero() {
                   <Linkedin className="w-5 h-5" />
                 </a>
                 <a 
-                  href="mailto:damiano.francesco@example.com"
+                  href="mailto:f.damiano@francescodamiano.tech"
                   className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center border border-[#6B5D4F]/20 hover:border-[#6B5D4F]/40 text-[#6B5D4F] hover:text-[#2C2416] transition-all duration-300 bg-white/30 backdrop-blur-sm hover-lift"
                   aria-label={t('hero.ariaEmail')}
                 >
